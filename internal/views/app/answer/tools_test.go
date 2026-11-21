@@ -23,7 +23,7 @@ func TestAskToolsAreTheReadOnlyAnswerers(t *testing.T) {
 		names = append(names, tools[i].Name)
 		checkTool(t, &tools[i])
 	}
-	want := []string{"what_needs_me", "show", "sync_status", "allocation", "performance", "value"}
+	want := []string{"what_needs_me", "show", "sync_status", "allocation", "performance", "value", "market_price"}
 	if diff := cmp.Diff(want, names); diff != "" {
 		t.Errorf("tools (-want +got):\n%s", diff)
 	}

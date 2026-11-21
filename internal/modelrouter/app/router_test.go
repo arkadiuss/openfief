@@ -456,6 +456,78 @@ func TestRouterDeniesByDefault(t *testing.T) {
 	}
 }
 
+// marketPriceConversation is the Ask box's conversation after the market price
+// tool answered (D-226): the person's question is T0, and the tool's result,
+// public market data from the owner's connector, is T2.
+func marketPriceConversation() *modelrouter.Request {
+	return &modelrouter.Request{Messages: []modelrouter.Message{
+		{Role: modelrouter.MessageUser, Content: "SECRET-QUESTION-TEXT", DataTier: modelrouter.DataTierT0},
+		{Role: modelrouter.MessageTool, Content: "SECRET-PRICE-CARD", ToolCallID: "1", DataTier: modelrouter.DataTierT2},
+	}}
+}
+
+// TestRouterRefusesAMarketPriceResultToAModelNotAllowedT2 checks D-226 at the
+// router: a conversation that holds a T2 tool result goes only to a model the
+// owner allowed for T2, as well as for the question's T0. With one model allowed
+// T0 and another T2 and none both, nothing is sent and the refusal is audited;
+// allowing the first T2 sends the conversation to it.
+func TestRouterRefusesAMarketPriceResultToAModelNotAllowedT2(t *testing.T) {
+	t.Parallel()
+	f := newRouterFixture(t)
+	policy, err := modelrouter.NewDataTierPolicy(map[modelrouter.DataTier][]modelrouter.Ref{
+		modelrouter.DataTierT0: {f.local}, modelrouter.DataTierT2: {f.cloud},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	f.store.settings.Policy = policy
+	if _, genErr := f.generate(marketPriceConversation()); !errors.Is(genErr, modelrouter.ErrDataTierDenied) {
+		t.Fatalf("error = %v, want ErrDataTierDenied: no model may receive both the question and the price", genErr)
+	}
+	if len(f.providers.called) != 0 {
+		t.Errorf("a refused conversation reached %v", f.providers.called)
+	}
+	if got := f.audit.results[len(f.audit.results)-1].Outcome; got != app.OutcomeRefused {
+		t.Errorf("last result outcome = %q, want refused", got)
+	}
+	policy, err = modelrouter.NewDataTierPolicy(map[modelrouter.DataTier][]modelrouter.Ref{
+		modelrouter.DataTierT0: {f.local}, modelrouter.DataTierT2: {f.cloud, f.local},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	f.store.settings.Policy = policy
+	res, err := f.generate(marketPriceConversation())
+	if err != nil || res.Model != f.local {
+		t.Errorf("with T2 allowed for the local model: model %v, error %v; want the local model", res.Model, err)
+	}
+}
+
+// TestInstructionsAddNoTierToARequest checks D-226's ruling: a message tagged as
+// the role's own instructions adds nothing to the tiers of a request, so a model
+// allowed T0 alone gets a conversation of instructions and a T0 question, and a
+// request of nothing but instructions is untagged.
+func TestInstructionsAddNoTierToARequest(t *testing.T) {
+	t.Parallel()
+	f := newRouterFixture(t)
+	policy, err := modelrouter.NewDataTierPolicy(map[modelrouter.DataTier][]modelrouter.Ref{modelrouter.DataTierT0: {f.local}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	f.store.settings.Policy = policy
+	res, genErr := f.generate(&modelrouter.Request{Messages: []modelrouter.Message{
+		{Role: modelrouter.MessageSystem, DataTier: modelrouter.DataTierInstructions},
+		{Role: modelrouter.MessageUser, DataTier: modelrouter.DataTierT0},
+	}})
+	if genErr != nil || res.Model != f.local {
+		t.Errorf("model %v, error %v; want the model allowed T0 alone", res.Model, genErr)
+	}
+	_, genErr = f.generate(&modelrouter.Request{Messages: []modelrouter.Message{{Role: modelrouter.MessageSystem, DataTier: modelrouter.DataTierInstructions}}})
+	if !errors.Is(genErr, modelrouter.ErrUntagged) {
+		t.Errorf("a request of instructions alone: error = %v, want ErrUntagged", genErr)
+	}
+}
+
 func TestRouterNoRoute(t *testing.T) {
 	t.Parallel()
 	f := newRouterFixture(t)

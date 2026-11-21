@@ -1259,3 +1259,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b1b8697744f8
+  - type: covered_by
+    from: SYM-d226-internal-ingest-quote-go-quoterequest
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aef5e79e1433
+  - type: implements
+    from: SYM-d226-internal-ingest-quote-go-quoterequest
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ab38d9f0737

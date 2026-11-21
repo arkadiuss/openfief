@@ -1574,5 +1574,23 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-02d1dba93007
+      },
+    {
+        type: implements,
+        from: SYM-d226-internal-ingest-app-tickers-go-marketdatadeclared,
+        to: REQ-ingest-market-quote-source,
+        created_at: 2026-11-21T11:30:17.451Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-4d4259de7d83
+      },
+    {
+        type: covered_by,
+        from: SYM-d226-internal-ingest-app-tickers-go-marketdatadeclared,
+        to: TEST-ingest-market-quote-source,
+        created_at: 2026-11-21T11:30:17.607Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-2d6f917e12ca
       }
   ]

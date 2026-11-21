@@ -1301,3 +1301,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5bb39403aa7
+  - type: specified_by
+    from: REQ-askbench-market-price-cases
+    to: SCEN-askbench-market-price-cases
+    created_at: 2026-11-21T11:27:51.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-002eb2aec78e
+  - type: implements
+    from: SYM-d226-internal-ingest-quote-go-cleanname
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T11:31:25.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75670a33f4fb
+  - type: covered_by
+    from: SYM-d226-internal-ingest-quote-go-cleanname
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T11:31:25.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fb1751d8a5f
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest-getfrom
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e555817e2c8
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest-getfrom
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd107ca28098
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotepoint-protoreflect
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7889c7e2bb1
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotepoint-protoreflect
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e252f9667a91

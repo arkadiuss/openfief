@@ -62,8 +62,11 @@ func readAccess() map[protoreflect.Name]string {
 		"ListSyncAttempts": beyondD137,
 		// D-195's instrument page: its listings, prices and exemption
 		// classes, then its holdings, lots and transactions across accounts.
-		"GetInstrument":              beyondD137,
-		"ListInstrumentPrices":       beyondD137,
+		"GetInstrument":        beyondD137,
+		"ListInstrumentPrices": beyondD137,
+		// D-226's market quote: public data fetched through the owner's
+		// market-data connector, which D-137 names as quotes for any instrument.
+		"GetMarketQuote":             "market quotes",
 		"ListInstrumentHoldings":     "holdings",
 		"ListInstrumentTransactions": "transactions",
 	}
@@ -144,7 +147,7 @@ func checkServed(t *testing.T, served map[string]bool) {
 	t.Helper()
 	for _, what := range []string{
 		"sleeves", "accounts", "transactions", "lots", "holdings", "cash", "valuations", "allocation",
-		"performance", "model portfolio", "price checks", "transfers", "attention items", "installed plugins",
+		"performance", "model portfolio", "price checks", "transfers", "attention items", "installed plugins", "market quotes",
 	} {
 		if !served[what] {
 			t.Errorf("no read API method serves %s (D-137)", what)

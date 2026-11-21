@@ -1182,3 +1182,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-87d1bdfbe9b9
+  - type: verified_by
+    from: SCEN-ask-market-price-offer
+    to: TEST-ask-market-price-offer
+    created_at: 2026-11-21T11:27:25.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8f8a80c8058
+  - type: implements
+    from: SYM-d226-internal-views-connectapi-quotes-go-readservice-getmarketquote
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T11:28:41.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef448b3b3967
+  - type: covered_by
+    from: SYM-d226-internal-views-connectapi-quotes-go-readservice-getmarketquote
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T11:28:41.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca251577dbe6
+  - type: executable_for
+    from: SYM-d226-internal-views-app-answer-quote-test-go-syntheticquote
+    to: TEST-ask-market-price-card
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82d65744664c
+  - type: covered_by
+    from: SYM-d226-internal-views-app-quotes-go-callerkey
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2fe214e6827
+  - type: implements
+    from: SYM-d226-internal-views-app-quotes-go-callerkey
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-540d5be03570
+  - type: covered_by
+    from: SYM-d226-internal-views-app-quotes-go-callerkey
+    to: TEST-views-market-quote-rate-limit
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9722db0bc0ad
+  - type: implements
+    from: SYM-d226-internal-views-app-quotes-go-callerkey
+    to: REQ-views-market-quote-rate-limit
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cbcae47afc6
+  - type: covered_by
+    from: SYM-d226-internal-valuation-eodhd-quote-go-quotematch
+    to: TEST-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a175bd38cda
+  - type: implements
+    from: SYM-d226-internal-valuation-eodhd-quote-go-quotematch
+    to: REQ-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50674e578790

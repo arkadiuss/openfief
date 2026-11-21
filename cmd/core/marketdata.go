@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
@@ -12,12 +13,14 @@ import (
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
 	"github.com/arkadiuss/openfief/internal/ingest"
+	ingestapp "github.com/arkadiuss/openfief/internal/ingest/app"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
 	"github.com/arkadiuss/openfief/internal/valuation"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	valuationconnect "github.com/arkadiuss/openfief/internal/valuation/connectapi"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
+	viewsapp "github.com/arkadiuss/openfief/internal/views/app"
 )
 
 // valuationOwners is ownerSessions answering with the valuation context's
@@ -65,4 +68,61 @@ func (s sourceInputs) StoreSources(ctx context.Context, _ ingest.BatchID, source
 		return fmt.Errorf("valuation: %w", err)
 	}
 	return nil
+}
+
+// priceRanking is the owner's ranking of the sources of prices (D-94) as the
+// quote lookup asks for it.
+type priceRanking struct {
+	store *valuationpg.Store
+}
+
+var _ ingestapp.PriceRanking = priceRanking{}
+
+// RankedPriceSources returns the names of the sources of prices, the
+// highest-ranked first.
+func (p priceRanking) RankedPriceSources(ctx context.Context) ([]string, error) {
+	r, err := p.store.SourceRanking(ctx, valuation.KindPrices)
+	if err != nil {
+		return nil, fmt.Errorf("ranking of the sources of prices: %w", err)
+	}
+	return r.Names(), nil
+}
+
+// heldSources finds the source an instrument the owner holds is valued from,
+// through the sources of the valuation's price series (D-94).
+type heldSources struct {
+	store *valuationpg.Store
+}
+
+var _ ingestapp.HeldSources = heldSources{}
+
+// ValuationSource returns the connector instance whose prices value the
+// instrument query names, a ticker or an ISIN.
+func (h heldSources) ValuationSource(ctx context.Context, query string) (string, error) {
+	series, err := h.store.SeriesSources(ctx)
+	if err != nil {
+		return "", fmt.Errorf("sources of the price series: %w", err)
+	}
+	source, _ := valuation.PriceSourceOfQuery(series, query)
+	return source, nil
+}
+
+// marketQuoteOption has the views look quotes up through the owner's
+// market-data connector, the highest-ranked source of prices (D-226, D-94): the
+// connector client entries, the running instances and what their manifests
+// declare, which D-123 lets be asked. The core makes no request of its own: the
+// connector plugin alone reaches its provider, under its egress grant.
+//
+// A demo answers from its synthetic data alone (D-226): with --demo-sessions
+// the views get no source, so a lookup is a failed precondition and the read
+// API says quotes are not available, even where an installed connector holds
+// a provider key.
+func marketQuoteOption(cfg *serveConfig, entries *entryCaller, vstore *valuationpg.Store, now func() time.Time) viewsapp.Option {
+	if cfg.Auth.DemoSessions {
+		return viewsapp.WithMarketQuotes(&viewsapp.MarketQuotesConfig{})
+	}
+	return viewsapp.WithMarketQuotes(&viewsapp.MarketQuotesConfig{
+		Source: &ingestapp.Quotes{Lookup: entries, Instances: entries, Declarations: entries, Ranking: priceRanking{store: vstore}, Held: heldSources{store: vstore}},
+		Today:  valuationpg.TodayIn(cfg.EndOfDay.Location, now), Now: now,
+	})
 }

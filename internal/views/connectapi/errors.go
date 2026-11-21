@@ -64,17 +64,11 @@ func invalidMessage(err error) error {
 // internal, logged under the request ID only, for anything else. Vanguard
 // maps these codes to HTTP statuses for REST (404, 400, 503, 500).
 func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.Error {
-	if errors.Is(err, app.ErrUnknownAccount) {
-		return connect.NewError(connect.CodeNotFound, errNoSuchAccount)
+	if qe := quoteError(err); qe != nil {
+		return qe
 	}
-	if errors.Is(err, app.ErrUnknownInstrument) {
-		return connect.NewError(connect.CodeNotFound, errNoInstrument)
-	}
-	if errors.Is(err, app.ErrUnknownInstance) {
-		return connect.NewError(connect.CodeNotFound, errNoInstance)
-	}
-	if errors.Is(err, app.ErrModelOff) {
-		return connect.NewError(connect.CodeNotFound, errModelOff)
+	if nf := notFoundError(err); nf != nil {
+		return nf
 	}
 	if errors.Is(err, kernel.ErrAuthzUnavailable) {
 		return connect.NewError(connect.CodeUnavailable, kernel.ErrAuthzUnavailable)
@@ -93,6 +87,23 @@ func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.E
 	}
 	logFailure(ctx, log, "answering")
 	return internalError(ctx)
+}
+
+// notFoundError returns the not found error err stands for: an unknown
+// account, instrument or connector instance, or a model portfolio that is off;
+// nil for any other.
+func notFoundError(err error) *connect.Error {
+	switch {
+	case errors.Is(err, app.ErrUnknownAccount):
+		return connect.NewError(connect.CodeNotFound, errNoSuchAccount)
+	case errors.Is(err, app.ErrUnknownInstrument):
+		return connect.NewError(connect.CodeNotFound, errNoInstrument)
+	case errors.Is(err, app.ErrUnknownInstance):
+		return connect.NewError(connect.CodeNotFound, errNoInstance)
+	case errors.Is(err, app.ErrModelOff):
+		return connect.NewError(connect.CodeNotFound, errModelOff)
+	}
+	return nil
 }
 
 // internalError is what a client sees of an internal failure: the request ID

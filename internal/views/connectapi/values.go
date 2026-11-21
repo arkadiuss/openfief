@@ -30,6 +30,7 @@ func (s *readService) GetSettings(ctx context.Context, _ *connect.Request[viewsv
 	out := &viewsv1.GetSettingsResponse{
 		ReportingCurrency: got.ReportingCurrency.String(), NumberFormat: pbNumberFormat(got.NumberFormat),
 		NumberFormatDefault: got.NumberFormatDefault, TaxWrappers: make([]string, 0, len(got.Wrappers)),
+		MarketQuotes: s.views.MarketQuotesAvailable(ctx),
 	}
 	for _, w := range got.Wrappers {
 		out.TaxWrappers = append(out.TaxWrappers, string(w))

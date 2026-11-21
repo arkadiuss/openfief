@@ -1350,3 +1350,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0336cad84597
+  - type: covered_by
+    from: SYM-d226-internal-ingest-app-quotes-go-priceranking
+    to: TEST-ingest-market-quote-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-826b4de79ac4
+  - type: implements
+    from: SYM-d226-internal-ingest-app-quotes-go-priceranking
+    to: REQ-ingest-market-quote-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-096984363813
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-getisin
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e05168f76262
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-getisin
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4b63648dea3

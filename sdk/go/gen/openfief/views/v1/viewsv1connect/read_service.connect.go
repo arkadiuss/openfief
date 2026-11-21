@@ -131,6 +131,9 @@ const (
 	// ReadServiceListInstrumentPricesProcedure is the fully-qualified name of the ReadService's
 	// ListInstrumentPrices RPC.
 	ReadServiceListInstrumentPricesProcedure = "/openfief.views.v1.ReadService/ListInstrumentPrices"
+	// ReadServiceGetMarketQuoteProcedure is the fully-qualified name of the ReadService's
+	// GetMarketQuote RPC.
+	ReadServiceGetMarketQuoteProcedure = "/openfief.views.v1.ReadService/GetMarketQuote"
 	// ReadServiceListInstrumentHoldingsProcedure is the fully-qualified name of the ReadService's
 	// ListInstrumentHoldings RPC.
 	ReadServiceListInstrumentHoldingsProcedure = "/openfief.views.v1.ReadService/ListInstrumentHoldings"
@@ -281,6 +284,21 @@ type ReadServiceClient interface {
 	// range, from every source (D-94), each marked when it is the source its
 	// listing is valued at (D-195).
 	ListInstrumentPrices(context.Context, *connect.Request[v1.ListInstrumentPricesRequest]) (*connect.Response[v1.ListInstrumentPricesResponse], error)
+	// GetMarketQuote looks an instrument up by ticker or ISIN and returns its
+	// latest end-of-day price with a short history over a period, fetched when
+	// asked through the owner's own market-data connector, the highest-ranked
+	// source of prices (D-94, D-226), for an instrument that may be held or
+	// not. The answer is public market data (data tier T2, D-206): it carries
+	// the connector instance it came from and the date of its latest close,
+	// is never stored and never changes a price or valuation. The call goes
+	// through the connector plugin, which alone reaches its provider under its
+	// egress grant; the core makes no request of its own. A query that names
+	// several listings is answered with them, none chosen, so the caller names
+	// one by its ISIN. It is NOT_FOUND for a query no listing matches,
+	// FAILED_PRECONDITION when no market-data connector can look quotes up,
+	// such as on a demo, and UNAVAILABLE when the connector or its provider
+	// fails.
+	GetMarketQuote(context.Context, *connect.Request[v1.GetMarketQuoteRequest]) (*connect.Response[v1.GetMarketQuoteResponse], error)
 	// ListInstrumentHoldings returns an instrument's holdings and open lots
 	// on a date across the accounts the caller may view, in account order
 	// (D-195).
@@ -505,6 +523,13 @@ func NewReadServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
+		getMarketQuote: connect.NewClient[v1.GetMarketQuoteRequest, v1.GetMarketQuoteResponse](
+			httpClient,
+			baseURL+ReadServiceGetMarketQuoteProcedure,
+			connect.WithSchema(readServiceMethods.ByName("GetMarketQuote")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
 		listInstrumentHoldings: connect.NewClient[v1.ListInstrumentHoldingsRequest, v1.ListInstrumentHoldingsResponse](
 			httpClient,
 			baseURL+ReadServiceListInstrumentHoldingsProcedure,
@@ -553,6 +578,7 @@ type readServiceClient struct {
 	listSyncAttempts           *connect.Client[v1.ListSyncAttemptsRequest, v1.ListSyncAttemptsResponse]
 	getInstrument              *connect.Client[v1.GetInstrumentRequest, v1.GetInstrumentResponse]
 	listInstrumentPrices       *connect.Client[v1.ListInstrumentPricesRequest, v1.ListInstrumentPricesResponse]
+	getMarketQuote             *connect.Client[v1.GetMarketQuoteRequest, v1.GetMarketQuoteResponse]
 	listInstrumentHoldings     *connect.Client[v1.ListInstrumentHoldingsRequest, v1.ListInstrumentHoldingsResponse]
 	listInstrumentTransactions *connect.Client[v1.ListInstrumentTransactionsRequest, v1.ListInstrumentTransactionsResponse]
 }
@@ -700,6 +726,11 @@ func (c *readServiceClient) GetInstrument(ctx context.Context, req *connect.Requ
 // ListInstrumentPrices calls openfief.views.v1.ReadService.ListInstrumentPrices.
 func (c *readServiceClient) ListInstrumentPrices(ctx context.Context, req *connect.Request[v1.ListInstrumentPricesRequest]) (*connect.Response[v1.ListInstrumentPricesResponse], error) {
 	return c.listInstrumentPrices.CallUnary(ctx, req)
+}
+
+// GetMarketQuote calls openfief.views.v1.ReadService.GetMarketQuote.
+func (c *readServiceClient) GetMarketQuote(ctx context.Context, req *connect.Request[v1.GetMarketQuoteRequest]) (*connect.Response[v1.GetMarketQuoteResponse], error) {
+	return c.getMarketQuote.CallUnary(ctx, req)
 }
 
 // ListInstrumentHoldings calls openfief.views.v1.ReadService.ListInstrumentHoldings.
@@ -854,6 +885,21 @@ type ReadServiceHandler interface {
 	// range, from every source (D-94), each marked when it is the source its
 	// listing is valued at (D-195).
 	ListInstrumentPrices(context.Context, *connect.Request[v1.ListInstrumentPricesRequest]) (*connect.Response[v1.ListInstrumentPricesResponse], error)
+	// GetMarketQuote looks an instrument up by ticker or ISIN and returns its
+	// latest end-of-day price with a short history over a period, fetched when
+	// asked through the owner's own market-data connector, the highest-ranked
+	// source of prices (D-94, D-226), for an instrument that may be held or
+	// not. The answer is public market data (data tier T2, D-206): it carries
+	// the connector instance it came from and the date of its latest close,
+	// is never stored and never changes a price or valuation. The call goes
+	// through the connector plugin, which alone reaches its provider under its
+	// egress grant; the core makes no request of its own. A query that names
+	// several listings is answered with them, none chosen, so the caller names
+	// one by its ISIN. It is NOT_FOUND for a query no listing matches,
+	// FAILED_PRECONDITION when no market-data connector can look quotes up,
+	// such as on a demo, and UNAVAILABLE when the connector or its provider
+	// fails.
+	GetMarketQuote(context.Context, *connect.Request[v1.GetMarketQuoteRequest]) (*connect.Response[v1.GetMarketQuoteResponse], error)
 	// ListInstrumentHoldings returns an instrument's holdings and open lots
 	// on a date across the accounts the caller may view, in account order
 	// (D-195).
@@ -1074,6 +1120,13 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
+	readServiceGetMarketQuoteHandler := connect.NewUnaryHandler(
+		ReadServiceGetMarketQuoteProcedure,
+		svc.GetMarketQuote,
+		connect.WithSchema(readServiceMethods.ByName("GetMarketQuote")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
 	readServiceListInstrumentHoldingsHandler := connect.NewUnaryHandler(
 		ReadServiceListInstrumentHoldingsProcedure,
 		svc.ListInstrumentHoldings,
@@ -1148,6 +1201,8 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 			readServiceGetInstrumentHandler.ServeHTTP(w, r)
 		case ReadServiceListInstrumentPricesProcedure:
 			readServiceListInstrumentPricesHandler.ServeHTTP(w, r)
+		case ReadServiceGetMarketQuoteProcedure:
+			readServiceGetMarketQuoteHandler.ServeHTTP(w, r)
 		case ReadServiceListInstrumentHoldingsProcedure:
 			readServiceListInstrumentHoldingsHandler.ServeHTTP(w, r)
 		case ReadServiceListInstrumentTransactionsProcedure:
@@ -1275,6 +1330,10 @@ func (UnimplementedReadServiceHandler) GetInstrument(context.Context, *connect.R
 
 func (UnimplementedReadServiceHandler) ListInstrumentPrices(context.Context, *connect.Request[v1.ListInstrumentPricesRequest]) (*connect.Response[v1.ListInstrumentPricesResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListInstrumentPrices is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) GetMarketQuote(context.Context, *connect.Request[v1.GetMarketQuoteRequest]) (*connect.Response[v1.GetMarketQuoteResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.GetMarketQuote is not implemented"))
 }
 
 func (UnimplementedReadServiceHandler) ListInstrumentHoldings(context.Context, *connect.Request[v1.ListInstrumentHoldingsRequest]) (*connect.Response[v1.ListInstrumentHoldingsResponse], error) {

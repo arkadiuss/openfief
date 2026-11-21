@@ -1119,3 +1119,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba8297f947c1
+  - type: implements
+    from: SYM-d226-internal-views-app-answer-quote-go-quoteperioddays
+    to: REQ-ask-market-price-card
+    created_at: 2026-11-21T11:35:12.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7077e7938015
+  - type: covered_by
+    from: SYM-d226-internal-views-app-answer-quote-go-quoteperioddays
+    to: TEST-ask-market-price-card
+    created_at: 2026-11-21T11:35:12.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5f082312530
+  - type: executable_for
+    from: SYM-d226-internal-views-app-answer-quote-test-go-testmarketpricecardholdsthesourcesnameasdata
+    to: TEST-ask-market-price-card
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb96a6706f36
+  - type: executable_for
+    from: SYM-d226-internal-views-app-answer-quote-test-go-testthemarketpricedefaultisthecallwithoutit
+    to: TEST-ask-market-price-card
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63e39ff07213

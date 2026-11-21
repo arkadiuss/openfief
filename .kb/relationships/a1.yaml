@@ -1126,3 +1126,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ada77155efda
+  - type: specified_by
+    from: REQ-views-market-quote-rate-limit
+    to: SCEN-views-market-quote-rate-limit
+    created_at: 2026-11-21T11:27:00.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5c9f925f7f8

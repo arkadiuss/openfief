@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d203-1-ask-box-model",
+  "sourceFile": "internal/views/ui/askmodel.go",
+  "symbol": "askConversation",
+  "verdict": "keeps",
+  "note": "The conversation keeps the tools its model was told, so a market tool can be left out; the model is still offered only the read-only answerers (D-203).",
+  "statementHash": "sha256:bb8706bd250ed2bbd545fa2ef12231fb41c175ab7eb71482125238d1ee7704f9",
+  "codeHash": "sha256:ed6c774885eb95eb2da1abf505eab06b85f38ec734dc6983d8aa31f79a87ab08",
+  "startLine": 248,
+  "endLine": 272,
+  "recordedAt": "2026-11-21T12:37:20.260Z"
+}

@@ -1070,3 +1070,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-967ff374dd0f
+  - type: implements
+    from: SYM-d226-internal-views-ui-askmarket-go-markettools
+    to: REQ-ask-market-price-offer
+    created_at: 2026-11-21T11:34:03.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-059b1614dad9
+  - type: covered_by
+    from: SYM-d226-internal-views-ui-askmarket-go-markettools
+    to: TEST-ask-market-price-offer
+    created_at: 2026-11-21T11:34:04.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2456a5b8e36
+  - type: implements
+    from: SYM-d226-internal-views-app-answer-quote-go-quoteargs
+    to: REQ-ask-market-price-card
+    created_at: 2026-11-21T11:34:54.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-147589417316
+  - type: covered_by
+    from: SYM-d226-internal-views-app-answer-quote-go-quoteargs
+    to: TEST-ask-market-price-card
+    created_at: 2026-11-21T11:34:54.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97eed82089a5

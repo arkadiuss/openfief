@@ -112,6 +112,20 @@ func (e *entryCaller) LookupInstruments(ctx context.Context, instance string, ti
 	return got, nil
 }
 
+// LookupQuote asks instance, a market-data connector, for a ticker's or an
+// ISIN's latest price and history through the client (D-226).
+func (e *entryCaller) LookupQuote(ctx context.Context, instance string, req ingest.QuoteRequest) (ingest.QuoteAnswer, error) {
+	c, err := e.get()
+	if err != nil {
+		return ingest.QuoteAnswer{}, err
+	}
+	got, err := c.LookupQuote(ctx, instance, req)
+	if err != nil {
+		return ingest.QuoteAnswer{}, fmt.Errorf("look up a quote: %w", err)
+	}
+	return got, nil
+}
+
 // setDiscovery makes d the source of every later Declarations and
 // ConnectorInstances.
 func (e *entryCaller) setDiscovery(d connectorDiscovery) { e.discovery.Store(&d) }

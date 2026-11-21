@@ -368,7 +368,7 @@ func (b *Bench) replayCards(ctx context.Context, k *runKey, run *RunReport) repl
 	style := k.c.numberFormat()
 	asker, err := ui.NewAsker(&ui.AskerConfig{
 		Read: newReadClient(b.seed, b.pf), Model: replayModel{calls: stored}, Today: func() kernel.Date { return b.seed.Today },
-		Limits: k.limits, Group: style.Group, Decimal: style.Decimal,
+		Limits: k.limits, Group: style.Group, Decimal: style.Decimal, MarketQuotes: true, DeniedTiers: k.c.Route.DenyTiers,
 	})
 	if err != nil {
 		return replayed{why: "replay: " + err.Error()}

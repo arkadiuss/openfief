@@ -1203,3 +1203,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8a152731598
+  - type: verified_by
+    from: SCEN-valuation-eodhd-quote-lookup
+    to: TEST-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T11:27:17.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-998151264ca2
+  - type: executable_for
+    from: SYM-d226-internal-ingest-connectrpc-quotes-test-go-quoterequest
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c703ec9fb88c
+  - type: executable_for
+    from: SYM-d226-internal-valuation-eodhd-quote-test-go-syntheticisin
+    to: TEST-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec3f19ae3b31

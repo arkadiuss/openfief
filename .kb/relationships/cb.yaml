@@ -1084,3 +1084,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5286c9719abe
+  - type: covered_by
+    from: SYM-d226-internal-views-app-quotes-go-marketquotesconfig
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-439377059b04
+  - type: implements
+    from: SYM-d226-internal-views-app-quotes-go-marketquotesconfig
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28af8d566b73

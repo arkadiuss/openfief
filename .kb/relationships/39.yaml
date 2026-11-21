@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa70f045a131
+  - type: executable_for
+    from: SYM-d226-internal-views-ui-askmarket-test-go-loopfixture-askwith
+    to: TEST-ask-market-price-offer
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6894dc093f1e
+  - type: specified_by
+    from: REQ-models-market-price-tier
+    to: SCEN-models-market-price-tier
+    created_at: 2026-11-21T12:42:38.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d2a7555308a

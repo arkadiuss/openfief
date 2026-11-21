@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-714468ffe563
+  - type: executable_for
+    from: SYM-d226-internal-views-app-quotes-test-go-testmarketquoteislimitedpercaller
+    to: TEST-views-market-quote-rate-limit
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-136ae764aaa9

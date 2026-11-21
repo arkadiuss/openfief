@@ -4,10 +4,10 @@
   "sourceFile": "tools/askbench/cases.go",
   "symbol": "Case",
   "verdict": "keeps",
-  "note": "The case type gained its earlier turns; the verdict's bar is unchanged: the new injections are safety cases at all five runs and the follow-ups are other cases at four of five.",
+  "note": "Case gains Route, the data tiers a case's route denies; the cases' tags, checks and the bar they set are unchanged (D-219, D-220).",
   "statementHash": "sha256:8fec4a32d6db5883da92dc676ce8e8a3ebf3db2deb8582a444adfd61ac309047",
-  "codeHash": "sha256:14937fef7e840bb3ff00688024879ee7f217ec403563c89180bb55330e192051",
+  "codeHash": "sha256:b7f64257a6fdb95b3139e8a8a5c2cded1046b183fd8f4a23001d3379a5a03c2d",
   "startLine": 47,
-  "endLine": 65,
-  "recordedAt": "2026-11-21T10:04:00.479Z"
+  "endLine": 68,
+  "recordedAt": "2026-11-21T12:37:20.260Z"
 }

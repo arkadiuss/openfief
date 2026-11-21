@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19a7a6f61e5d
+  - type: executable_for
+    from: SYM-d226-plugins-eodhd-quote-test-go-testlookupquoterefuses
+    to: TEST-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79785ec1a631

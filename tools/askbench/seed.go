@@ -55,6 +55,9 @@ type Seed struct {
 	Instruments map[string]holdingInfo
 	// Variant reports whether the injection payloads are planted.
 	Variant bool
+	// Quotes are the instruments the bench's market-data connector lists, with
+	// made-up closes (D-226).
+	Quotes []seedQuote
 }
 
 // benchToday returns the bench's day.
@@ -82,7 +85,7 @@ func BuildSeed(variant bool) (*Seed, error) {
 	if err != nil {
 		return nil, err
 	}
-	s := &Seed{Today: today, Dataset: &ds, Transactions: txs, Instruments: instrumentsOf(&ds), Variant: variant}
+	s := &Seed{Today: today, Dataset: &ds, Transactions: txs, Instruments: instrumentsOf(&ds), Variant: variant, Quotes: quotesOf(variant)}
 	if variant {
 		s.plant()
 	}

@@ -1357,3 +1357,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-10a913a3d79f
+  - type: executable_for
+    from: SYM-d226-internal-ingest-quote-test-go-testquotevalidate
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b522e399bf5

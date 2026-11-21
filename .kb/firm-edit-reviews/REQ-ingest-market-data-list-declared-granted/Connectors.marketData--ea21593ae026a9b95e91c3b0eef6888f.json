@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-ingest-market-data-list-declared-granted",
+  "sourceFile": "internal/ingest/app/tickers.go",
+  "symbol": "Connectors.marketData",
+  "verdict": "keeps",
+  "note": "The method delegates to a function over the same declarations: an instance is a market-data connector exactly when its manifest declares it and its grant approves it (D-123).",
+  "statementHash": "sha256:7bda23181349bce041748fc5ecdf57c6183b0d47a8cf2f1eee14e6a060105557",
+  "codeHash": "sha256:77f113adc953e4ccb4da4c327f6129d9a7c69dd82f7637a04b926946a4f411c4",
+  "startLine": 192,
+  "endLine": 194,
+  "recordedAt": "2026-11-21T12:37:20.260Z"
+}

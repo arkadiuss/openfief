@@ -1007,3 +1007,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-886969dbd8f9
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connectorv1connect-connector-connect-go-unimplementedconnectorservicehandler-lookupquote
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acc521dce2bd
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connectorv1connect-connector-connect-go-unimplementedconnectorservicehandler-lookupquote
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50e6c44c8ce9
+  - type: executable_for
+    from: SYM-d226-internal-ingest-app-quotes-test-go-pricedlookup-lookupquote
+    to: TEST-ingest-market-quote-held-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54298242a058

@@ -1126,3 +1126,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ac8df49ed4c
+  - type: executable_for
+    from: SYM-d226-internal-views-connectapi-quotes-test-go-testconnectgetmarketquotenamesseverallistings
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae3c377f65a0
+  - type: executable_for
+    from: SYM-d226-internal-views-ui-askmarket-test-go-testthemarketpricetoolisnotofferedoveraroutethatmaynotreceivet2
+    to: TEST-ask-market-price-offer
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8c192f52705

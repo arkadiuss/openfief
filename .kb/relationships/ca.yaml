@@ -1182,3 +1182,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d03d1dacf198
+  - type: implements
+    from: SYM-d226-cmd-core-marketdata-go-marketquoteoption
+    to: REQ-demo-market-quotes-off
+    created_at: 2026-11-21T11:36:16.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9872b3427ccd
+  - type: covered_by
+    from: SYM-d226-cmd-core-marketdata-go-marketquoteoption
+    to: TEST-demo-market-quotes-off
+    created_at: 2026-11-21T11:36:16.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6fb98926be9
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-reset
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ae1aaed93a2
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-reset
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02041175d76c

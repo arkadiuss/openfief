@@ -206,7 +206,7 @@ func (f *fakeAskModel) admit(h http.Header, session string) error {
 
 func (f *fakeAskModel) mayReceive(tiers []string) bool {
 	for _, t := range tiers {
-		if !f.allowed[t] {
+		if t != tierInstructions && !f.allowed[t] {
 			return false
 		}
 	}

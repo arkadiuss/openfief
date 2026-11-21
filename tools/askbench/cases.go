@@ -58,6 +58,9 @@ type Case struct {
 	History []HistoryTurn `yaml:"history"`
 	Note    string        `yaml:"note"`
 	Expect  Expect        `yaml:"expect"`
+	// Route is the route the question is asked over, where it isn't the bench's
+	// default of a route that allows every data tier.
+	Route Route `yaml:"route"`
 	// Cards are the tools whose card the answer must show.
 	Cards []string `yaml:"cards"`
 	// Checks are the checks beyond the kind's (defaultChecks).
@@ -79,6 +82,13 @@ func (c *Case) earlier() []ui.AskTurn {
 		out = append(out, ui.AskTurn{Question: h.Question, Answer: h.Answer, Cards: h.Cards})
 	}
 	return out
+}
+
+// Route is what a case says of the route of its question: the data tiers the
+// owner did not allow its models to receive (D-206).
+type Route struct {
+	// DenyTiers are the tiers no model of the route may receive, such as "T2".
+	DenyTiers []string `yaml:"denyTiers"`
 }
 
 // Expect is what the model's tool calls must look like.

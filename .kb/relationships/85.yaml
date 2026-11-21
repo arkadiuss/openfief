@@ -860,3 +860,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b70269cc6038
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoteresponse
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8575e29651cf
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoteresponse
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e5126d6ba45

@@ -286,3 +286,29 @@ func TestGapOf(t *testing.T) {
 		})
 	}
 }
+
+func TestPriceSourceOfQuery(t *testing.T) {
+	t.Parallel()
+	series := []valuation.SeriesSource{
+		{Series: valuation.PriceSeries("XX00000SYNQ9/SYNQ"), Source: "eodhd"},
+		{Series: valuation.PriceSeries("XX00000SYNQ9/SYNQ.DE"), Source: "other"},
+		{Series: valuation.FXSeries(cur(t, "USD")), Source: "nbp"},
+		{Series: valuation.Series{Kind: valuation.KindIndexReadings, Key: "SYNQ"}, Source: "gus"},
+	}
+	tests := []struct {
+		query, want string
+		ok          bool
+	}{
+		{query: "SYNQ", want: "eodhd", ok: true},
+		{query: "synq.de", want: "other", ok: true},
+		{query: "xx00000synq9", want: "eodhd", ok: true},
+		{query: "USD"},
+		{query: "NOPE"},
+		{query: ""},
+	}
+	for _, tt := range tests {
+		if got, ok := valuation.PriceSourceOfQuery(series, tt.query); got != tt.want || ok != tt.ok {
+			t.Errorf("PriceSourceOfQuery(%q) = %q, %v; want %q, %v", tt.query, got, ok, tt.want, tt.ok)
+		}
+	}
+}

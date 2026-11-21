@@ -1245,3 +1245,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85af9988b9ea
+  - type: verified_by
+    from: SCEN-ingest-market-quote-source
+    to: TEST-ingest-market-quote-source
+    created_at: 2026-11-21T11:27:03.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c66a884ce976
+  - type: covered_by
+    from: SYM-d226-internal-valuation-series-go-pricesourceofquery
+    to: TEST-ingest-market-quote-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9e88d8a77e5
+  - type: implements
+    from: SYM-d226-internal-valuation-series-go-pricesourceofquery
+    to: REQ-ingest-market-quote-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1155bbbde419
+  - type: covered_by
+    from: SYM-d226-internal-valuation-series-go-pricesourceofquery
+    to: TEST-ingest-market-quote-held-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8798895afeaf
+  - type: implements
+    from: SYM-d226-internal-valuation-series-go-pricesourceofquery
+    to: REQ-ingest-market-quote-held-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f47bac9591a9

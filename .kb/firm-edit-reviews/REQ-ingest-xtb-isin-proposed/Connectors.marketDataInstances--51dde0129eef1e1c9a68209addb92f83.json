@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-ingest-xtb-isin-proposed",
+  "sourceFile": "internal/ingest/app/tickers.go",
+  "symbol": "Connectors.marketDataInstances",
+  "verdict": "keeps",
+  "note": "The method delegates to a function over the same lister and declarations: the same running market-data connectors in name order, so the ISIN lookup still goes only to them.",
+  "statementHash": "sha256:717937a190763f89d4d51a161ec10d6c5e82bfa9370fafa8e8f39c570b578964",
+  "codeHash": "sha256:2d40fb905812032ba0864bd9eb85b15417db54e3aa758cface5a170d6d681438",
+  "startLine": 164,
+  "endLine": 166,
+  "recordedAt": "2026-11-21T12:37:20.260Z"
+}

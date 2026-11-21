@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"slices"
+	"strings"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 )
@@ -246,4 +247,31 @@ func (g *SeriesGap) Detail() string {
 func GapOf(series Series, source string, latest, day kernel.Date, threshold int) (SeriesGap, bool) {
 	g := SeriesGap{Series: series, Source: source, Latest: latest, Day: day}
 	return g, latest.IsZero() || g.Days() > threshold
+}
+
+// PriceSourceOfQuery returns the source whose prices value the instrument a
+// query names, a ticker or an ISIN as a price series' key spells them
+// (ISIN/SYMBOL), without regard to case: the instrument the owner holds, or
+// held and priced, whose values come from one source (D-94). Series of other
+// kinds are ignored. When several series match, the first in key order wins.
+// It returns false when none does.
+func PriceSourceOfQuery(series []SeriesSource, query string) (string, bool) {
+	var best *SeriesSource
+	for i := range series {
+		s := &series[i]
+		if s.Series.Kind != KindPrices {
+			continue
+		}
+		isin, symbol, _ := strings.Cut(s.Series.Key, "/")
+		if !strings.EqualFold(isin, query) && !strings.EqualFold(symbol, query) {
+			continue
+		}
+		if best == nil || s.Series.Key < best.Series.Key {
+			best = s
+		}
+	}
+	if best == nil {
+		return "", false
+	}
+	return best.Source, true
 }

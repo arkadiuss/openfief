@@ -1280,3 +1280,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f0e7f297610
+  - type: executable_for
+    from: SYM-d226-internal-views-app-quotes-test-go-testmarketquoterefuses
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25a87750c967

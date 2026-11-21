@@ -1175,3 +1175,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46a8b4e2e094
+  - type: implements
+    from: SYM-d226-internal-views-connectapi-quotes-go-quoteerror
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T11:28:51.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e231573de02
+  - type: covered_by
+    from: SYM-d226-internal-views-connectapi-quotes-go-quoteerror
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T11:28:51.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b17799c6bdd
+  - type: covered_by
+    from: SYM-d226-internal-views-connectapi-quotes-go-quoteerror
+    to: TEST-views-market-quote-callers
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed3a912f4d87
+  - type: implements
+    from: SYM-d226-internal-views-connectapi-quotes-go-quoteerror
+    to: REQ-views-market-quote-callers
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f869f23b4caa

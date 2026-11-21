@@ -972,3 +972,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ab7a070e337a
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-getexchange
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-861f41af9fcf
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-getexchange
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23ba26c15a69

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-valuation-eodhd-connector",
+  "sourceFile": "internal/valuation/eodhd/listing.go",
+  "symbol": "SupportedExchange",
+  "verdict": "keeps",
+  "note": "Only the WAR and XETRA literals became named constants of the same values; the supported exchanges are unchanged.",
+  "statementHash": "sha256:5f2d8fbdb8b28227287d2c63d79c9243e33b00cb334900c46a5d424e7475f2af",
+  "codeHash": "sha256:1d628edda369805d19692f1219c677f0ef429cec2556a4d4a8c8f52e0734fe0d",
+  "startLine": 35,
+  "endLine": 41,
+  "recordedAt": "2026-11-21T13:38:23.827Z"
+}

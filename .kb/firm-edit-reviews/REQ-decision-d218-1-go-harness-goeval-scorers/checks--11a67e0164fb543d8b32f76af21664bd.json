@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d218-1-go-harness-goeval-scorers",
+  "sourceFile": "tools/askbench/scorers.go",
+  "symbol": "checks",
+  "verdict": "keeps",
+  "note": "The table gains the check of D-226's refused route; no existing check changes (D-218).",
+  "statementHash": "sha256:40b0233c0e519e7fb69ed061c962dc0b71e96a75e22532ce825e114e799ed480",
+  "codeHash": "sha256:f6b599411df7e042f5720550794f501ffcfd585554e5320f04442856b427ef51",
+  "startLine": 216,
+  "endLine": 237,
+  "recordedAt": "2026-11-21T12:37:20.260Z"
+}

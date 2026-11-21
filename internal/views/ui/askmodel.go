@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
-	"slices"
 	"strings"
 	"time"
 	"unicode/utf8"
@@ -206,15 +205,19 @@ func (a *modelAnswerer) loop(r *http.Request, sess session, question string, con
 	ctx, cancel := context.WithTimeout(r.Context(), a.limits.Deadline)
 	defer cancel()
 	r = r.WithContext(ctx)
+	offered, err := a.offer(ctx, sess)
+	if err != nil {
+		return a.failure(r, question, err)
+	}
 	*conv = askConversation{
-		a: a, r: r, sess: sess, tiers: map[string]bool{tierT0: true},
+		a: a, r: r, sess: sess, tiers: map[string]bool{tierT0: true}, tools: offered.tools,
 		msgs: []askMessage{
-			{Role: roleSystem, Content: askSystemPrompt(a.today()), Tier: tierT2},
+			{Role: roleSystem, Content: withNotice(askSystemPrompt(a.today()), offered.notice), Tier: tierInstructions},
 			{Role: roleUser, Content: historyMessage(historyOf(r), question), Tier: tierT0},
 		},
 	}
 	for round := 1; round <= a.limits.ToolRounds+1; round++ {
-		tools := a.tools
+		tools := conv.tools
 		final := round > a.limits.ToolRounds
 		if final {
 			tools = nil
@@ -246,7 +249,10 @@ type askConversation struct {
 	a    *modelAnswerer
 	r    *http.Request
 	sess session
-	msgs []askMessage
+	// tools are the tools the model was told: a market tool is among them only
+	// where it can be asked and the route may receive its data (offer).
+	tools []askTool
+	msgs  []askMessage
 	// tiers are the data tiers the messages hold so far.
 	tiers map[string]bool
 	calls int
@@ -305,18 +311,18 @@ func (c *askConversation) generate(ctx context.Context, tools []askTool, structu
 // longer valid.
 func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 	c.calls++
-	tool, ok := c.a.tool(call.Name)
+	tool, ok := c.toolOffered(call.Name)
 	if !ok {
-		c.addResult(&call, callUnknownTool, answer.ToolFailure("there is no tool called %s", call.Name), tierT2)
+		c.addResult(&call, callUnknownTool, answer.ToolFailure("there is no tool called %s", call.Name), tierInstructions)
 		return nil
 	}
 	if c.calls > c.a.limits.ToolCalls {
-		c.addResult(&call, callOverLimit, answer.ToolFailure("too many tool calls for one question; answer with what you have"), tierT2)
+		c.addResult(&call, callOverLimit, answer.ToolFailure("too many tool calls for one question; answer with what you have"), tierInstructions)
 		return nil
 	}
 	q, err := tool.Query(call.Args, c.a.today())
 	if err != nil {
-		c.addResult(&call, callBadArgs, answer.ToolFailure("%s", err.Error()), tierT2)
+		c.addResult(&call, callBadArgs, answer.ToolFailure("%s", err.Error()), tierInstructions)
 		return nil
 	}
 	toolCtx, cancel := context.WithTimeout(ctx, askToolTimeout)
@@ -328,7 +334,7 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 		}
 		// What failed is not the model's to see: its result says only that
 		// the read did not work.
-		c.addResult(&call, callReadFailed, answer.ToolFailure("the data could not be read"), tierT2)
+		c.addResult(&call, callReadFailed, answer.ToolFailure("the data could not be read"), tierInstructions)
 		return nil
 	}
 	tiers := c.tiers
@@ -342,7 +348,7 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 	}
 	if !allowed {
 		c.withheld = append(c.withheld, withheldCard{Label: tool.Label, Tier: tool.Tier, Data: tierWords(tool.Tier)})
-		c.addResult(&call, callWithheld, answer.ToolFailure("withheld: this model may not receive %s", tierWords(tool.Tier)), tierT2)
+		c.addResult(&call, callWithheld, answer.ToolFailure("withheld: this model may not receive %s", tierWords(tool.Tier)), tierInstructions)
 		return nil
 	}
 	c.tiers = next
@@ -413,7 +419,7 @@ func (c *askConversation) retry(content string, why error) {
 	if strings.TrimSpace(content) != "" {
 		c.msgs = append(c.msgs, askMessage{Role: roleAssistant, Content: content, Tier: mostSensitive(c.tiers)})
 	}
-	c.msgs = append(c.msgs, askMessage{Role: roleUser, Content: retryText(why), Tier: tierT2})
+	c.msgs = append(c.msgs, askMessage{Role: roleUser, Content: retryText(why), Tier: tierInstructions})
 }
 
 // finalInstruction is what the final round adds to the conversation after the
@@ -424,11 +430,11 @@ func (c *askConversation) retry(content string, why error) {
 // instruction asks for the answer from the cards (finalAnswerText).
 func finalInstruction(content, tier string) []askMessage {
 	if strings.TrimSpace(content) == "" {
-		return []askMessage{{Role: roleUser, Content: finalAnswerText, Tier: tierT2}}
+		return []askMessage{{Role: roleUser, Content: finalAnswerText, Tier: tierInstructions}}
 	}
 	return []askMessage{
 		{Role: roleAssistant, Content: content, Tier: tier},
-		{Role: roleUser, Content: finalText, Tier: tierT2},
+		{Role: roleUser, Content: finalText, Tier: tierInstructions},
 	}
 }
 
@@ -499,15 +505,6 @@ func readNames(candidates []string, cards []answerCard) []string {
 		}
 	}
 	return out
-}
-
-// tool returns the tool called name.
-func (a *modelAnswerer) tool(name string) (askTool, bool) {
-	i := slices.IndexFunc(a.tools, func(t askTool) bool { return t.Name == name })
-	if i < 0 {
-		return askTool{}, false
-	}
-	return a.tools[i], true
 }
 
 // tierList returns the tiers of set in tierOrder.

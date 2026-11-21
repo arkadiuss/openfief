@@ -1035,3 +1035,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-168815d65b91
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-reset
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-826ad03c554b
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-reset
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2ee1936b888

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d203-1-ask-box-model",
+  "sourceFile": "internal/views/app/answer/tools.go",
+  "symbol": "Tool",
+  "verdict": "keeps",
+  "note": "Tool gains the Market mark; the other tools, their schemas and tiers are unchanged, and every tool still only reads (D-203).",
+  "statementHash": "sha256:bb8706bd250ed2bbd545fa2ef12231fb41c175ab7eb71482125238d1ee7704f9",
+  "codeHash": "sha256:290dcb88478b3e58286ce04355e72b6ce6e89902ff1d02814d4fb82771edbc39",
+  "startLine": 28,
+  "endLine": 58,
+  "recordedAt": "2026-11-21T12:37:20.260Z"
+}

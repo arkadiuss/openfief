@@ -85,7 +85,7 @@ func (p *scriptedPort) generate(_ context.Context, _ session, msgs []askMessage,
 	for i := range msgs {
 		// The router refuses a conversation with a tier no model of the
 		// route may receive before it sends anything.
-		if !p.allowed[msgs[i].Tier] {
+		if msgs[i].Tier != tierInstructions && !p.allowed[msgs[i].Tier] {
 			p.refused++
 			return askReply{}, codeErr(connect.CodePermissionDenied, nil)
 		}
@@ -270,11 +270,11 @@ func TestModelLoopTagsEveryMessageWithATier(t *testing.T) {
 	if _, err := f.ask("value?"); err != nil {
 		t.Fatal(err)
 	}
-	want := []string{"system:T2", "user:T0", "assistant:T0", "tool:T0", "tool:T2"}
+	want := []string{"system:instructions", "user:T0", "assistant:T0", "tool:T0", "tool:instructions"}
 	if diff := cmp.Diff(want, roleTiers(f.port.requests[1])); diff != "" {
 		t.Errorf("messages of the second round (-want +got):\n%s", diff)
 	}
-	if diff := cmp.Diff([]string{"system:T2", "user:T0"}, roleTiers(f.port.requests[0])); diff != "" {
+	if diff := cmp.Diff([]string{"system:instructions", "user:T0"}, roleTiers(f.port.requests[0])); diff != "" {
 		t.Errorf("messages of the first round (-want +got):\n%s", diff)
 	}
 }
@@ -332,7 +332,7 @@ func TestModelLoopRefusesEachToolResultAboveWhatTheRouteAllows(t *testing.T) {
 // isRefusalWithoutData reports whether m says a card was withheld, holds
 // none of its data and is tagged public.
 func isRefusalWithoutData(m *askMessage) bool {
-	return strings.Contains(m.Content, "withheld") && !strings.Contains(m.Content, secretAsk) && !strings.Contains(m.Content, "1 000,00") && m.Tier == tierT2
+	return strings.Contains(m.Content, "withheld") && !strings.Contains(m.Content, secretAsk) && !strings.Contains(m.Content, "1 000,00") && m.Tier == tierInstructions
 }
 
 func toolMessages(msgs []askMessage) []askMessage {
@@ -364,7 +364,7 @@ func TestModelLoopIsBounded(t *testing.T) {
 	// Every round offers the tools but the last, which must answer with what it has.
 	wantOffered := make([]int, 0, limits.ToolRounds+1)
 	for range limits.ToolRounds {
-		wantOffered = append(wantOffered, len(f.a.tools))
+		wantOffered = append(wantOffered, f.toldWithoutPrices())
 	}
 	wantOffered = append(wantOffered, 0)
 	if diff := cmp.Diff(wantOffered, f.port.offered); diff != "" {
@@ -445,7 +445,7 @@ func TestModelLoopLimitsAreConfigurable(t *testing.T) {
 	if _, err := f.ask("two tools"); err != nil {
 		t.Fatal(err)
 	}
-	if diff := cmp.Diff([]int{len(f.a.tools), 0}, f.port.offered); diff != "" {
+	if diff := cmp.Diff([]int{f.toldWithoutPrices(), 0}, f.port.offered); diff != "" {
 		t.Errorf("tools offered per round (-want +got):\n%s", diff)
 	}
 	if len(f.ran) != 1 {
@@ -475,7 +475,7 @@ func TestModelLoopBadCallsGetAFailureAndRunNothing(t *testing.T) {
 		t.Errorf("ran %v and showed %d cards, want nothing: no call was valid", f.ran, len(got.Used))
 	}
 	for _, m := range toolMessages(f.port.requests[1]) {
-		if !strings.HasPrefix(m.Content, `{"error":`) || m.Tier != tierT2 || strings.Contains(m.Content, secretAsk) {
+		if !strings.HasPrefix(m.Content, `{"error":`) || m.Tier != tierInstructions || strings.Contains(m.Content, secretAsk) {
 			t.Errorf("tool result %+v, want a failure that holds none of the arguments", m)
 		}
 	}
@@ -536,7 +536,7 @@ func TestModelQuestionIsT0(t *testing.T) {
 		if err != nil || got.Text != "done" {
 			t.Fatalf("answer = %+v, %v", got, err)
 		}
-		if diff := cmp.Diff([]string{"system:T2", "user:T0"}, roleTiers(f.port.requests[0])); diff != "" {
+		if diff := cmp.Diff([]string{"system:instructions", "user:T0"}, roleTiers(f.port.requests[0])); diff != "" {
 			t.Errorf("messages (-want +got):\n%s", diff)
 		}
 	})

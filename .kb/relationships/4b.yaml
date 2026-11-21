@@ -1189,3 +1189,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9addf7695ada
+  - type: executable_for
+    from: SYM-d226-internal-views-ui-askmarket-test-go-loopfixture-toolstold
+    to: TEST-ask-market-price-offer
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf25780fdb76
+  - type: verified_by
+    from: SCEN-views-market-quote-callers
+    to: TEST-views-market-quote-callers
+    created_at: 2026-11-21T12:42:35.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f9f34a7f3ef

@@ -888,6 +888,52 @@ components:
           title: instrument
       title: GetInstrumentResponse
       additionalProperties: false
+    openfief.views.v1.GetMarketQuoteRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          title: query
+          description: |-
+            A ticker, such as "NVDA", or an ISIN; at most 32 letters, digits, dots,
+             dashes and underscores.
+        from:
+          type: string
+          title: from
+          description: |-
+            YYYY-MM-DD, both inclusive: the period of the history. Both empty is the
+             last 30 days up to today; a period is at most 366 days and ends today or
+             earlier.
+        to:
+          type: string
+          title: to
+      title: GetMarketQuoteRequest
+      additionalProperties: false
+    openfief.views.v1.GetMarketQuoteResponse:
+      type: object
+      properties:
+        quote:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.MarketQuote'
+          title: quote
+          description: The quote; unset when the query names several listings.
+        candidates:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.MarketQuoteListing'
+          title: candidates
+          description: |-
+            The listings the query could mean, when it names several and none was
+             chosen, with the connector instance that found them: the caller asks
+             again with one's ISIN.
+        source:
+          type: string
+          title: source
+        dataTier:
+          type: string
+          title: data_tier
+      title: GetMarketQuoteResponse
+      additionalProperties: false
     openfief.views.v1.GetModelPortfolioRequest:
       type: object
       properties:
@@ -1164,6 +1210,15 @@ components:
             What each wrapper asks of an account beyond its key, in the order of
              tax_wrappers: the forms it can have (D-147) and whether it takes
              earlier payments (D-149).
+        marketQuotes:
+          type: boolean
+          title: market_quotes
+          description: |-
+            Whether GetMarketQuote can be answered here (D-226): a market-data
+             connector the owner installed and approved (D-123) is running, and the
+             install is not a demo, which answers from its synthetic data alone. A
+             client that offers a price lookup, such as the Ask box, offers it only
+             when this is true.
       title: GetSettingsResponse
       additionalProperties: false
     openfief.views.v1.GetValuationStatusRequest:
@@ -2049,6 +2104,76 @@ components:
       description: |-
         Lot is an open tax lot. An opening lot was seeded at go-live from what the
          institution reported held.
+    openfief.views.v1.MarketQuote:
+      type: object
+      properties:
+        listing:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.MarketQuoteListing'
+          title: listing
+        latest:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: latest
+          description: 'The latest close and its day, YYYY-MM-DD: the data''s date.'
+        date:
+          type: string
+          title: date
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.MarketQuotePoint'
+          title: history
+          description: The closes of the period in date order, the latest last.
+        source:
+          type: string
+          title: source
+          description: The connector instance that answered (D-94).
+        dataTier:
+          type: string
+          title: data_tier
+          description: |-
+            The data tier of the quote (D-206): always "T2", public data. A model
+             receives it only when the owner allowed it for T2.
+      title: MarketQuote
+      additionalProperties: false
+      description: |-
+        MarketQuote is an instrument's latest end-of-day price and history from a
+         market-data source (D-226).
+    openfief.views.v1.MarketQuoteListing:
+      type: object
+      properties:
+        instrument:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Instrument'
+          title: instrument
+        exchange:
+          type: string
+          title: exchange
+          description: The venue's code at the source, such as "XETRA".
+        currency:
+          type: string
+          title: currency
+          description: The currency the closes are in.
+      title: MarketQuoteListing
+      additionalProperties: false
+      description: |-
+        MarketQuoteListing is one listing a market-data source names, with text
+         that comes from the source: a client shows it as data, never as an
+         instruction.
+    openfief.views.v1.MarketQuotePoint:
+      type: object
+      properties:
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+        close:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: close
+      title: MarketQuotePoint
+      additionalProperties: false
     openfief.views.v1.ModelHistoryGap:
       type: string
       title: ModelHistoryGap
@@ -3842,6 +3967,71 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListInstrumentTransactionsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
+  /v1/market-quotes/{query}:
+    get:
+      tags:
+        - ReadService
+      summary: GetMarketQuote
+      description: |-
+        GetMarketQuote looks an instrument up by ticker or ISIN and returns its
+         latest end-of-day price with a short history over a period, fetched when
+         asked through the owner's own market-data connector, the highest-ranked
+         source of prices (D-94, D-226), for an instrument that may be held or
+         not. The answer is public market data (data tier T2, D-206): it carries
+         the connector instance it came from and the date of its latest close,
+         is never stored and never changes a price or valuation. The call goes
+         through the connector plugin, which alone reaches its provider under its
+         egress grant; the core makes no request of its own. A query that names
+         several listings is answered with them, none chosen, so the caller names
+         one by its ISIN. It is NOT_FOUND for a query no listing matches,
+         FAILED_PRECONDITION when no market-data connector can look quotes up,
+         such as on a demo, and UNAVAILABLE when the connector or its provider
+         fails.
+      operationId: openfief.views.v1.ReadService.GetMarketQuote
+      parameters:
+        - name: query
+          in: path
+          description: |-
+            A ticker, such as "NVDA", or an ISIN; at most 32 letters, digits, dots,
+             dashes and underscores.
+          required: true
+          schema:
+            type: string
+            title: query
+        - name: from
+          in: query
+          description: |-
+            YYYY-MM-DD, both inclusive: the period of the history. Both empty is the
+             last 30 days up to today; a period is at most 366 days and ends today or
+             earlier.
+          schema:
+            type: string
+            title: from
+        - name: to
+          in: query
+          description: The to query parameter.
+          schema:
+            type: string
+            title: to
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.GetMarketQuoteResponse'
         "400":
           $ref: '#/components/responses/BadRequest'
         "401":

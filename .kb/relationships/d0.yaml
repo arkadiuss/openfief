@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ace151b6dfdc
+  - type: executable_for
+    from: SYM-d226-internal-ingest-app-quotes-test-go-quotesources-connectorinstances
+    to: TEST-ingest-market-quote-source
+    created_at: 2026-11-21T11:52:19.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-612b5c296939
+  - type: executable_for
+    from: SYM-d226-internal-views-connectapi-quotes-test-go-testconnectgetmarketquote
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f49ea3de2b03

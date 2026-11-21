@@ -1266,3 +1266,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-617c18f3e732
+  - type: executable_for
+    from: SYM-d226-internal-views-app-answer-quote-test-go-testmarketpricecard
+    to: TEST-ask-market-price-card
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c20c09e08be
+  - type: executable_for
+    from: SYM-d226-plugins-eodhd-quote-test-go-testlookupquotewithouttradingintheperiod
+    to: TEST-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edfcc67481f9

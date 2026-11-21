@@ -193511,20 +193511,6 @@ symbols:
         target: TEST-ui-ask-model-loop
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
-  - id: SYM-ask-model-askmodel-go-model-answerer-tool
-    title: modelAnswerer.tool
-    status: active
-    sourceFile: internal/views/ui/askmodel.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      ref: M2 brief (the Ask box's model, D-203) on the model router, 2026-11-13
-      recorded_at: 2026-11-13T18:25:42.472Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-ask-model-loop
-      - type: implements
-        target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-askmodel-go-tier-list
     title: tierList
     status: active
@@ -242137,3 +242123,4038 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-d226-internal-views-app-quotes-go-views-marketquote
+    title: Views.MarketQuote
+    status: active
+    sourceFile: internal/views/app/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+      - type: covered_by
+        target: TEST-views-market-quote-callers
+      - type: implements
+        target: REQ-views-market-quote-callers
+  - id: SYM-d226-internal-views-app-quotes-go-views-marketquotesavailable
+    title: Views.MarketQuotesAvailable
+    status: active
+    sourceFile: internal/views/app/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+      - type: covered_by
+        target: TEST-views-market-quote-callers
+      - type: implements
+        target: REQ-views-market-quote-callers
+  - id: SYM-d226-internal-views-app-quotes-go-withmarketquotes
+    title: WithMarketQuotes
+    status: active
+    sourceFile: internal/views/app/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-internal-views-app-quotes-go-utcdate
+    title: utcDate
+    status: active
+    sourceFile: internal/views/app/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-go-readservice-getmarketquote
+    title: readService.GetMarketQuote
+    status: active
+    sourceFile: internal/views/connectapi/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-go-quoteerror
+    title: quoteError
+    status: active
+    sourceFile: internal/views/connectapi/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+      - type: covered_by
+        target: TEST-views-market-quote-callers
+      - type: implements
+        target: REQ-views-market-quote-callers
+  - id: SYM-d226-internal-views-connectapi-quotes-go-optionaldate
+    title: optionalDate
+    status: active
+    sourceFile: internal/views/connectapi/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-go-pbquotelisting
+    title: pbQuoteListing
+    status: active
+    sourceFile: internal/views/connectapi/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-go-pbmarketquote
+    title: pbMarketQuote
+    status: active
+    sourceFile: internal/views/connectapi/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-internal-views-app-quotes-go-quotelimiter-allow
+    title: quoteLimiter.allow
+    status: active
+    sourceFile: internal/views/app/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote-rate-limit
+      - type: implements
+        target: REQ-views-market-quote-rate-limit
+  - id: SYM-d226-internal-ingest-app-quotes-go-quotes-sources
+    title: Quotes.Sources
+    status: active
+    sourceFile: internal/ingest/app/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-go-quotes-available
+    title: Quotes.Available
+    status: active
+    sourceFile: internal/ingest/app/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-go-quotes-quote
+    title: Quotes.Quote
+    status: active
+    sourceFile: internal/ingest/app/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+      - type: covered_by
+        target: TEST-ingest-market-quote-held-source
+      - type: implements
+        target: REQ-ingest-market-quote-held-source
+  - id: SYM-d226-internal-ingest-app-tickers-go-marketdatainstances
+    title: marketDataInstances
+    status: active
+    sourceFile: internal/ingest/app/tickers.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-tickers-go-marketdatadeclared
+    title: marketDataDeclared
+    status: active
+    sourceFile: internal/ingest/app/tickers.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+  - id: SYM-d226-cmd-core-marketdata-go-priceranking-rankedpricesources
+    title: priceRanking.RankedPriceSources
+    status: active
+    sourceFile: cmd/core/marketdata.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+  - id: SYM-d226-cmd-core-bondlots-go-entrycaller-lookupquote
+    title: entryCaller.LookupQuote
+    status: active
+    sourceFile: cmd/core/bondlots.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-quote-go-parsequotequery
+    title: ParseQuoteQuery
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-go-quoteperiod
+    title: QuotePeriod
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-go-quote-latest
+    title: Quote.Latest
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-go-quote-validate
+    title: Quote.Validate
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-go-cleanname
+    title: CleanName
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-go-client-lookupquote
+    title: Client.LookupQuote
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-go-quoteerror
+    title: quoteError
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-go-quotefrom
+    title: quoteFrom
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-go-candidatesfrom
+    title: candidatesFrom
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-go-quotelistingfrom
+    title: quoteListingFrom
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-valuation-eodhd-quote-go-exchangecode
+    title: ExchangeCode
+    status: active
+    sourceFile: internal/valuation/eodhd/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-internal-valuation-eodhd-quote-go-listing-quoteticker
+    title: Listing.QuoteTicker
+    status: active
+    sourceFile: internal/valuation/eodhd/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-internal-valuation-eodhd-quote-go-venuerank
+    title: venueRank
+    status: active
+    sourceFile: internal/valuation/eodhd/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-internal-valuation-eodhd-quote-go-matchquery
+    title: MatchQuery
+    status: active
+    sourceFile: internal/valuation/eodhd/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-internal-valuation-eodhd-client-go-client-find
+    title: Client.Find
+    status: active
+    sourceFile: internal/valuation/eodhd/client.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-plugins-eodhd-quote-go-connector-lookupquote
+    title: connector.LookupQuote
+    status: active
+    sourceFile: plugins/eodhd/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-plugins-eodhd-quote-go-connector-quotecloses
+    title: connector.quoteCloses
+    status: active
+    sourceFile: plugins/eodhd/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-plugins-eodhd-quote-go-parsequote
+    title: parseQuote
+    status: active
+    sourceFile: plugins/eodhd/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-plugins-eodhd-quote-go-quotelisting
+    title: quoteListing
+    status: active
+    sourceFile: plugins/eodhd/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-plugins-eodhd-quote-go-cleanname
+    title: cleanName
+    status: active
+    sourceFile: plugins/eodhd/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-internal-views-ui-askmarket-go-markettools
+    title: marketTools
+    status: active
+    sourceFile: internal/views/ui/askmarket.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-offer
+      - type: implements
+        target: REQ-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-go-modelanswerer-offer
+    title: modelAnswerer.offer
+    status: active
+    sourceFile: internal/views/ui/askmarket.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-offer
+      - type: implements
+        target: REQ-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-go-askconversation-tooloffered
+    title: askConversation.toolOffered
+    status: active
+    sourceFile: internal/views/ui/askmarket.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-offer
+      - type: implements
+        target: REQ-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-go-withnotice
+    title: withNotice
+    status: active
+    sourceFile: internal/views/ui/askmarket.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-offer
+      - type: implements
+        target: REQ-ask-market-price-offer
+  - id: SYM-d226-internal-views-app-answer-quote-go-quotetool
+    title: quoteTool
+    status: active
+    sourceFile: internal/views/app/answer/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-go-quoteargs
+    title: quoteArgs
+    status: active
+    sourceFile: internal/views/app/answer/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-go-quotespan
+    title: quoteSpan
+    status: active
+    sourceFile: internal/views/app/answer/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-go-quoteperioddays
+    title: quotePeriodDays
+    status: active
+    sourceFile: internal/views/app/answer/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-go-commands-quote
+    title: Commands.quote
+    status: active
+    sourceFile: internal/views/app/answer/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-go-quotefailure
+    title: quoteFailure
+    status: active
+    sourceFile: internal/views/app/answer/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-go-quotecard
+    title: quoteCard
+    status: active
+    sourceFile: internal/views/app/answer/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-go-isinwords
+    title: isinWords
+    status: active
+    sourceFile: internal/views/app/answer/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-go-decimalof
+    title: decimalOf
+    status: active
+    sourceFile: internal/views/app/answer/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-go-quotechoices
+    title: quoteChoices
+    status: active
+    sourceFile: internal/views/app/answer/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-cmd-core-marketdata-go-marketquoteoption
+    title: marketQuoteOption
+    status: active
+    sourceFile: cmd/core/marketdata.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-market-quotes-off
+      - type: implements
+        target: REQ-demo-market-quotes-off
+  - id: SYM-d226-tools-askbench-quotes-go-quotesof
+    title: quotesOf
+    status: active
+    sourceFile: tools/askbench/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-market-price-cases
+      - type: implements
+        target: REQ-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-quotes-go-seed-findquote
+    title: Seed.findQuote
+    status: active
+    sourceFile: tools/askbench/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-market-price-cases
+      - type: implements
+        target: REQ-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-quotes-go-readservice-getmarketquote
+    title: readService.GetMarketQuote
+    status: active
+    sourceFile: tools/askbench/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-market-price-cases
+      - type: implements
+        target: REQ-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-scorers-go-saypricesneedaclearedmodel
+    title: sayPricesNeedAClearedModel
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-market-price-cases
+      - type: implements
+        target: REQ-askbench-market-price-cases
+  - id: SYM-d226-cmd-core-marketdata-go-priceranking
+    title: priceRanking
+    status: active
+    sourceFile: cmd/core/marketdata.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+  - id: SYM-d226-cmd-core-quotes-test-go-marketdatainstance
+    title: marketDataInstance
+    status: active
+    sourceFile: cmd/core/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-demo-market-quotes-off
+  - id: SYM-d226-cmd-core-quotes-test-go-marketdatainstance-connectorinstances
+    title: marketDataInstance.ConnectorInstances
+    status: active
+    sourceFile: cmd/core/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-demo-market-quotes-off
+  - id: SYM-d226-cmd-core-quotes-test-go-marketdatainstance-declarations
+    title: marketDataInstance.Declarations
+    status: active
+    sourceFile: cmd/core/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-demo-market-quotes-off
+  - id: SYM-d226-cmd-core-quotes-test-go-testademolooksnoquotesup
+    title: TestADemoLooksNoQuotesUp
+    status: active
+    sourceFile: cmd/core/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-demo-market-quotes-off
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-quotesources
+    title: quoteSources
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-quotesources-connectorinstances
+    title: quoteSources.ConnectorInstances
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-quotesources-declarations
+    title: quoteSources.Declarations
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-quotesources-rankedpricesources
+    title: quoteSources.RankedPriceSources
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-quotelookup
+    title: quoteLookup
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-quotelookup-lookupquote
+    title: quoteLookup.LookupQuote
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-newquotes
+    title: newQuotes
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-testquotesasktherankedsource
+    title: TestQuotesAskTheRankedSource
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-testquoteswithoutaclientasknobody
+    title: TestQuotesWithoutAClientAskNobody
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-testquotesfailwhentheinstancesortherankingcannotberead
+    title: TestQuotesFailWhenTheInstancesOrTheRankingCannotBeRead
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-go-quotelookup
+    title: QuoteLookup
+    status: active
+    sourceFile: internal/ingest/app/quotes.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: type-shape
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-test-go-quoteconnector-lookupquote
+    title: quoteConnector.LookupQuote
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-test-go-quoteconnector
+    title: quoteConnector
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-app-quotes-go-quotes
+    title: Quotes
+    status: active
+    sourceFile: internal/ingest/app/quotes.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-test-go-testclientlookupquoterefuseswhatdoesnottranslate
+    title: TestClientLookupQuoteRefusesWhatDoesNotTranslate
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes_test.go
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-cmd-core-marketdata-go-heldsources
+    title: heldSources
+    status: active
+    sourceFile: cmd/core/marketdata.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+      - type: covered_by
+        target: TEST-ingest-market-quote-held-source
+      - type: implements
+        target: REQ-ingest-market-quote-held-source
+  - id: SYM-d226-cmd-core-marketdata-go-heldsources-valuationsource
+    title: heldSources.ValuationSource
+    status: active
+    sourceFile: cmd/core/marketdata.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+      - type: covered_by
+        target: TEST-ingest-market-quote-held-source
+      - type: implements
+        target: REQ-ingest-market-quote-held-source
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-quotesources-valuationsource
+    title: quoteSources.ValuationSource
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-go-priceranking
+    title: PriceRanking
+    status: active
+    sourceFile: internal/ingest/app/quotes.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-app-quotes-go-heldsources
+    title: HeldSources
+    status: active
+    sourceFile: internal/ingest/app/quotes.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+      - type: covered_by
+        target: TEST-ingest-market-quote-held-source
+      - type: implements
+        target: REQ-ingest-market-quote-held-source
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-test-go-quotelisting
+    title: quoteListing
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-test-go-quoteresponse
+    title: quoteResponse
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-test-go-quoterequest
+    title: quoteRequest
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-test-go-testclientlookupquote
+    title: TestClientLookupQuote
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-test-go-checksyntheticquote
+    title: checkSyntheticQuote
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-test-go-testclientlookupquotecandidates
+    title: TestClientLookupQuoteCandidates
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-test-go-testclientlookupquotetreatsthesourcesnameasdata
+    title: TestClientLookupQuoteTreatsTheSourcesNameAsData
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-connectrpc-quotes-test-go-testclientlookupquoteerrors
+    title: TestClientLookupQuoteErrors
+    status: active
+    sourceFile: internal/ingest/connectrpc/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-test-go-maybeday
+    title: maybeDay
+    status: active
+    sourceFile: internal/ingest/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-test-go-quoteday
+    title: quoteDay
+    status: active
+    sourceFile: internal/ingest/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-test-go-testparsequotequery
+    title: TestParseQuoteQuery
+    status: active
+    sourceFile: internal/ingest/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-test-go-testquoteperiod
+    title: TestQuotePeriod
+    status: active
+    sourceFile: internal/ingest/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-test-go-testcleanname
+    title: TestCleanName
+    status: active
+    sourceFile: internal/ingest/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-test-go-testquotevalidate
+    title: TestQuoteValidate
+    status: active
+    sourceFile: internal/ingest/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-go-quoterequest
+    title: QuoteRequest
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-go-quotelisting
+    title: QuoteListing
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-go-quotepoint
+    title: QuotePoint
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-go-quote
+    title: Quote
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-go-quoteanswer
+    title: QuoteAnswer
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-modelrouter-app-router-test-go-marketpriceconversation
+    title: marketPriceConversation
+    status: active
+    sourceFile: internal/modelrouter/app/router_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-market-price-result-refused
+  - id: SYM-d226-internal-modelrouter-app-router-test-go-testrouterrefusesamarketpriceresulttoamodelnotallowedt2
+    title: TestRouterRefusesAMarketPriceResultToAModelNotAllowedT2
+    status: active
+    sourceFile: internal/modelrouter/app/router_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-market-price-result-refused
+  - id: SYM-d226-internal-modelrouter-app-router-test-go-testinstructionsaddnotiertoarequest
+    title: TestInstructionsAddNoTierToARequest
+    status: active
+    sourceFile: internal/modelrouter/app/router_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-market-price-result-refused
+  - id: SYM-d226-internal-modelrouter-connectapi-ask-test-go-testaskservicekeepsamarketpricefromamodelnotallowedt2
+    title: TestAskServiceKeepsAMarketPriceFromAModelNotAllowedT2
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-market-price-result-refused
+  - id: SYM-d226-internal-modelrouter-tier-go-parsemessagetier
+    title: ParseMessageTier
+    status: active
+    sourceFile: internal/modelrouter/tier.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-market-price-result-refused
+      - type: implements
+        target: REQ-models-market-price-tier
+  - id: SYM-d226-internal-valuation-eodhd-quote-test-go-testexchangecode
+    title: TestExchangeCode
+    status: active
+    sourceFile: internal/valuation/eodhd/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-quote-lookup
+  - id: SYM-d226-internal-valuation-eodhd-quote-test-go-testquoteticker
+    title: TestQuoteTicker
+    status: active
+    sourceFile: internal/valuation/eodhd/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-quote-lookup
+  - id: SYM-d226-internal-valuation-eodhd-quote-test-go-testmatchquery
+    title: TestMatchQuery
+    status: active
+    sourceFile: internal/valuation/eodhd/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-quote-lookup
+  - id: SYM-d226-internal-valuation-eodhd-quote-test-go-testmatchquerycapsthecandidates
+    title: TestMatchQueryCapsTheCandidates
+    status: active
+    sourceFile: internal/valuation/eodhd/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-quote-lookup
+  - id: SYM-d226-internal-valuation-eodhd-quote-test-go-syntheticisin
+    title: syntheticISIN
+    status: active
+    sourceFile: internal/valuation/eodhd/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-quote-lookup
+  - id: SYM-d226-internal-valuation-eodhd-quote-go-usvenues
+    title: usVenues
+    status: active
+    sourceFile: internal/valuation/eodhd/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-internal-valuation-series-test-go-testpricesourceofquery
+    title: TestPriceSourceOfQuery
+    status: active
+    sourceFile: internal/valuation/series_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-source
+  - id: SYM-d226-internal-valuation-series-go-pricesourceofquery
+    title: PriceSourceOfQuery
+    status: active
+    sourceFile: internal/valuation/series.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+      - type: covered_by
+        target: TEST-ingest-market-quote-held-source
+      - type: implements
+        target: REQ-ingest-market-quote-held-source
+  - id: SYM-d226-internal-views-app-answer-cards-go-commands-dispatch
+    title: Commands.dispatch
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-test-go-quoteread
+    title: quoteRead
+    status: active
+    sourceFile: internal/views/app/answer/quote_test.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-test-go-quoteread-getmarketquote
+    title: quoteRead.GetMarketQuote
+    status: active
+    sourceFile: internal/views/app/answer/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-test-go-newquotetoolbox
+    title: newQuoteToolbox
+    status: active
+    sourceFile: internal/views/app/answer/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-test-go-syntheticquote
+    title: syntheticQuote
+    status: active
+    sourceFile: internal/views/app/answer/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-test-go-testthemarketpricetoolispublicdataandoffersitselfonlywhereitcan
+    title: TestTheMarketPriceToolIsPublicDataAndOffersItselfOnlyWhereItCan
+    status: active
+    sourceFile: internal/views/app/answer/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-test-go-testmarketpricearguments
+    title: TestMarketPriceArguments
+    status: active
+    sourceFile: internal/views/app/answer/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-test-go-testmarketpricecard
+    title: TestMarketPriceCard
+    status: active
+    sourceFile: internal/views/app/answer/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-test-go-checkpricecard
+    title: checkPriceCard
+    status: active
+    sourceFile: internal/views/app/answer/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-test-go-testmarketpricecardholdsthesourcesnameasdata
+    title: TestMarketPriceCardHoldsTheSourcesNameAsData
+    status: active
+    sourceFile: internal/views/app/answer/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-test-go-testmarketpricenamesseveralinstruments
+    title: TestMarketPriceNamesSeveralInstruments
+    status: active
+    sourceFile: internal/views/app/answer/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-test-go-testmarketpricefailuresarecardsthemodelcanrelay
+    title: TestMarketPriceFailuresAreCardsTheModelCanRelay
+    status: active
+    sourceFile: internal/views/app/answer/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-test-go-testthemarketpricedefaultisthecallwithoutit
+    title: TestTheMarketPriceDefaultIsTheCallWithoutIt
+    status: active
+    sourceFile: internal/views/app/answer/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-test-go-testmarketpricereadsonlywiththecallerstoken
+    title: TestMarketPriceReadsOnlyWithTheCallersToken
+    status: active
+    sourceFile: internal/views/app/answer/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-go-quotereader
+    title: QuoteReader
+    status: active
+    sourceFile: internal/views/app/answer/quote.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-go-quotespan-x
+    title: QuoteSpan
+    status: active
+    sourceFile: internal/views/app/answer/quote.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-internal-views-app-answer-quote-go-explicitspan
+    title: explicitSpan
+    status: active
+    sourceFile: internal/views/app/answer/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-card
+      - type: implements
+        target: REQ-ask-market-price-card
+  - id: SYM-d226-internal-views-app-quotes-test-go-fakequotes
+    title: fakeQuotes
+    status: active
+    sourceFile: internal/views/app/quotes_test.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-app-quotes-test-go-fakequotes-quote
+    title: fakeQuotes.Quote
+    status: active
+    sourceFile: internal/views/app/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-app-quotes-test-go-fakequotes-available
+    title: fakeQuotes.Available
+    status: active
+    sourceFile: internal/views/app/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-app-quotes-test-go-quoteviews
+    title: quoteViews
+    status: active
+    sourceFile: internal/views/app/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-app-quotes-test-go-testmarketquote
+    title: TestMarketQuote
+    status: active
+    sourceFile: internal/views/app/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-app-quotes-test-go-testmarketquoterefuses
+    title: TestMarketQuoteRefuses
+    status: active
+    sourceFile: internal/views/app/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-app-quotes-test-go-testmarketquoteunavailablewithoutasource
+    title: TestMarketQuoteUnavailableWithoutASource
+    status: active
+    sourceFile: internal/views/app/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-app-quotes-test-go-testmarketquoteislimitedperminute
+    title: TestMarketQuoteIsLimitedPerMinute
+    status: active
+    sourceFile: internal/views/app/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote-rate-limit
+  - id: SYM-d226-internal-views-app-quotes-test-go-testmarketquoteislimitedpercaller
+    title: TestMarketQuoteIsLimitedPerCaller
+    status: active
+    sourceFile: internal/views/app/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote-rate-limit
+  - id: SYM-d226-internal-views-app-quotes-test-go-testmarketquoteisreadbywhod226names
+    title: TestMarketQuoteIsReadByWhoD226Names
+    status: active
+    sourceFile: internal/views/app/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+      - type: executable_for
+        target: TEST-views-market-quote-callers
+  - id: SYM-d226-internal-views-app-quotes-go-marketquotes
+    title: MarketQuotes
+    status: active
+    sourceFile: internal/views/app/quotes.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-internal-views-app-quotes-go-marketquotesconfig
+    title: MarketQuotesConfig
+    status: active
+    sourceFile: internal/views/app/quotes.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-internal-views-app-quotes-go-marketquotes-x
+    title: marketQuotes
+    status: active
+    sourceFile: internal/views/app/quotes.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-internal-views-app-quotes-go-quotelimiter
+    title: quoteLimiter
+    status: active
+    sourceFile: internal/views/app/quotes.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote-rate-limit
+      - type: implements
+        target: REQ-views-market-quote-rate-limit
+  - id: SYM-d226-internal-views-app-quotes-go-mayreadquotes
+    title: mayReadQuotes
+    status: active
+    sourceFile: internal/views/app/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+      - type: covered_by
+        target: TEST-views-market-quote-callers
+      - type: implements
+        target: REQ-views-market-quote-callers
+  - id: SYM-d226-internal-views-app-quotes-go-callerkey
+    title: callerKey
+    status: active
+    sourceFile: internal/views/app/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+      - type: covered_by
+        target: TEST-views-market-quote-rate-limit
+      - type: implements
+        target: REQ-views-market-quote-rate-limit
+  - id: SYM-d226-internal-views-connectapi-errors-go-notfounderror
+    title: notFoundError
+    status: active
+    sourceFile: internal/views/connectapi/errors.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-test-go-quotesource
+    title: quoteSource
+    status: active
+    sourceFile: internal/views/connectapi/quotes_test.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-test-go-quotesource-quote
+    title: quoteSource.Quote
+    status: active
+    sourceFile: internal/views/connectapi/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-test-go-quotesource-available
+    title: quoteSource.Available
+    status: active
+    sourceFile: internal/views/connectapi/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-test-go-quoteapi
+    title: quoteAPI
+    status: active
+    sourceFile: internal/views/connectapi/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-test-go-serveapi
+    title: serveAPI
+    status: active
+    sourceFile: internal/views/connectapi/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-test-go-testconnectgetmarketquote
+    title: TestConnectGetMarketQuote
+    status: active
+    sourceFile: internal/views/connectapi/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-test-go-testconnectgetmarketquotenamesseverallistings
+    title: TestConnectGetMarketQuoteNamesSeveralListings
+    status: active
+    sourceFile: internal/views/connectapi/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-test-go-testrestgetmarketquote
+    title: TestRESTGetMarketQuote
+    status: active
+    sourceFile: internal/views/connectapi/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-test-go-checkquotebody
+    title: checkQuoteBody
+    status: active
+    sourceFile: internal/views/connectapi/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-test-go-testmarketquotewithoutasourceisafailedprecondition
+    title: TestMarketQuoteWithoutASourceIsAFailedPrecondition
+    status: active
+    sourceFile: internal/views/connectapi/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-test-go-testsettingstellwhetherquotesareavailable
+    title: TestSettingsTellWhetherQuotesAreAvailable
+    status: active
+    sourceFile: internal/views/connectapi/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+  - id: SYM-d226-internal-views-connectapi-quotes-test-go-testconnectgetmarketquoterefusesaviewpluginandademosession
+    title: TestConnectGetMarketQuoteRefusesAViewPluginAndADemoSession
+    status: active
+    sourceFile: internal/views/connectapi/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote
+      - type: executable_for
+        target: TEST-views-market-quote-callers
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-quotesession
+    title: quoteSession
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-loopfixture-askwith
+    title: loopFixture.askWith
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-loopfixture-toolstold
+    title: loopFixture.toolsTold
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-loopfixture-toldwithoutprices
+    title: loopFixture.toldWithoutPrices
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-testthemarketpricetoolisofferedwhereaconnectorrunsandtheroutemayreceivet2
+    title: TestTheMarketPriceToolIsOfferedWhereAConnectorRunsAndTheRouteMayReceiveT2
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-testarouteallowedt0onlyanswersavaluequestion
+    title: TestARouteAllowedT0OnlyAnswersAValueQuestion
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-testthemarketpricetoolisnotofferedoveraroutethatmaynotreceivet2
+    title: TestTheMarketPriceToolIsNotOfferedOverARouteThatMayNotReceiveT2
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-checknopricecard
+    title: checkNoPriceCard
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-testthemarketpricetoolisnotofferedwherenoconnectoranswers
+    title: TestTheMarketPriceToolIsNotOfferedWhereNoConnectorAnswers
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-flipport
+    title: flipPort
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-flipport-permits
+    title: flipPort.permits
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-testamarketpricecardiswithheldwhentheroutestopsallowingt2
+    title: TestAMarketPriceCardIsWithheldWhenTheRouteStopsAllowingT2
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-testtheboxshowsamarketpricecardonthepage
+    title: TestTheBoxShowsAMarketPriceCardOnThePage
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-fakeread-quotesasked
+    title: fakeRead.quotesAsked
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-testmarkettoolsaretheonesthetooltablemarks
+    title: TestMarketToolsAreTheOnesTheToolTableMarks
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-fakes-test-go-fakeread-getmarketquote
+    title: fakeRead.GetMarketQuote
+    status: active
+    sourceFile: internal/views/ui/fakes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-plugins-eodhd-connector-test-go-fakeeodhd-find
+    title: fakeEODHD.Find
+    status: active
+    sourceFile: plugins/eodhd/connector_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-quote-lookup
+  - id: SYM-d226-plugins-eodhd-quote-test-go-quotewith
+    title: quoteWith
+    status: active
+    sourceFile: plugins/eodhd/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-quote-lookup
+  - id: SYM-d226-plugins-eodhd-quote-test-go-quoterequest
+    title: quoteRequest
+    status: active
+    sourceFile: plugins/eodhd/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-quote-lookup
+  - id: SYM-d226-plugins-eodhd-quote-test-go-testlookupquote
+    title: TestLookupQuote
+    status: active
+    sourceFile: plugins/eodhd/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-quote-lookup
+  - id: SYM-d226-plugins-eodhd-quote-test-go-testlookupquotewithouttradingintheperiod
+    title: TestLookupQuoteWithoutTradingInThePeriod
+    status: active
+    sourceFile: plugins/eodhd/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-quote-lookup
+  - id: SYM-d226-plugins-eodhd-quote-test-go-testlookupquoteseveralinstruments
+    title: TestLookupQuoteSeveralInstruments
+    status: active
+    sourceFile: plugins/eodhd/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-quote-lookup
+  - id: SYM-d226-plugins-eodhd-quote-test-go-testlookupquotecleansthesourcesname
+    title: TestLookupQuoteCleansTheSourcesName
+    status: active
+    sourceFile: plugins/eodhd/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-quote-lookup
+  - id: SYM-d226-plugins-eodhd-quote-test-go-testlookupquoterefuses
+    title: TestLookupQuoteRefuses
+    status: active
+    sourceFile: plugins/eodhd/quote_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-quote-lookup
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest
+    title: LookupQuoteRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest-reset
+    title: LookupQuoteRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest-string
+    title: LookupQuoteRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest-protomessage
+    title: LookupQuoteRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest-protoreflect
+    title: LookupQuoteRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest-descriptor
+    title: LookupQuoteRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest-getquery
+    title: LookupQuoteRequest.GetQuery
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest-getfrom
+    title: LookupQuoteRequest.GetFrom
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest-getto
+    title: LookupQuoteRequest.GetTo
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotepoint
+    title: QuotePoint
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotepoint-reset
+    title: QuotePoint.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotepoint-string
+    title: QuotePoint.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotepoint-protomessage
+    title: QuotePoint.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotepoint-protoreflect
+    title: QuotePoint.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotepoint-descriptor
+    title: QuotePoint.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotepoint-getdate
+    title: QuotePoint.GetDate
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotepoint-getclose
+    title: QuotePoint.GetClose
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting
+    title: QuoteListing
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-reset
+    title: QuoteListing.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-string
+    title: QuoteListing.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-protomessage
+    title: QuoteListing.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-protoreflect
+    title: QuoteListing.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-descriptor
+    title: QuoteListing.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-getsymbol
+    title: QuoteListing.GetSymbol
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-getisin
+    title: QuoteListing.GetIsin
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-getname
+    title: QuoteListing.GetName
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-getexchange
+    title: QuoteListing.GetExchange
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-getcurrency
+    title: QuoteListing.GetCurrency
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoteresponse
+    title: LookupQuoteResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoteresponse-reset
+    title: LookupQuoteResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoteresponse-string
+    title: LookupQuoteResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoteresponse-protomessage
+    title: LookupQuoteResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoteresponse-protoreflect
+    title: LookupQuoteResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoteresponse-descriptor
+    title: LookupQuoteResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoteresponse-getlisting
+    title: LookupQuoteResponse.GetListing
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoteresponse-gethistory
+    title: LookupQuoteResponse.GetHistory
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoteresponse-getcandidates
+    title: LookupQuoteResponse.GetCandidates
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connectorv1connect-connector-connect-go-connectorserviceclient-lookupquote
+    title: connectorServiceClient.LookupQuote
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connectorv1connect-connector-connect-go-unimplementedconnectorservicehandler-lookupquote
+    title: UnimplementedConnectorServiceHandler.LookupQuote
+    status: active
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getsettingsresponse-getmarketquotes
+    title: GetSettingsResponse.GetMarketQuotes
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoterequest
+    title: GetMarketQuoteRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoterequest-reset
+    title: GetMarketQuoteRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoterequest-string
+    title: GetMarketQuoteRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoterequest-protomessage
+    title: GetMarketQuoteRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoterequest-protoreflect
+    title: GetMarketQuoteRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoterequest-descriptor
+    title: GetMarketQuoteRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoterequest-getquery
+    title: GetMarketQuoteRequest.GetQuery
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoterequest-getfrom
+    title: GetMarketQuoteRequest.GetFrom
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoterequest-getto
+    title: GetMarketQuoteRequest.GetTo
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotelisting
+    title: MarketQuoteListing
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotelisting-reset
+    title: MarketQuoteListing.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotelisting-string
+    title: MarketQuoteListing.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotelisting-protomessage
+    title: MarketQuoteListing.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotelisting-protoreflect
+    title: MarketQuoteListing.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotelisting-descriptor
+    title: MarketQuoteListing.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotelisting-getinstrument
+    title: MarketQuoteListing.GetInstrument
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotelisting-getexchange
+    title: MarketQuoteListing.GetExchange
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotelisting-getcurrency
+    title: MarketQuoteListing.GetCurrency
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote
+    title: MarketQuote
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-reset
+    title: MarketQuote.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-string
+    title: MarketQuote.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-protomessage
+    title: MarketQuote.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-protoreflect
+    title: MarketQuote.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-descriptor
+    title: MarketQuote.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-getlisting
+    title: MarketQuote.GetListing
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-getlatest
+    title: MarketQuote.GetLatest
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-getdate
+    title: MarketQuote.GetDate
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-gethistory
+    title: MarketQuote.GetHistory
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-getsource
+    title: MarketQuote.GetSource
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-getdatatier
+    title: MarketQuote.GetDataTier
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint
+    title: MarketQuotePoint
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint-reset
+    title: MarketQuotePoint.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint-string
+    title: MarketQuotePoint.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint-protomessage
+    title: MarketQuotePoint.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint-protoreflect
+    title: MarketQuotePoint.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint-descriptor
+    title: MarketQuotePoint.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint-getdate
+    title: MarketQuotePoint.GetDate
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint-getclose
+    title: MarketQuotePoint.GetClose
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse
+    title: GetMarketQuoteResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-reset
+    title: GetMarketQuoteResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-string
+    title: GetMarketQuoteResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-protomessage
+    title: GetMarketQuoteResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-protoreflect
+    title: GetMarketQuoteResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-descriptor
+    title: GetMarketQuoteResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-getquote
+    title: GetMarketQuoteResponse.GetQuote
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-getcandidates
+    title: GetMarketQuoteResponse.GetCandidates
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-getsource
+    title: GetMarketQuoteResponse.GetSource
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-getdatatier
+    title: GetMarketQuoteResponse.GetDataTier
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-viewsv1connect-read-service-connect-go-readserviceclient-getmarketquote
+    title: readServiceClient.GetMarketQuote
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-sdk-go-gen-openfief-views-v1-viewsv1connect-read-service-connect-go-unimplementedreadservicehandler-getmarketquote
+    title: UnimplementedReadServiceHandler.GetMarketQuote
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote
+      - type: implements
+        target: REQ-views-market-quote
+  - id: SYM-d226-tools-askbench-cases-go-route
+    title: Route
+    status: active
+    sourceFile: tools/askbench/cases.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-market-price-cases
+      - type: implements
+        target: REQ-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-quotes-test-go-quoteclient
+    title: quoteClient
+    status: active
+    sourceFile: tools/askbench/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-quotes-test-go-testthebenchsmarketdataismadeup
+    title: TestTheBenchsMarketDataIsMadeUp
+    status: active
+    sourceFile: tools/askbench/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-quotes-test-go-testthebenchsconnectorquotesthetickerortheisin
+    title: TestTheBenchsConnectorQuotesTheTickerOrTheISIN
+    status: active
+    sourceFile: tools/askbench/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-quotes-test-go-testonlythevariantsinstrumentnamecarriesthepayload
+    title: TestOnlyTheVariantsInstrumentNameCarriesThePayload
+    status: active
+    sourceFile: tools/askbench/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-quotes-test-go-testthepricecasesaskwhatd226names
+    title: TestThePriceCasesAskWhatD226Names
+    status: active
+    sourceFile: tools/askbench/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-quotes-test-go-checknvdacases
+    title: checkNVDACases
+    status: active
+    sourceFile: tools/askbench/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-quotes-test-go-checkrefusedcases
+    title: checkRefusedCases
+    status: active
+    sourceFile: tools/askbench/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-quotes-test-go-testananswerthatsayspricesneedaclearedmodelpasses
+    title: TestAnAnswerThatSaysPricesNeedAClearedModelPasses
+    status: active
+    sourceFile: tools/askbench/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-quotes-go-seedquote
+    title: seedQuote
+    status: active
+    sourceFile: tools/askbench/quotes.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-market-price-cases
+      - type: implements
+        target: REQ-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-quotes-go-seedclose
+    title: seedClose
+    status: active
+    sourceFile: tools/askbench/quotes.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-market-price-cases
+      - type: implements
+        target: REQ-askbench-market-price-cases
+  - id: SYM-d226-internal-identity-access-go-mayreadquotes
+    title: MayReadQuotes
+    status: active
+    sourceFile: internal/identity/access.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-market-quote-callers
+      - type: implements
+        target: REQ-views-market-quote-callers
+  - id: SYM-d226-internal-identity-access-test-go-testmayreadquotes
+    title: TestMayReadQuotes
+    status: active
+    sourceFile: internal/identity/access_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-market-quote-callers
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-pricedlookup
+    title: pricedLookup
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-held-source
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-pricedlookup-lookupquote
+    title: pricedLookup.LookupQuote
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-held-source
+  - id: SYM-d226-internal-ingest-app-quotes-test-go-testaheldquoteisthevaluationsourceslatestprice
+    title: TestAHeldQuoteIsTheValuationSourcesLatestPrice
+    status: active
+    sourceFile: internal/ingest/app/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-market-quote-held-source
+  - id: SYM-d226-internal-ingest-app-quotes-go-quotes-heldonly
+    title: Quotes.heldOnly
+    status: active
+    sourceFile: internal/ingest/app/quotes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-source
+      - type: implements
+        target: REQ-ingest-market-quote-source
+  - id: SYM-d226-internal-ingest-quote-go-quotequery
+    title: quoteQuery
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-ingest-quote-go-period
+    title: Period
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-d226-internal-valuation-eodhd-quote-go-quotematch
+    title: QuoteMatch
+    status: active
+    sourceFile: internal/valuation/eodhd/quote.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-internal-views-ui-askmarket-test-go-checkstrictcsp
+    title: checkStrictCSP
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ask-market-price-offer
+  - id: SYM-d226-internal-views-ui-askmarket-go-offering
+    title: offering
+    status: active
+    sourceFile: internal/views/ui/askmarket.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ask-market-price-offer
+      - type: implements
+        target: REQ-ask-market-price-offer
+  - id: SYM-d226-plugins-eodhd-quote-go-quoteasked
+    title: quoteAsked
+    status: active
+    sourceFile: plugins/eodhd/quote.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-plugins-eodhd-quote-go-quoteperiod
+    title: quotePeriod
+    status: active
+    sourceFile: plugins/eodhd/quote.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-valuation-eodhd-quote-lookup
+  - id: SYM-d226-tools-askbench-quotes-test-go-checkroutecase
+    title: checkRouteCase
+    status: active
+    sourceFile: tools/askbench/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-market-price-cases
+  - id: SYM-d226-tools-askbench-quotes-test-go-checkpayloadcase
+    title: checkPayloadCase
+    status: active
+    sourceFile: tools/askbench/quotes_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-market-price-cases

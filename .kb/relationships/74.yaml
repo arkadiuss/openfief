@@ -1476,3 +1476,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa892c67812e
+  - type: executable_for
+    from: SYM-d226-internal-identity-access-test-go-testmayreadquotes
+    to: TEST-views-market-quote-callers
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd832c43d252

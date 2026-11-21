@@ -38,6 +38,22 @@ const (
 // DataTiers returns every tier, most sensitive first.
 func DataTiers() []DataTier { return []DataTier{DataTierT0, DataTierTF, DataTierT1, DataTierT2} }
 
+// DataTierInstructions tags a message of a role's own fixed text: its
+// instructions and the product's own messages, which name no data. It is no
+// tier: it adds nothing to a request's DataTierSet, so no list of models
+// allowed has it and no model is refused for it (D-206, D-226). A request of
+// nothing but instructions has no tier and is refused as untagged.
+const DataTierInstructions DataTier = "instructions"
+
+// ParseMessageTier parses the tag of a message: a tier as its constant spells
+// it, or DataTierInstructions.
+func ParseMessageTier(s string) (DataTier, error) {
+	if DataTier(s) == DataTierInstructions {
+		return DataTierInstructions, nil
+	}
+	return ParseDataTier(s)
+}
+
 // ParseDataTier parses a tier as its constant spells it.
 func ParseDataTier(s string) (DataTier, error) {
 	t := DataTier(s)
@@ -51,7 +67,8 @@ func ParseDataTier(s string) (DataTier, error) {
 type DataTierSet []DataTier
 
 // NewDataTierSet returns the set of tags, or an error wrapping ErrUntagged when
-// there are none or one is empty, or ErrUnknownDataTier when one is no tier.
+// there are none, one is empty or none is a tier, or ErrUnknownDataTier when
+// one is neither a tier nor DataTierInstructions, which adds nothing.
 func NewDataTierSet(tags []DataTier) (DataTierSet, error) {
 	if len(tags) == 0 {
 		return nil, ErrUntagged
@@ -66,9 +83,12 @@ func NewDataTierSet(tags []DataTier) (DataTierSet, error) {
 		if tag == "" {
 			return nil, ErrUntagged
 		}
-		if !slices.Contains(set, tag) {
+		if tag != DataTierInstructions && !slices.Contains(set, tag) {
 			return nil, fmt.Errorf("%w: %q", ErrUnknownDataTier, string(tag))
 		}
+	}
+	if len(set) == 0 {
+		return nil, ErrUntagged
 	}
 	return set, nil
 }

@@ -2,14 +2,23 @@ package ui
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log/slog"
 	"net/http"
+	"slices"
+
+	"connectrpc.com/connect"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/views/app/answer"
+	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 )
+
+// errTierDenied is what a harness's route answers a message of a data tier the
+// owner did not allow it to receive.
+var errTierDenied = errors.New("no model of the route may receive the data tier")
 
 // The Ask box's conversation as a harness sees it: the same messages, tools
 // and replies the page's loop exchanges with the core's router.
@@ -52,6 +61,16 @@ type AskerConfig struct {
 	// Group and Decimal are the number format of the owner's settings (D-113)
 	// that cards write amounts in; an empty Decimal is the plain format.
 	Group, Decimal string
+	// MarketQuotes says the install has a market-data connector, as the read
+	// API's settings do (D-226): without it the market price tool is not
+	// offered.
+	MarketQuotes bool
+	// DeniedTiers are the data tiers the route's models may not receive, as
+	// the owner's lists leave them (D-206); none, the harness's default, is a
+	// route that allows every tier. A message of a denied tier is refused as the
+	// router refuses it, and a tool whose card is of one is not offered.
+	// The box's own fixed text carries no tier, as in the core.
+	DeniedTiers []string
 }
 
 // Asker runs the Ask box's model loop for a harness: the loop and the tools
@@ -61,6 +80,7 @@ type AskerConfig struct {
 type Asker struct {
 	answerer *modelAnswerer
 	format   numberFormat
+	quotes   bool
 }
 
 // NewAsker returns an Asker over cfg; it fails with ErrMissingDependency
@@ -76,25 +96,28 @@ func NewAsker(cfg *AskerConfig) (*Asker, error) {
 	commands := commandAnswerer{s: s}
 	return &Asker{
 		answerer: &modelAnswerer{
-			model: askModelFunc{m: cfg.Model}, tools: answer.Tools(), run: commands.run, today: s.today,
+			model: askModelFunc{m: cfg.Model, denied: cfg.DeniedTiers}, tools: answer.Tools(), run: commands.run, today: s.today,
 			log: slog.New(slog.DiscardHandler), limits: cfg.Limits.withDefaults(),
 		},
-		format: separators(cfg.Group, cfg.Decimal),
+		format: separators(cfg.Group, cfg.Decimal), quotes: cfg.MarketQuotes,
 	}, nil
 }
 
 // askModelFunc is askModelPort over an AskModel: a harness's route allows
-// every data tier, so a model is always available and every tool's card may
-// be sent.
+// every data tier but those it lists as denied, so a model is always available
+// and a tool's card may be sent unless its tier is denied.
 type askModelFunc struct {
-	m AskModel
+	m      AskModel
+	denied []string
 }
 
 var _ askModelPort = askModelFunc{}
 
 func (askModelFunc) available(context.Context, session) (bool, error) { return true, nil }
 
-func (askModelFunc) permits(context.Context, session, []string) (bool, error) { return true, nil }
+func (f askModelFunc) permits(_ context.Context, _ session, tiers []string) (bool, error) {
+	return !slices.ContainsFunc(tiers, func(t string) bool { return slices.Contains(f.denied, t) }), nil
+}
 
 // admit lets every question go: a harness has no budget and no limit.
 func (askModelFunc) admit(context.Context, session, string) (askAdmission, error) {
@@ -102,6 +125,12 @@ func (askModelFunc) admit(context.Context, session, string) (askAdmission, error
 }
 
 func (f askModelFunc) generate(ctx context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64, structured bool) (askReply, error) {
+	for i := range msgs {
+		if slices.Contains(f.denied, msgs[i].Tier) {
+			// As the router refuses a request with data no model on the route may receive (D-206).
+			return askReply{}, fmt.Errorf("the harness's route: %w", connect.NewError(connect.CodePermissionDenied, errTierDenied))
+		}
+	}
 	schema := ""
 	if structured {
 		schema = askAnswerSchemaJSON
@@ -181,7 +210,8 @@ func (a *Asker) AskAfter(ctx context.Context, question string, earlier []AskTurn
 		return AskRun{}, fmt.Errorf("starting the question: %w", err)
 	}
 	r = withHistory(withFormat(r, a.format), earlier)
-	card, conv, err := a.answerer.converse(r, session{Token: "ask-bench", Origin: "ask-bench"}, question)
+	sess := session{Token: "ask-bench", Origin: "ask-bench", Settings: &viewsv1.GetSettingsResponse{MarketQuotes: a.quotes}}
+	card, conv, err := a.answerer.converse(r, sess, question)
 	if err != nil {
 		return AskRun{}, fmt.Errorf("asking: %w", err)
 	}

@@ -35,6 +35,11 @@ type Tool struct {
 	Label string
 	// Tier is the data tier of what the tool's card carries (D-206).
 	Tier string
+	// Market marks a tool whose card is public market data fetched through
+	// the owner's market-data connector (D-226): unlike the others it reaches
+	// outside the owner's record, so a caller offers it only where a connector
+	// answers and where its data may go to the model (Tier).
+	Market bool
 	// Defaults returns what leaving an argument out means, the value it has
 	// when the model does not give it, for each argument that has one, latest
 	// being the latest valued day. A call that gives an argument its default
@@ -65,11 +70,11 @@ const (
 )
 
 // Tools returns the tools, in the order the model is told them. Every
-// tool's card is T0: it holds whole-portfolio holdings, amounts or tax data,
-// or names the owner's accounts and instruments (D-206). A tool whose card
-// holds only public data would take T2; none does yet.
+// tool's card is T0 but the last: it holds whole-portfolio holdings, amounts or
+// tax data, or names the owner's accounts and instruments (D-206). The market
+// price tool's card holds only public data, so it takes T2 (D-226).
 func Tools() []Tool {
-	return []Tool{needsTool(), showTool(), syncTool(), allocationTool(), performanceTool(), valueTool()}
+	return []Tool{needsTool(), showTool(), syncTool(), allocationTool(), performanceTool(), valueTool(), quoteTool()}
 }
 
 func needsTool() Tool {

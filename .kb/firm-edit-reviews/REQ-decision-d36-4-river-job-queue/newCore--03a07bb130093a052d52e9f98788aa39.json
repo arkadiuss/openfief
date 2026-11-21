@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d36-4-river-job-queue",
+  "sourceFile": "cmd/core/core.go",
+  "symbol": "newCore",
+  "verdict": "keeps",
+  "note": "newCore builds the connector entry caller earlier and gives the views a market quote option; the River job queue and the revaluation wiring are unchanged (D-36).",
+  "statementHash": "sha256:b8e5ef0433c746260fb018057811e951fed3b6d2ccb5aa263052aba628c4e98f",
+  "codeHash": "sha256:b739334254315d6379cee860e2390217949db883e14406cfe355d0b8b1df3d61",
+  "startLine": 201,
+  "endLine": 263,
+  "recordedAt": "2026-11-21T12:37:20.260Z"
+}

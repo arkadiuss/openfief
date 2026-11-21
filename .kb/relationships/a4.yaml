@@ -1245,3 +1245,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25a9198e5df4
+  - type: covered_by
+    from: SYM-d226-internal-views-app-quotes-go-mayreadquotes
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e29772404fe
+  - type: implements
+    from: SYM-d226-internal-views-app-quotes-go-mayreadquotes
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46de135ffd5d
+  - type: covered_by
+    from: SYM-d226-internal-views-app-quotes-go-mayreadquotes
+    to: TEST-views-market-quote-callers
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c69fa1b61063
+  - type: implements
+    from: SYM-d226-internal-views-app-quotes-go-mayreadquotes
+    to: REQ-views-market-quote-callers
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4edb73ed8003

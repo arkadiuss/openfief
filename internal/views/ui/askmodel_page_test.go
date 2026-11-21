@@ -140,7 +140,7 @@ func TestAskBoxWithholdsACardAboveWhatTheRouteAllows(t *testing.T) {
 	)
 	wantNoBody(t, rec, `class="used-card"`, "By asset class", "66.7%", "1 000,00")
 	results := toolNames(t, h.askModel.requests[1])
-	if len(results) != 1 || !strings.HasPrefix(results[0], "T2 ") || !strings.Contains(results[0], "withheld") || strings.Contains(results[0], "listed") {
+	if len(results) != 1 || !strings.HasPrefix(results[0], "instructions ") || !strings.Contains(results[0], "withheld") || strings.Contains(results[0], "listed") {
 		t.Errorf("what the model got for the card = %v, want a refusal tagged public with none of its data", results)
 	}
 	if want := [][]string{{"T0"}}; !cmp.Equal(want, h.askModel.checks) {

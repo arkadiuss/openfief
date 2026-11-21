@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f979c620542a
+  - type: implements
+    from: SYM-d226-internal-views-app-answer-quote-go-quotechoices
+    to: REQ-ask-market-price-card
+    created_at: 2026-11-21T11:36:07.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c358585dddf
+  - type: covered_by
+    from: SYM-d226-internal-views-app-answer-quote-go-quotechoices
+    to: TEST-ask-market-price-card
+    created_at: 2026-11-21T11:36:07.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8388927a477f

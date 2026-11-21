@@ -188,7 +188,7 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 	style := t.c.numberFormat()
 	asker, err := ui.NewAsker(&ui.AskerConfig{
 		Read: newReadClient(b.seed, b.pf), Model: mr, Today: func() kernel.Date { return b.seed.Today },
-		Limits: b.opts.Limits, Group: style.Group, Decimal: style.Decimal,
+		Limits: b.opts.Limits, Group: style.Group, Decimal: style.Decimal, MarketQuotes: true, DeniedTiers: t.c.Route.DenyTiers,
 	})
 	if err != nil {
 		return RunReport{Run: t.run, Error: errorText(err)}

@@ -1203,3 +1203,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1440cfc94163
+  - type: covered_by
+    from: SYM-d226-internal-modelrouter-tier-go-parsemessagetier
+    to: TEST-models-market-price-result-refused
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62e20753c3ea
+  - type: implements
+    from: SYM-d226-internal-modelrouter-tier-go-parsemessagetier
+    to: REQ-models-market-price-tier
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4c0a2ceecfe

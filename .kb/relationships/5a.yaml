@@ -1315,3 +1315,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1db90deb89cd
+  - type: executable_for
+    from: SYM-d226-internal-ingest-connectrpc-quotes-test-go-quotelisting
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da39050306b4

@@ -1035,3 +1035,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40f94465b42b
+  - type: implements
+    from: SYM-d226-internal-valuation-eodhd-client-go-client-find
+    to: REQ-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T11:33:05.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0166e8dc3ce
+  - type: covered_by
+    from: SYM-d226-internal-valuation-eodhd-client-go-client-find
+    to: TEST-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T11:33:05.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-523e38dbd360
+  - type: covered_by
+    from: SYM-d226-internal-ingest-app-quotes-go-heldsources
+    to: TEST-ingest-market-quote-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da340586977d
+  - type: implements
+    from: SYM-d226-internal-ingest-app-quotes-go-heldsources
+    to: REQ-ingest-market-quote-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40a72f433437
+  - type: covered_by
+    from: SYM-d226-internal-ingest-app-quotes-go-heldsources
+    to: TEST-ingest-market-quote-held-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb9b5411a4b9
+  - type: implements
+    from: SYM-d226-internal-ingest-app-quotes-go-heldsources
+    to: REQ-ingest-market-quote-held-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9b18b2ef716

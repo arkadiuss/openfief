@@ -1287,3 +1287,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d578a2b60f8a
+  - type: implements
+    from: SYM-d226-internal-ingest-quote-go-quote-latest
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T11:31:08.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3950ef961232
+  - type: covered_by
+    from: SYM-d226-internal-ingest-quote-go-quote-latest
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T11:31:08.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-809b684085aa
+  - type: implements
+    from: SYM-d226-plugins-eodhd-quote-go-parsequote
+    to: REQ-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T11:33:35.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-327f746b8c84
+  - type: covered_by
+    from: SYM-d226-plugins-eodhd-quote-go-parsequote
+    to: TEST-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T11:33:35.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0740cbe6798a
