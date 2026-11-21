@@ -236,8 +236,8 @@ type AuthServiceClient interface {
 	// an audit entry (D-211), written in the same transaction. Owner scope
 	// only: a read-scoped (demo) session is refused with PERMISSION_DENIED,
 	// and it is not on the read API, so no script token reads or changes it.
-	// While the core runs with --authz=policy a grant is stored and has no
-	// effect, since every holder of read access views every account then.
+	// A grant limits what its holder views under either --authz mode, the
+	// policy or SpiceDB.
 	CreateGrant(context.Context, *connect.Request[v1.CreateGrantRequest]) (*connect.Response[v1.CreateGrantResponse], error)
 	// RevokeGrant ends a grant: from the next call its holder no longer views
 	// what only that grant gave it. The grant stays in ListGrants, with its end,
@@ -727,8 +727,8 @@ type AuthServiceHandler interface {
 	// an audit entry (D-211), written in the same transaction. Owner scope
 	// only: a read-scoped (demo) session is refused with PERMISSION_DENIED,
 	// and it is not on the read API, so no script token reads or changes it.
-	// While the core runs with --authz=policy a grant is stored and has no
-	// effect, since every holder of read access views every account then.
+	// A grant limits what its holder views under either --authz mode, the
+	// policy or SpiceDB.
 	CreateGrant(context.Context, *connect.Request[v1.CreateGrantRequest]) (*connect.Response[v1.CreateGrantResponse], error)
 	// RevokeGrant ends a grant: from the next call its holder no longer views
 	// what only that grant gave it. The grant stays in ListGrants, with its end,

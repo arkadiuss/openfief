@@ -1,6 +1,5 @@
 - **Client events, shared cap.** The pages' client-event reports are limited to 30 a minute per address (an IPv6 /64 counts as one address) and 600 a minute for the whole install. Many addresses together can use up the install's minute and hold back legitimate reports until it ends. That trade-off bounds log and metric volume.
 - **Plugin metrics.** A view plugin's metric descriptions, scope names and short (64-byte) values of allow-listed attributes reach your OTLP export as the plugin sent them. Install only view plugins you trust with your telemetry.
-- **Demo scrub, structured log bodies.** The demo collector's scrub rewrites string log bodies only. A log record whose body is a map would pass unscrubbed; nothing in OpenFief emits one today.
 - **Market quotes.** Quote lookups share an install-wide limit of 60 a minute (10 per caller), so viewers and script tokens can use up the owner's minute.
 - **MCP.** Tool calls are not rate-limited per token, except market prices. Every call is audited and limited by the token's grants.
 - **Prompt injection.** Text from third parties that reaches the Ask box's tools (instrument names from the market-data provider, statement text from brokers) can try to steer the model. Tools only read, answers are shown only to the asker, and the model can send at most a 32-character ticker-shaped query to the market-data provider.

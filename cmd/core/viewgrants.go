@@ -27,31 +27,30 @@ type grantsInForce interface {
 	InForce(ctx context.Context) ([]identity.Grant, error)
 }
 
-// ungrantedViewPluginsIn is ungrantedViewPlugins for the core's configuration
-// and the plugins its cluster runs, nil outside a cluster.
-func ungrantedViewPluginsIn(cfg *serveConfig, installed *viewskube.Plugins, grants grantsInForce) attentionapp.Check {
+// ungrantedViewPluginsIn is ungrantedViewPlugins for the plugins the core's
+// cluster runs, nil outside a cluster.
+func ungrantedViewPluginsIn(installed *viewskube.Plugins, grants grantsInForce) attentionapp.Check {
 	var lister installedPlugins
 	if installed != nil {
 		lister = installed
 	}
-	return ungrantedViewPlugins(cfg.Authz.Mode == authzSpiceDB, lister, grants)
+	return ungrantedViewPlugins(lister, grants)
 }
 
 // ungrantedViewPlugins is the attention check of view plugins that can't read
-// anything (D-196, D-209): while the core answers from SpiceDB, a view plugin
-// that is installed, runs (its Ready condition is True) and holds the view
-// capability, and that holds no grant in force, views nothing until the owner
-// grants it accounts. Each is a condition of the kind view-plugin-ungranted,
+// anything (D-196, D-209): under either authorizer, the policy or SpiceDB, a
+// view plugin that is installed, runs (its Ready condition is True) and holds
+// the view capability, and that holds no grant in force, views nothing until
+// the owner grants it accounts. Each is a condition of the kind view-plugin-ungranted,
 // its subject the instance, which clears when a grant exists or the plugin is
 // uninstalled. The plugin that serves browsers, the built-in UI, is exempt:
-// it reads with the signed-in person's session, never its own identity. With
-// the policy there is nothing to grant, since every holder of read access
-// views every account, so the check finds nothing; nor does it outside a
-// cluster, where installed is nil. A plugin cache that has not synced is an
+// it reads with the signed-in person's session, never its own identity. The
+// check finds nothing outside a cluster, where installed is nil. A plugin
+// cache that has not synced is an
 // error, so no item is cleared on a guess.
-func ungrantedViewPlugins(spicedbOn bool, installed installedPlugins, grants grantsInForce) attentionapp.Check {
+func ungrantedViewPlugins(installed installedPlugins, grants grantsInForce) attentionapp.Check {
 	return attentionapp.Check{Kind: attentiondomain.KindViewPluginUngranted, Find: func(ctx context.Context) ([]attentiondomain.Condition, error) {
-		if !spicedbOn || installed == nil {
+		if installed == nil {
 			return nil, nil
 		}
 		records, err := installed.InstalledPlugins(ctx)

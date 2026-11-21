@@ -397,7 +397,7 @@ func TestOwnerGrantsAnUngrantedViewPluginTheHousehold(t *testing.T) {
 	t.Parallel()
 	f := newGrantsFixture(t)
 	f.plugins.records = []views.PluginRecord{readyView("ghostfolio")}
-	check := ungrantedViewPlugins(true, f.plugins, f.grants)
+	check := ungrantedViewPlugins(f.plugins, f.grants)
 	wantUngranted(t, check, "before the grant", "ghostfolio")
 
 	owner := identity.Actor{Kind: identity.ActorOwner, ID: "0123456789abcdef"}

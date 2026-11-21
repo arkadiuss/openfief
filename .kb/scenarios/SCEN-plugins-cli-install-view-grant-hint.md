@@ -8,4 +8,4 @@ origin:
 id: SCEN-plugins-cli-install-view-grant-hint
 type: scenario
 ---
-Given openfief plugin install of a plugin with the view capability, the output ends with "If OpenFief runs with SpiceDB authorization, grant it accounts in Settings → Access."; given a plugin with only the connector capability, the output has no such line.
+Given openfief plugin install of a plugin with the view capability, the output ends with "It reads nothing until you grant it accounts in Settings → Access."; given a plugin with only the connector capability, the output has no such line.

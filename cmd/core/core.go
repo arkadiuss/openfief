@@ -222,7 +222,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		return nil, err
 	}
 	agents, attn, err := newAgentsAndAttention(pool, changes, auth, cfg.Auth.Origins, l, vstore, checks, now, log,
-		modelGuardSetup{cfg: &cfg.Guards, zone: cfg.EndOfDay.Location}, ungrantedViewPluginsIn(cfg, installed, acc.grants))
+		modelGuardSetup{cfg: &cfg.Guards, zone: cfg.EndOfDay.Location}, ungrantedViewPluginsIn(installed, acc.grants))
 	if err != nil {
 		return nil, err
 	}
