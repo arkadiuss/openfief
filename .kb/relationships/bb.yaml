@@ -1273,3 +1273,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b93872688994
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-kube-remove-cluster-scoped
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T12:21:02.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f0e7f297610

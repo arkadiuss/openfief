@@ -17,7 +17,10 @@ import (
 	"time"
 
 	"google.golang.org/protobuf/encoding/protojson"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
@@ -148,13 +151,58 @@ func runUpgrade(m *testing.M) int {
 	}
 	if k != nil {
 		ctx, cancel := context.WithTimeout(context.Background(), removeTimeout)
-		if rmErr := k.removeNamespace(ctx, logStderrf); rmErr != nil {
+		// The demo run that follows installs its own CRDs on a clean cluster, as the bundle run's end leaves it.
+		if rmErr := errors.Join(k.removeNamespace(ctx, logStderrf), k.removeClusterScoped(ctx, logStderrf)); rmErr != nil {
 			logStderrf("e2e: removing the published release's install: %v", rmErr)
 			code = 1
 		}
 		cancel()
 	}
 	return code
+}
+
+// removeClusterScoped deletes what an install of OpenFief leaves outside its namespace: the ClusterRoleBindings
+// and ClusterRoles of the core's and the egress proxy's token reviews, and the Plugin and PluginGrant CRDs, then
+// waits until the CRDs are gone. Its Custom Resources went with the namespace, so none is left to hold them. What
+// isn't there is fine.
+func (k *kube) removeClusterScoped(ctx context.Context, logf func(string, ...any)) error {
+	rbac := func(resource string) schema.GroupVersionResource {
+		return schema.GroupVersionResource{Group: "rbac.authorization.k8s.io", Version: "v1", Resource: resource}
+	}
+	crd := schema.GroupVersionResource{Group: "apiextensions.k8s.io", Version: "v1", Resource: "customresourcedefinitions"}
+	objects := []struct {
+		resource schema.GroupVersionResource
+		name     string
+	}{
+		{rbac("clusterrolebindings"), "openfief-core-tokenreview"},
+		{rbac("clusterrolebindings"), "openfief-egress-proxy-tokenreview"},
+		{rbac("clusterroles"), "openfief-core-tokenreview"},
+		{rbac("clusterroles"), "openfief-egress-proxy-tokenreview"},
+		{crd, "plugins.openfief.io"},
+		{crd, "plugingrants.openfief.io"},
+	}
+	logf("e2e: removing OpenFief's cluster-scoped objects: its CRDs and token-review RBAC")
+	for _, o := range objects {
+		if err := k.dynamic.Resource(o.resource).Delete(ctx, o.name, metav1.DeleteOptions{}); err != nil && !apierrors.IsNotFound(err) {
+			return fmt.Errorf("deleting %s %s: %w", o.resource.Resource, o.name, err)
+		}
+	}
+	for _, o := range objects {
+		err := waitFor(ctx, removeTimeout, func(ctx context.Context) (string, bool, error) {
+			_, getErr := k.dynamic.Resource(o.resource).Get(ctx, o.name, metav1.GetOptions{})
+			switch {
+			case apierrors.IsNotFound(getErr):
+				return "gone", true, nil
+			case getErr != nil:
+				return "", false, fmt.Errorf("%w: %w", errRetry, getErr)
+			}
+			return "still there", false, nil
+		})
+		if err != nil {
+			return fmt.Errorf("waiting for %s %s to be removed: %w", o.resource.Resource, o.name, err)
+		}
+	}
+	return nil
 }
 
 // installPublished installs the published release on a cluster without OpenFief, in the install guide's order and
@@ -176,6 +224,9 @@ func installPublished(ctx context.Context, k *kube, logf func(string, ...any)) e
 	b := &rel.bundle
 	steps := []func() error{
 		func() error { return k.removeNamespace(ctx, logf) },
+		// The bundle run before this one leaves the checkout's CRDs and cluster-scoped RBAC, which belong to the
+		// field manager of the suite: the published release's older CRDs must not be applied over them, nor forced.
+		func() error { return k.removeClusterScoped(ctx, logf) },
 		func() error {
 			logf("e2e: installing CloudNativePG from the published release")
 			return applyCNPG(ctx, k, b.cnpg)
