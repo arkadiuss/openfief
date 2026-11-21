@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-26599C6DFD7167ED
 type: fact
 ---
+
+Definition not stated: the subject ingest.connector_batches is named by requirement REQ-ingest-connector-batches, which links to the subject fact FACT-SUBJECT-26599C6DFD7167ED through constrains. The people who own that source can say what it is in the product and what it is not.

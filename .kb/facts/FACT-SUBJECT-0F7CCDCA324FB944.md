@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0F7CCDCA324FB944
 type: fact
 ---
+
+Definition not stated: the subject telemetry.traces is named by requirements REQ-telemetry-domain-spans, REQ-telemetry-private-spans, REQ-telemetry-trace-boundary, REQ-telemetry-trace-propagation, which link to the subject fact FACT-SUBJECT-0F7CCDCA324FB944 through constrains. The people who own that source can say what it is in the product and what it is not.

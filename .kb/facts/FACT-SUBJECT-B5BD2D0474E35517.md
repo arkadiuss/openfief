@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B5BD2D0474E35517
 type: fact
 ---
+
+Definition not stated: the subject plugins.core_to_plugin_calls is named by requirement REQ-plugins-core-only-caller, which links to the subject fact FACT-SUBJECT-B5BD2D0474E35517 through constrains. The people who own that source can say what it is in the product and what it is not.

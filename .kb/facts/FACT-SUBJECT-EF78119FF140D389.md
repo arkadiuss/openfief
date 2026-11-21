@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-EF78119FF140D389
 type: fact
 ---
+
+Definition not stated: the subject ingest.ingest_path is named by requirements REQ-ingest-app-ingest-path, REQ-ingest-app-seed-opening-only, which link to the subject fact FACT-SUBJECT-EF78119FF140D389 through constrains. The people who own that source can say what it is in the product and what it is not.

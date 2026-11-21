@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-A304F79739C6376C
 type: fact
 ---
+
+Definition not stated: the subject ui.first_run_setup is named by requirement REQ-ui-first-run-wizard, which links to the subject fact FACT-SUBJECT-A304F79739C6376C through constrains. The people who own that source can say what it is in the product and what it is not.

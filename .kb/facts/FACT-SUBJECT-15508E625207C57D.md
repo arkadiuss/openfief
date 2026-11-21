@@ -1,6 +1,6 @@
 ---
 title: E2e Egress Proxy Log
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-200
 tags:
   - strict-modeling
@@ -19,4 +19,7 @@ origin:
   recorded_at: '2026-11-06T20:50:01.325Z'
 id: FACT-SUBJECT-15508E625207C57D
 type: fact
+kind_of:
+  - e2e.egress_log
 ---
+The egress proxy's own log as the end-to-end suite reads it on kind and k3d, a kind of e2e.egress_log: it adds that every request of the configured destinations is shown, where e2e.egress_log states what the log must not hold.

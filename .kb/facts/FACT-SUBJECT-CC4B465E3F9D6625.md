@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-CC4B465E3F9D6625
 type: fact
 ---
+
+Definition not stated: the subject valuation.account_terms is named by requirement REQ-valuation-account-terms-inputs, which links to the subject fact FACT-SUBJECT-CC4B465E3F9D6625 through constrains. The people who own that source can say what it is in the product and what it is not.

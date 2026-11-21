@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-69E4E336F63AF9BB
 type: fact
 ---
+
+Definition not stated: the subject docs.reference_pages is named by requirement REQ-docs-generated-reference, which links to the subject fact FACT-SUBJECT-69E4E336F63AF9BB through constrains. The people who own that source can say what it is in the product and what it is not.

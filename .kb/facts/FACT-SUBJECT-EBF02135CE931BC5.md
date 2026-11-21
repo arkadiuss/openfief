@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-EBF02135CE931BC5
 type: fact
 ---
+
+Definition not stated: the subject task_kibi_install is named by requirement REQ-tooling-kibi-install-tracks-pins, which links to the subject fact FACT-SUBJECT-EBF02135CE931BC5 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5B91F4781101E3AD
 type: fact
 ---
+
+Definition not stated: the subject identity.demo_loading is named by requirement REQ-identity-demo-loading-no-wizard, which links to the subject fact FACT-SUBJECT-5B91F4781101E3AD through constrains. The people who own that source can say what it is in the product and what it is not.

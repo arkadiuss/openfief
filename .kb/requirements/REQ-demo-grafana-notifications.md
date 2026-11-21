@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 550
+    subjects:
+      - demo.grafana_notifications
   - claim_key: CLAIM-378BBEB70068968F
     claim_text: it fails with a clear error and a non-zero exit when the IRM API fails
     role: normative
@@ -25,6 +27,8 @@ semantic_inventory:
     span:
       start: 552
       end: 622
+    subjects:
+      - demo.grafana_notifications
   - claim_key: CLAIM-712A6100D74BC2BB
     claim_text: the integration's link is read from the API into the contact point's request and is in no argument, file, output or git
     role: descriptive

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B24E3E88A2AED4CC
 type: fact
 ---
+
+Definition not stated: the subject attention.unclassified_instrument_check is named by requirement REQ-attention-unclassified-instrument-check, which links to the subject fact FACT-SUBJECT-B24E3E88A2AED4CC through constrains. The people who own that source can say what it is in the product and what it is not.

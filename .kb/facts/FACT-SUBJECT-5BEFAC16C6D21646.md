@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5BEFAC16C6D21646
 type: fact
 ---
+
+Definition not stated: the subject tooling.release_notes is named by requirement REQ-tooling-release-notes, which links to the subject fact FACT-SUBJECT-5BEFAC16C6D21646 through constrains. The people who own that source can say what it is in the product and what it is not.

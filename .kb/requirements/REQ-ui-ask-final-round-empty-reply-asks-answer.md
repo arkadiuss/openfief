@@ -26,6 +26,8 @@ semantic_inventory:
     span:
       start: 0
       end: 333
+    subjects:
+      - ask_box.final_round_empty_reply
   - claim_key: CLAIM-F3D732D0D9547651
     claim_text: a reply with text keeps the instruction to put it into the schema without changing its meaning, and the retry after an invalid reply keeps fixing only the form, for every model and with no hint for any one question
     role: descriptive

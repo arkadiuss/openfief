@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 306
+    subjects:
+      - models_page.routes_and_providers
 logic_claims:
   - CLAIM-E0A159E555C486BD
 semantic_clauses:

@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-3899A3EEEC4BB0DD
 type: fact
 ---
+
+Definition not stated: the subject views.browser_routing is named by requirement REQ-views-browser-route-longest-prefix, which links to the subject fact FACT-SUBJECT-3899A3EEEC4BB0DD through constrains. The people who own that source can say what it is in the product and what it is not.

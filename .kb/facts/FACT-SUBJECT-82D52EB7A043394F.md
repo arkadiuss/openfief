@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-82D52EB7A043394F
 type: fact
 ---
+
+Definition not stated: the subject ui.tickers_page is named by requirements REQ-ui-ticker-currency-choice, REQ-ui-tickers-correct, which link to the subject fact FACT-SUBJECT-82D52EB7A043394F through constrains. The people who own that source can say what it is in the product and what it is not.

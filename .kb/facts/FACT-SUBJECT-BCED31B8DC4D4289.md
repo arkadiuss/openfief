@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-BCED31B8DC4D4289
 type: fact
 ---
+
+Definition not stated: the subject plugins.cosign_bundle is named by requirement REQ-plugins-cosign-bundle-verification, which links to the subject fact FACT-SUBJECT-BCED31B8DC4D4289 through constrains. The people who own that source can say what it is in the product and what it is not.

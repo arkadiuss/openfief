@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: plugins.config_hosts
+subject_key: plugins.config_field_host
 property_key: host_from_https_url
-canonical_key: mcp-kibi-model-requirement:plugins.config_hosts:host_from_https_url:eq:true
+canonical_key: mcp-kibi-model-requirement:plugins.config_field_host:host_from_https_url:eq:true
 operator: eq
 value_type: bool
 value_bool: true

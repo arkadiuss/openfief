@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-019F6B72F4372DE8
 type: fact
 ---
+
+Definition not stated: the subject ingest.sync_store is named by requirement REQ-ingest-sync-store, which links to the subject fact FACT-SUBJECT-019F6B72F4372DE8 through constrains. The people who own that source can say what it is in the product and what it is not.

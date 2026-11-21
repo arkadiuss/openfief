@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B5985D839AD69FE2
 type: fact
 ---
+
+Definition not stated: the subject plugins.eodhd_connector is named by requirements REQ-plugins-eodhd-ambiguous-isin, REQ-plugins-eodhd-euronext-markets, REQ-plugins-eodhd-index-by-name, REQ-plugins-eodhd-sync, REQ-plugins-eodhd-unpriced-reported, which link to the subject fact FACT-SUBJECT-B5985D839AD69FE2 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-393ADA027839BE5B
 type: fact
 ---
+
+Definition not stated: the subject views.transaction_listing is named by requirement REQ-views-transaction-pages, which links to the subject fact FACT-SUBJECT-393ADA027839BE5B through constrains. The people who own that source can say what it is in the product and what it is not.

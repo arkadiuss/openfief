@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-94F3EA422220D5E6
 type: fact
 ---
+
+Definition not stated: the subject access.sleeve_grant is named by requirement REQ-identity-grants-sleeve-covers-later-accounts, which links to the subject fact FACT-SUBJECT-94F3EA422220D5E6 through constrains. The people who own that source can say what it is in the product and what it is not.

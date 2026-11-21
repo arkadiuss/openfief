@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5D5273B6E7DF2D96
 type: fact
 ---
+
+Definition not stated: the subject views.read_api is named by requirements REQ-views-api-auth, REQ-views-api-contract, REQ-views-api-logs, REQ-views-api-read-only, REQ-views-authz-hidden-account-not-found, REQ-views-authz-totals-over-viewable, REQ-views-bond-series-terms, REQ-views-model-off-404, REQ-views-model-portfolio, REQ-views-onboarding-lists, REQ-views-price-checks, REQ-views-read-api-bounded-bodies, REQ-views-read-api-declared-errors, REQ-views-read-api-list-broker-accounts-removed, REQ-views-read-api-no-broker-account-numbers, REQ-views-read-api-serves-no-broker-accounts, which link to the subject fact FACT-SUBJECT-5D5273B6E7DF2D96 through constrains. The people who own that source can say what it is in the product and what it is not.

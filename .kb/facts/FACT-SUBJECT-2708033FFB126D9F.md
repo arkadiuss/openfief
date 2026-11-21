@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-2708033FFB126D9F
 type: fact
 ---
+
+Definition not stated: the subject plugins.plugin_images is named by requirement REQ-AUTO-AC7E986366466A6A, which links to the subject fact FACT-SUBJECT-2708033FFB126D9F through constrains. The people who own that source can say what it is in the product and what it is not.

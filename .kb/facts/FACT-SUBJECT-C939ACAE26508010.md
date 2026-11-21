@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-C939ACAE26508010
 type: fact
 ---
+
+Definition not stated: the subject plugins.plugin_to_core_communication is named by requirement REQ-AUTO-BC327C2200FC820F, which links to the subject fact FACT-SUBJECT-C939ACAE26508010 through constrains. The people who own that source can say what it is in the product and what it is not.

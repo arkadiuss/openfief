@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-34E32129990BBCFB
 type: fact
 ---
+
+Definition not stated: the subject treasurybonds.account_history is named by requirements REQ-treasurybonds-account-history-from-first-purchase, REQ-treasurybonds-valued-every-day-since-first-purchase, which link to the subject fact FACT-SUBJECT-34E32129990BBCFB through constrains. The people who own that source can say what it is in the product and what it is not.

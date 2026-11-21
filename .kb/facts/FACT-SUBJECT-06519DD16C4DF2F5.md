@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-06519DD16C4DF2F5
 type: fact
 ---
+
+Definition not stated: the subject views.yearly_taxes is named by requirement REQ-views-yearly-taxes, which links to the subject fact FACT-SUBJECT-06519DD16C4DF2F5 through constrains. The people who own that source can say what it is in the product and what it is not.

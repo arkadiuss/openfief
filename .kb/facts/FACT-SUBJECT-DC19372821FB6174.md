@@ -21,3 +21,4 @@ origin:
 id: FACT-SUBJECT-DC19372821FB6174
 type: fact
 ---
+A ledger account: it belongs to exactly one sleeve and must have an ID, institution and name, and accounts are seeded atomically with opening lots from each broker's current lot-level positions, a reseed being refused. It does not cover the sleeve itself.

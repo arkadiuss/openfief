@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 194
+    subjects:
+      - inbox.proposal_card
 logic_claims:
   - CLAIM-4312EFD1D5EE99F3
 semantic_clauses:

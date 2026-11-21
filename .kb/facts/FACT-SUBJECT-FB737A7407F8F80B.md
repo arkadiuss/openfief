@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-FB737A7407F8F80B
 type: fact
 ---
+
+Definition not stated: the subject views.sync_history is named by requirements REQ-decision-d199-1-viewer-syncs, REQ-views-sync-history, REQ-views-syncs-for-viewers, which link to the subject fact FACT-SUBJECT-FB737A7407F8F80B through constrains. The people who own that source can say what it is in the product and what it is not.

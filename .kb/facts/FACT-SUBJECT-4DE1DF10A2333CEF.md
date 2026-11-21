@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-4DE1DF10A2333CEF
 type: fact
 ---
+
+Definition not stated: the subject access.grant is named by requirements REQ-identity-grants-only-view, REQ-identity-grants-per-account-sleeve-household, which link to the subject fact FACT-SUBJECT-4DE1DF10A2333CEF through constrains. The people who own that source can say what it is in the product and what it is not.

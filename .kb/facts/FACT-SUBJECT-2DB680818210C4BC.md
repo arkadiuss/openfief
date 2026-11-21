@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-2DB680818210C4BC
 type: fact
 ---
+
+Definition not stated: the subject access.household_grant is named by requirement REQ-identity-grants-household-covers-every-account, which links to the subject fact FACT-SUBJECT-2DB680818210C4BC through constrains. The people who own that source can say what it is in the product and what it is not.

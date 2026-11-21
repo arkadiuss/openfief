@@ -21,3 +21,4 @@ origin:
 id: FACT-SUBJECT-ECF86A4CFE17F2A3
 type: fact
 ---
+The price check: cross-check prices are stored beside the valuation prices keyed by instrument, date and source and never replace one, and a check compares a cross-check price only with the price of the same instrument, date and currency, with a threshold, rounding and an acknowledgement of a difference.

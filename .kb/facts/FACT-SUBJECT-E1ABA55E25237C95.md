@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-E1ABA55E25237C95
 type: fact
 ---
+
+Definition not stated: the subject ledger.holdings_and_tax_lots is named by requirement REQ-AUTO-BE6EA3B9F864EA40, which links to the subject fact FACT-SUBJECT-E1ABA55E25237C95 through constrains. The people who own that source can say what it is in the product and what it is not.

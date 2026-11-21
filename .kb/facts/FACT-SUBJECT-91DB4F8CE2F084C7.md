@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-91DB4F8CE2F084C7
 type: fact
 ---
+
+Definition not stated: the subject platform.core_and_ui is named by requirement REQ-AUTO-084BCAC87452897B, which links to the subject fact FACT-SUBJECT-91DB4F8CE2F084C7 through constrains. The people who own that source can say what it is in the product and what it is not.

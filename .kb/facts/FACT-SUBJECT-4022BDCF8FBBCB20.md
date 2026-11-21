@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-4022BDCF8FBBCB20
 type: fact
 ---
+
+Definition not stated: the subject ingest.connector_delivery is named by requirements REQ-ingest-bond-terms-index-levels-declared-approved, REQ-ingest-cross-check-prices, REQ-ingest-cross-check-prices-declared-only, REQ-ingest-index-readings-declared-approved, REQ-ingest-undeclared-bond-terms-index-levels-dropped, REQ-ingest-undeclared-cross-check-prices-attention-item, REQ-ingest-undeclared-cross-check-prices-dropped, REQ-ingest-undeclared-cross-check-prices-item-per-instance, REQ-ingest-undeclared-cross-check-prices-rest-imported, REQ-ingest-undeclared-deliveries-item-per-instance, which link to the subject fact FACT-SUBJECT-4022BDCF8FBBCB20 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-1FEA6AF758EE9559
 type: fact
 ---
+
+Definition not stated: the subject portfolio.model_portfolio is named by requirements REQ-portfolio-model-entry, REQ-portfolio-model-max-targets, REQ-portfolio-model-optional, REQ-portfolio-model-report, REQ-portfolio-model-store, REQ-portfolio-model-targets, REQ-portfolio-model-weight-step, REQ-portfolio-model-weights, REQ-portfolio-twr-comparison, which link to the subject fact FACT-SUBJECT-1FEA6AF758EE9559 through constrains. The people who own that source can say what it is in the product and what it is not.

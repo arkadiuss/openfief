@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-85358A991DE9337D
 type: fact
 ---
+
+Definition not stated: the subject views.ghostfolio.activities is named by requirement REQ-views-ghostfolio-redemption-sell, which links to the subject fact FACT-SUBJECT-85358A991DE9337D through constrains. The people who own that source can say what it is in the product and what it is not.

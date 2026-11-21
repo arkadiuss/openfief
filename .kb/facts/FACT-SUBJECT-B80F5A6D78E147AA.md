@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B80F5A6D78E147AA
 type: fact
 ---
+
+Definition not stated: the subject ui.installed_plugins is named by requirements REQ-ui-installed-plugins, REQ-ui-plugin-trust-badge-mapping, REQ-ui-plugin-trust-badge-signer, REQ-ui-plugin-trust-badges, which link to the subject fact FACT-SUBJECT-B80F5A6D78E147AA through constrains. The people who own that source can say what it is in the product and what it is not.

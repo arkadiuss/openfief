@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-DC4F7EC29743B12A
 type: fact
 ---
+
+Definition not stated: the subject ingest.bond_lot is named by requirements REQ-ingest-bond-lot-exchange-price-by-letter, REQ-ingest-bond-lot-purchase-kinds, REQ-ingest-bond-lot-rules, REQ-ingest-bond-lot-terms-optional, which link to the subject fact FACT-SUBJECT-DC4F7EC29743B12A through constrains. The people who own that source can say what it is in the product and what it is not.

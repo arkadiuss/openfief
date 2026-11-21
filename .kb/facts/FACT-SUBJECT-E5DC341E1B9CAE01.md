@@ -1,6 +1,6 @@
 ---
 title: Valuation Cross Check Prices
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-22
 tags:
   - strict-modeling
@@ -20,4 +20,7 @@ origin:
   recorded_at: '2026-10-29T05:37:25.442Z'
 id: FACT-SUBJECT-E5DC341E1B9CAE01
 type: fact
+part_of:
+  - valuation.price_check
 ---
+The storage of cross-check prices beside the valuation prices, keyed by instrument, date and source, never replacing a valuation price. It is a part of valuation.price_check, which covers comparing them and acknowledging a difference.

@@ -21,6 +21,8 @@ semantic_inventory:
     span:
       start: 0
       end: 287
+    subjects:
+      - ask_bench.demo_route_gate
 logic_claims:
   - CLAIM-556405216442E05E
 id: REQ-askbench-gates-the-demo-route

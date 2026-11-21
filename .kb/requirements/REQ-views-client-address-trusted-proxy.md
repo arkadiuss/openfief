@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 528
+    subjects:
+      - front_door.client_address
 logic_claims:
   - CLAIM-7370A8AFDD246278
 id: REQ-views-client-address-trusted-proxy

@@ -20,3 +20,4 @@ origin:
 id: FACT-SUBJECT-C4667D6B8DCAE40E
 type: fact
 ---
+The basis at which a bond lot counts in totals: configurable, gross_accrued or net_if_redeemed with net_if_redeemed when nothing is configured, the market basis rejected for retail treasury bonds. It does not cover applying a changed basis, which valuation.bond_basis_setting covers.

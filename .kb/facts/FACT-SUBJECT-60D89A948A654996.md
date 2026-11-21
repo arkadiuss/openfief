@@ -1,6 +1,6 @@
 ---
 title: Plugins Plugin Upgrade
-status: active
+status: archived
 text_ref: design-decisions:D-16#3
 tags:
   - strict-modeling
@@ -19,4 +19,7 @@ origin:
   recorded_at: '2026-10-27T20:12:30.416Z'
 id: FACT-SUBJECT-60D89A948A654996
 type: fact
+part_of:
+  - plugins.upgrade
 ---
+The approval gate of a plugin upgrade: one that requests more permissions must not deploy until they are approved. It is a part of plugins.upgrade, which also covers the report of the permissions a grant does not approve.

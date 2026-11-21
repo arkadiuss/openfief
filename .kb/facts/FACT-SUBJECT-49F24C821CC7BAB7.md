@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-49F24C821CC7BAB7
 type: fact
 ---
+
+Definition not stated: the subject identity.protected_actions is named by requirement REQ-identity-protected-actions-recent-passkey-check, which links to the subject fact FACT-SUBJECT-49F24C821CC7BAB7 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C25D641A654E2CC6
 type: fact
 ---
+
+Definition not stated: the subject plugins.nbp_fx is named by requirement REQ-plugins-nbp-fx-sync, which links to the subject fact FACT-SUBJECT-C25D641A654E2CC6 through constrains. The people who own that source can say what it is in the product and what it is not.

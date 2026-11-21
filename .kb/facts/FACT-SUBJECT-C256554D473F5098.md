@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C256554D473F5098
 type: fact
 ---
+
+Definition not stated: the subject ingest.go_live is named by requirements REQ-ingest-keeps-from-go-live-opening-uploads, REQ-ingest-keeps-from-go-live-uploads, which link to the subject fact FACT-SUBJECT-C256554D473F5098 through constrains. The people who own that source can say what it is in the product and what it is not.

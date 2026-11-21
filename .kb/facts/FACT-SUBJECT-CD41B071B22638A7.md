@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-CD41B071B22638A7
 type: fact
 ---
+
+Definition not stated: the subject docs.stale_gate is named by requirement REQ-docs-stale-gate, which links to the subject fact FACT-SUBJECT-CD41B071B22638A7 through constrains. The people who own that source can say what it is in the product and what it is not.

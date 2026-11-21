@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-9B72F507E96B0FE2
 type: fact
 ---
+
+Definition not stated: the subject ingest.account_form is named by requirement REQ-ingest-account-form-checks, which links to the subject fact FACT-SUBJECT-9B72F507E96B0FE2 through constrains. The people who own that source can say what it is in the product and what it is not.

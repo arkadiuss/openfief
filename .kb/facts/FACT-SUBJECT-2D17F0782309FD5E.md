@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-2D17F0782309FD5E
 type: fact
 ---
+
+Definition not stated: the subject identity.read_access is named by requirements REQ-identity-read-access-holders, REQ-identity-read-access-holders-incl-owner, REQ-identity-read-access-kinds-of-record, REQ-identity-read-access-never-broker-account-numbers, REQ-identity-read-access-never-secrets, REQ-identity-read-access-never-state-change, REQ-identity-read-access-no-broker-account-numbers, REQ-identity-read-access-no-secrets, REQ-identity-read-access-no-state-change, REQ-identity-read-access-scope, REQ-identity-read-access-viewable-accounts-only, which link to the subject fact FACT-SUBJECT-2D17F0782309FD5E through constrains. The people who own that source can say what it is in the product and what it is not.

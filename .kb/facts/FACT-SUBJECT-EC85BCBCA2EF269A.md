@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-EC85BCBCA2EF269A
 type: fact
 ---
+
+Definition not stated: the subject ingest.payout_setting is named by requirement REQ-ingest-payout-setting-history, which links to the subject fact FACT-SUBJECT-EC85BCBCA2EF269A through constrains. The people who own that source can say what it is in the product and what it is not.

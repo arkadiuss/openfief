@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 236
+    subjects:
+      - ask_box.model_off_fallback
 logic_claims:
   - CLAIM-C8C7F56C0C1FCA4D
 id: REQ-ui-ask-model-fallback-as-before

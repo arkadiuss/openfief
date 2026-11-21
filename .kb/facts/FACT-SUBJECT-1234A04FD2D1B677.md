@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-1234A04FD2D1B677
 type: fact
 ---
+
+Definition not stated: the subject valuation.nbp_table_a is named by requirements REQ-valuation-nbp-decimal-exact, REQ-valuation-nbp-request, which link to the subject fact FACT-SUBJECT-1234A04FD2D1B677 through constrains. The people who own that source can say what it is in the product and what it is not.

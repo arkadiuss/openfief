@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-82ADE63DA63B57D2
 type: fact
 ---
+
+Definition not stated: the subject ledger.holding is named by requirement REQ-ledger-holding-derivation, which links to the subject fact FACT-SUBJECT-82ADE63DA63B57D2 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8422AA93FAB9FA88
 type: fact
 ---
+
+Definition not stated: the subject treasurybonds.lot_mapping is named by requirements REQ-treasurybonds-lot-booked-on-purchase-date, REQ-treasurybonds-lot-idempotent-series-date, REQ-treasurybonds-lot-mapping, REQ-treasurybonds-lot-on-go-live-day-opening, REQ-treasurybonds-lot-on-purchase-date, REQ-treasurybonds-lots-any-order, REQ-treasurybonds-post-go-live-deposit-buy, REQ-treasurybonds-pre-go-live-opening-lot, which link to the subject fact FACT-SUBJECT-8422AA93FAB9FA88 through constrains. The people who own that source can say what it is in the product and what it is not.

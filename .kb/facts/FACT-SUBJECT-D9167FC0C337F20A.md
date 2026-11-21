@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-D9167FC0C337F20A
 type: fact
 ---
+
+Definition not stated: the subject valuation.unclassified_instruments is named by requirement REQ-valuation-unclassified-attention, which links to the subject fact FACT-SUBJECT-D9167FC0C337F20A through constrains. The people who own that source can say what it is in the product and what it is not.

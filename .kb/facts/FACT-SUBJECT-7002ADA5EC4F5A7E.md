@@ -21,3 +21,4 @@ origin:
 id: FACT-SUBJECT-7002ADA5EC4F5A7E
 type: fact
 ---
+The payout of a hand-entered bond account: its setting matches the option the bond registry offers, coupons and maturities staying as the account's cash or paid out, and when paid out the treasury-bonds connector follows each coupon or redemption with a withdrawal of the cash it brought on the same day.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-A9563048F0AE7021
 type: fact
 ---
+
+Definition not stated: the subject core.attention_items is named by requirements REQ-attention-unclassified-instrument-is-check, REQ-attention-unclassified-instrument-resolves-itself, REQ-core-attention-item-checks, REQ-core-attention-item-outbox-events, REQ-core-attention-item-store, REQ-views-unbound-attention-names-instance-only, REQ-views-unbound-attention-owner-only, which link to the subject fact FACT-SUBJECT-A9563048F0AE7021 through constrains. The people who own that source can say what it is in the product and what it is not.

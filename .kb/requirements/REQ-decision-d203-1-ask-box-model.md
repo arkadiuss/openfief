@@ -20,6 +20,8 @@ semantic_inventory:
     span:
       start: 0
       end: 282
+    subjects:
+      - ask_box.model_mode
 logic_claims:
   - CLAIM-DC3ADD5D76F483D9
 id: REQ-decision-d203-1-ask-box-model

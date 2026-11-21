@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-BBDDA77D77099F6A
 type: fact
 ---
+
+Definition not stated: the subject demo.cloud_init is named by requirement REQ-tooling-demo-bootstrap, which links to the subject fact FACT-SUBJECT-BBDDA77D77099F6A through constrains. The people who own that source can say what it is in the product and what it is not.

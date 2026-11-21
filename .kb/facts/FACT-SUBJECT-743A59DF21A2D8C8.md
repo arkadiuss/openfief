@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-743A59DF21A2D8C8
 type: fact
 ---
+
+Definition not stated: the subject views.front_door is named by requirement REQ-views-proxied-pages-security-headers, which links to the subject fact FACT-SUBJECT-743A59DF21A2D8C8 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -19,4 +19,6 @@ origin:
   recorded_at: '2026-11-02T23:54:10.078Z'
 id: FACT-SUBJECT-D153F903E058415A
 type: fact
+part_of: []
 ---
+A stored valuation: a stored row derived from the transaction log, prices, FX rates and index readings, rebuildable, holding the three values, and naming its currency taken from the jurisdiction pack. It does not cover how the inputs are fetched.

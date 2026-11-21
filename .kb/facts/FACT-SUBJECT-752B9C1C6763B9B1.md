@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-752B9C1C6763B9B1
 type: fact
 ---
+
+Definition not stated: the subject operator.policy_verifier is named by requirement REQ-operator-policy-verifier, which links to the subject fact FACT-SUBJECT-752B9C1C6763B9B1 through constrains. The people who own that source can say what it is in the product and what it is not.

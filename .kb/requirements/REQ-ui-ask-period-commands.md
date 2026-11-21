@@ -25,6 +25,8 @@ semantic_inventory:
     span:
       start: 0
       end: 292
+    subjects:
+      - ask_box.period_commands
 logic_claims:
   - CLAIM-7BFDB9E92FB7BA31
 id: REQ-ui-ask-period-commands

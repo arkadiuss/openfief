@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-B858CA4E12513023
 type: fact
 ---
+
+Definition not stated: the subject views.ghostfolio_client is named by requirement REQ-views-ghostfolio-follows-no-redirect, which links to the subject fact FACT-SUBJECT-B858CA4E12513023 through constrains. The people who own that source can say what it is in the product and what it is not.

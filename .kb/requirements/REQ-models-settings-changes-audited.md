@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 239
+    subjects:
+      - models.settings_change_audit
 logic_claims:
   - CLAIM-7318C53CB4C7EC17
 semantic_clauses:

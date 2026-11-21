@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-27BB7AB17977F386
 type: fact
 ---
+
+Definition not stated: the subject ingest.openfief is named by requirement REQ-AUTO-FD618A602F7F9106, which links to the subject fact FACT-SUBJECT-27BB7AB17977F386 through constrains. The people who own that source can say what it is in the product and what it is not.

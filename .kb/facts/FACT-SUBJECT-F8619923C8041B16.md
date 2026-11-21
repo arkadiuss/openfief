@@ -1,6 +1,6 @@
 ---
 title: Valuation Bond Valuation Basis
-status: active
+status: archived
 text_ref: design-decisions:D-25#1
 tags:
   - strict-modeling
@@ -19,4 +19,7 @@ origin:
   recorded_at: '2026-10-27T20:12:41.409Z'
 id: FACT-SUBJECT-F8619923C8041B16
 type: fact
+part_of:
+  - valuation.bond_basis
 ---
+That the bond valuation basis for totals is configurable. It is a part of valuation.bond_basis, which covers the basis values themselves (gross_accrued, net_if_redeemed) and their default.

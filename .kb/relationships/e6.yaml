@@ -496,13 +496,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9e537900c27
-  - type: constrains
-    from: REQ-plugins-config-host-https-url
-    to: FACT-SUBJECT-408AED85B10C0271
-    created_at: 2026-10-29T15:10:55.087Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-02519c0adc49
   - type: requires_property
     from: REQ-plugins-config-host-https-url
     to: FACT-PROP-97A9374A1D3C67C2
@@ -1308,3 +1301,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6a51372f1718
+  - type: constrains
+    from: REQ-plugins-config-host-https-url
+    to: FACT-SUBJECT-9E1AFC3BC2FA1036
+    created_at: 2026-11-20T22:39:00.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efd41b02e16c

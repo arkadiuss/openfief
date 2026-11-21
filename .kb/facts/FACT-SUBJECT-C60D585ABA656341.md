@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-C60D585ABA656341
 type: fact
 ---
+
+Definition not stated: the subject identity.login is named by requirement REQ-AUTO-DBE65341C3D9DBFD, which links to the subject fact FACT-SUBJECT-C60D585ABA656341 through constrains. The people who own that source can say what it is in the product and what it is not.

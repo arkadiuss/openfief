@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-31DBB7F6DD738808
 type: fact
 ---
+
+Definition not stated: the subject demo.dns is named by requirements REQ-tooling-demo-dns, REQ-tooling-demo-dns-fallback, which link to the subject fact FACT-SUBJECT-31DBB7F6DD738808 through constrains. The people who own that source can say what it is in the product and what it is not.

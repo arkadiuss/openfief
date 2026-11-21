@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-AD0E41D410701C0F
 type: fact
 ---
+
+Definition not stated: the subject tooling.pre_commit_hook is named by requirements REQ-tooling-hook-affected-packages, REQ-tooling-hook-docs-only, REQ-tooling-hook-full-fallback, REQ-tooling-hook-merge-first-parent, REQ-tooling-hook-step-timings, which link to the subject fact FACT-SUBJECT-AD0E41D410701C0F through constrains. The people who own that source can say what it is in the product and what it is not.

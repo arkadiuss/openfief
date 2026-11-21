@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-05D7E67A1A7903C4
 type: fact
 ---
+
+Definition not stated: the subject views.performance_query is named by requirement REQ-views-performance-query-charts-start, which links to the subject fact FACT-SUBJECT-05D7E67A1A7903C4 through constrains. The people who own that source can say what it is in the product and what it is not.

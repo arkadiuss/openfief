@@ -21,3 +21,4 @@ origin:
 id: FACT-SUBJECT-7674F14A65896C4F
 type: fact
 ---
+An opening lot: recorded on the go-live date with the date the lot was first acquired and its cost basis in the original currency, an open date after go-live being rejected. Lots added one at a time are all dated on the go-live date when the account is seeded, on one date when not, and refused for an account with a current transaction.

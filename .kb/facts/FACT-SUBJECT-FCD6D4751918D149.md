@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-FCD6D4751918D149
 type: fact
 ---
+
+Definition not stated: the subject tooling.e2e_task is named by requirement REQ-tooling-e2e-local-only, which links to the subject fact FACT-SUBJECT-FCD6D4751918D149 through constrains. The people who own that source can say what it is in the product and what it is not.

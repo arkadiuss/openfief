@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-040695DC2B45EBE0
 type: fact
 ---
+
+Definition not stated: the subject operator.plugin_objects is named by requirements REQ-operator-gomemlimit-nine-tenths, REQ-operator-instance-secret-names, REQ-operator-instance-secret-names-double-hyphen, REQ-operator-plugin-gomemlimit, which link to the subject fact FACT-SUBJECT-040695DC2B45EBE0 through constrains. The people who own that source can say what it is in the product and what it is not.

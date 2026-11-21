@@ -29,8 +29,184 @@ semantic_inventory:
     span:
       start: 0
       end: 242
+    subjects:
+      - views.performance
+      - views.time_charts
 id: REQ-ui-period-opens-chart-on-opening-close
 type: req
+pair_reviews:
+  - with: REQ-portfolio-twr-cash-flows-end-of-day
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: The time-weighted return must count cash flows at the end of their day; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-portfolio-twr-confirmed-transfers-only
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: Only confirmed transfers must be left out of the time-weighted return''s cash flows; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-portfolio-twr-opening-lots-inflows
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: The time-weighted return must count opening lots as inflows at their market value on their date; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-portfolio-twr-rounding
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: The time-weighted return must round each daily factor and the running product half-even to 12 decimal places; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-ui-account-chart-default-start
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: An account''s time charts must by default start on the account''s own first day; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-ui-charts-start-default-clears-setting
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: Going back to the default charts'' start must clear the stored setting; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-ui-charts-start-stored-setting
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: The charts'' start the owner chooses must be a setting, stored for the portfolio and for each account; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-ui-opened-account-keeps-default-start
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: An account marked as opened on its seeding day must not move the portfolio''s default charts'' start; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-ui-performance-index-100-on-start
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: The performance index must be 100 on a time chart''s start date; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-ui-portfolio-chart-default-start
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: The portfolio''s charts must by default start on the latest day before which some account''s history is unknown because it was seeded from a starting balance; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-ui-portfolio-chart-start-ignores-full-history
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: Accounts with their whole history, or opened later, must not move the portfolio charts'' default start; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-ui-time-chart-marks-tracking-start
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: A time chart must mark where tracking began; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-ui-time-chart-start-owner-chosen
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: Every time chart, the portfolio''s and each account''s, must start on a date the owner can choose; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-ui-unmarked-seeded-account-moves-start
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: An account seeded from a starting balance and not marked as opened on its seeding day must move the portfolio''s default charts'' start; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-views-paid-out-payout-counts-as-return
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: The time-weighted return must count a paid-out coupon or redemption as return, taking its withdrawal as an external cash flow; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-views-performance-confirmed-transfers
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: The performance series must leave out of its cash flows only the withdrawal and the deposit of each transfer the owner confirmed, counting the money in transit between th; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-views-performance-gaps
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: The performance series must stop before the first day that is after an account''s valued-through date, on which a holding lacks one complete valuation of its current quant; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-views-performance-twr
+    verdict: no_conflict
+    separated_by: 'where a chart''s start is set when a period opens on it (this requirement) against: The read API''s performance series must chain each day''s return of the portfolio''s value with the day''s net external cash flow taken at the end of the day, so that deposit; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-views-period-return-from-opening-close
+    verdict: no_conflict
+    separated_by: where a chart's start is set when a period opens on it (the chart requirement) against which close a period's return starts from (the return requirement); both name the period's opening close and agree on it, and neither changes the other's rule
+    claims:
+      - claim_key: CLAIM-F5005365120F0539
+      - claim_key: CLAIM-F8BA46C58CEF26A3
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
 ---
 Wherever a period opens on the performance chart, from one of its presets or from an Ask box card, the charts' start must be set to the period's opening close, so that the chart, which keeps 100 on its start, and the card show the same return.
 

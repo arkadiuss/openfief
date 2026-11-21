@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-0A0004497D00C0DD
 type: fact
 ---
+
+Definition not stated: the subject valuation.workers is named by requirement REQ-valuation-revaluation-config, which links to the subject fact FACT-SUBJECT-0A0004497D00C0DD through constrains. The people who own that source can say what it is in the product and what it is not.

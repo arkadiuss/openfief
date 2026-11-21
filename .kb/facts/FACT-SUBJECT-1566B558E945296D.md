@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-1566B558E945296D
 type: fact
 ---
+
+Definition not stated: the subject docs.package_coverage is named by requirement REQ-docs-packages-covered, which links to the subject fact FACT-SUBJECT-1566B558E945296D through constrains. The people who own that source can say what it is in the product and what it is not.

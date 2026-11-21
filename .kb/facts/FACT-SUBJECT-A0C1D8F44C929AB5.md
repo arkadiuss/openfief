@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-A0C1D8F44C929AB5
 type: fact
 ---
+
+Definition not stated: the subject jurisdiction.pl.oki_tax is named by requirement REQ-pl-oki-tax-computation, which links to the subject fact FACT-SUBJECT-A0C1D8F44C929AB5 through constrains. The people who own that source can say what it is in the product and what it is not.

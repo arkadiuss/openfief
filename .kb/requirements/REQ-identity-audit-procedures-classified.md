@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 84
+    subjects:
+      - audit.procedure_classification
   - claim_key: CLAIM-9914D28F94F851A7
     claim_text: every one that does not must be listed with the reason, so that a procedure added without an entry fails a test
     role: normative
@@ -26,6 +28,8 @@ semantic_inventory:
     span:
       start: 90
       end: 201
+    subjects:
+      - audit.procedure_classification
 logic_claims:
   - CLAIM-8CBA9F91DC2BE866
   - CLAIM-9914D28F94F851A7

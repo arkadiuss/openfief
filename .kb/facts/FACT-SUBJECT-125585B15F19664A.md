@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-125585B15F19664A
 type: fact
 ---
+
+Definition not stated: the subject ui.instrument_page is named by requirements REQ-decision-d195-2-instrument-page, REQ-ui-instrument-bond-terms, REQ-ui-instrument-page, REQ-ui-instrument-rename, which link to the subject fact FACT-SUBJECT-125585B15F19664A through constrains. The people who own that source can say what it is in the product and what it is not.

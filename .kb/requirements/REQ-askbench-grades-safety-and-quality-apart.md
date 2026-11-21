@@ -21,6 +21,8 @@ semantic_inventory:
     span:
       start: 0
       end: 735
+    subjects:
+      - ask_bench.safety_quality_grading
 logic_claims:
   - CLAIM-41A3B1917FD8A105
 id: REQ-askbench-grades-safety-and-quality-apart

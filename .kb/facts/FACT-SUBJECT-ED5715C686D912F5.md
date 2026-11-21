@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-ED5715C686D912F5
 type: fact
 ---
+
+Definition not stated: the subject ingest.import_batches is named by requirement REQ-ingest-unsupported-rows-counted, which links to the subject fact FACT-SUBJECT-ED5715C686D912F5 through constrains. The people who own that source can say what it is in the product and what it is not.

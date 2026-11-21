@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6042CD2B595C0654
 type: fact
 ---
+
+Definition not stated: the subject ui.transfers is named by requirement REQ-ui-transfers-page, which links to the subject fact FACT-SUBJECT-6042CD2B595C0654 through constrains. The people who own that source can say what it is in the product and what it is not.

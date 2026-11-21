@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: ledger.accounts
+subject_key: ledger.account
 property_key: opening_cash_against_equity
-canonical_key: mcp-kibi-model-requirement:ledger.accounts:opening_cash_against_equity:eq:true
+canonical_key: mcp-kibi-model-requirement:ledger.account:opening_cash_against_equity:eq:true
 operator: eq
 value_type: bool
 value_bool: true

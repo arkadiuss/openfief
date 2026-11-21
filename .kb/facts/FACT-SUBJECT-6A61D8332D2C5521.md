@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6A61D8332D2C5521
 type: fact
 ---
+
+Definition not stated: the subject views.reporting_currency is named by requirements REQ-views-reporting-currency, REQ-views-reporting-currency-pack, REQ-views-unconvertible-reporting-currency-refused, which link to the subject fact FACT-SUBJECT-6A61D8332D2C5521 through constrains. The people who own that source can say what it is in the product and what it is not.

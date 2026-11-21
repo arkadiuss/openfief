@@ -20,4 +20,7 @@ origin:
   recorded_at: '2026-10-31T12:10:57.252Z'
 id: FACT-SUBJECT-3478B243AF63E8B4
 type: fact
+kind_of:
+  - ingest.ticker_isin
 ---
+The ISIN proposed for a new XTB ticker, which the owner confirms once in the UI or enters when the lookup finds none. It is a kind of ingest.ticker_isin, which covers confirmed ISINs for every account of an institution.

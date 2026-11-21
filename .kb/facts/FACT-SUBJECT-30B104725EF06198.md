@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-30B104725EF06198
 type: fact
 ---
+
+Definition not stated: the subject ui.session_end is named by requirement REQ-ui-session-end-clears-site-data, which links to the subject fact FACT-SUBJECT-30B104725EF06198 through constrains. The people who own that source can say what it is in the product and what it is not.

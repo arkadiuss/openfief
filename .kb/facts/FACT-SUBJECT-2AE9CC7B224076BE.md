@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-2AE9CC7B224076BE
 type: fact
 ---
+
+Definition not stated: the subject ledger.recorded_changes is named by requirement REQ-ledger-recorded-changes-pages, which links to the subject fact FACT-SUBJECT-2AE9CC7B224076BE through constrains. The people who own that source can say what it is in the product and what it is not.

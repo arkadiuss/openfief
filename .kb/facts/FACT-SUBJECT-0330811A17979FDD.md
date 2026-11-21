@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0330811A17979FDD
 type: fact
 ---
+
+Definition not stated: the subject tooling.vulnerability_check is named by requirements REQ-tooling-vuln-findings-fail, REQ-tooling-vuln-findings-fail-v2, REQ-tooling-vuln-offline, REQ-tooling-vuln-unreachable-fails, which link to the subject fact FACT-SUBJECT-0330811A17979FDD through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-EE919270A75F28E3
 type: fact
 ---
+
+Definition not stated: the subject ui.onboarding_pages is named by requirements REQ-ui-broker-accounts-owner-only, REQ-ui-delete-and-remap, which link to the subject fact FACT-SUBJECT-EE919270A75F28E3 through constrains. The people who own that source can say what it is in the product and what it is not.

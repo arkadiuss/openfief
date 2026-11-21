@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-7E17A76D18A4DAA6
 type: fact
 ---
+
+Definition not stated: the subject core.serve_flags is named by requirement REQ-core-serve-flags, which links to the subject fact FACT-SUBJECT-7E17A76D18A4DAA6 through constrains. The people who own that source can say what it is in the product and what it is not.

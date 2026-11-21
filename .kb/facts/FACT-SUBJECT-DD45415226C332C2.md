@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-DD45415226C332C2
 type: fact
 ---
+
+Definition not stated: the subject plugins.image_signature is named by requirement REQ-plugins-trusted-signers-only, which links to the subject fact FACT-SUBJECT-DD45415226C332C2 through constrains. The people who own that source can say what it is in the product and what it is not.

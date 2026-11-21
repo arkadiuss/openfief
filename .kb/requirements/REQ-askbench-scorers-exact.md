@@ -15,6 +15,8 @@ semantic_inventory:
     span:
       start: 0
       end: 403
+    subjects:
+      - ask_bench.scorers
 logic_claims:
   - CLAIM-66162BF16D739506
 origin:

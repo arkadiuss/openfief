@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D9B8F3ECCEFE14B1
 type: fact
 ---
+
+Definition not stated: the subject identity.authorization is named by requirements REQ-identity-authz-one-interface, REQ-identity-authz-owner-acts-every-account, REQ-identity-authz-per-account, REQ-identity-authz-readers-view-every-account, REQ-identity-authz-spicedb-answers, REQ-identity-authz-tokens-plugins-granted-accounts, which link to the subject fact FACT-SUBJECT-D9B8F3ECCEFE14B1 through constrains. The people who own that source can say what it is in the product and what it is not.

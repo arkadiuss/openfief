@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-6A2F87E606504707
 type: fact
 ---
+
+Definition not stated: the subject valuation.holding_values is named by requirements REQ-valuation-holding-tax-as-if-sold-alone, REQ-valuation-holding-three-values, which link to the subject fact FACT-SUBJECT-6A2F87E606504707 through constrains. The people who own that source can say what it is in the product and what it is not.

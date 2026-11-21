@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-3CCED7DCCD94CEEF
 type: fact
 ---
+
+Definition not stated: the subject ui.first_run_wizard_steps is named by requirement REQ-ui-first-run-wizard-steps-outside-demo, which links to the subject fact FACT-SUBJECT-3CCED7DCCD94CEEF through constrains. The people who own that source can say what it is in the product and what it is not.

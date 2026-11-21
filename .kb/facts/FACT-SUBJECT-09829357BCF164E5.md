@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-09829357BCF164E5
 type: fact
 ---
+
+Definition not stated: the subject plugins.plugin_egress is named by requirements REQ-AUTO-8CBFBD6A12E0865B, REQ-plugins-egress-through-proxy, which link to the subject fact FACT-SUBJECT-09829357BCF164E5 through constrains. The people who own that source can say what it is in the product and what it is not.

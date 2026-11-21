@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-30FC87DCAAFC7CB1
 type: fact
 ---
+
+Definition not stated: the subject ingest.logging is named by requirement REQ-ingest-logs-carry-no-values, which links to the subject fact FACT-SUBJECT-30FC87DCAAFC7CB1 through constrains. The people who own that source can say what it is in the product and what it is not.

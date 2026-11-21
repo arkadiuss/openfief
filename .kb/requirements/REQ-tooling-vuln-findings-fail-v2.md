@@ -13,6 +13,8 @@ semantic_inventory:
     span:
       start: 0
       end: 194
+    subjects:
+      - tooling.vulnerability_findings_gate
   - claim_key: CLAIM-BDC5D9D8953E20BA
     claim_text: an entry past its expiry fails it too
     role: descriptive

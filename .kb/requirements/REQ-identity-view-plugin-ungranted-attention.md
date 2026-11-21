@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 375
+    subjects:
+      - view_plugin.ungranted_attention_item
   - claim_key: CLAIM-C49700DF697C34CD
     claim_text: none is raised under the policy, nor for the built-in UI, which reads with the signed-in person's session
     role: descriptive

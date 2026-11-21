@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-54D92FE28F71503A
 type: fact
 ---
+
+Definition not stated: the subject portfolio.default_sleeves is named by requirement REQ-portfolio-defaults-on-fresh-install, which links to the subject fact FACT-SUBJECT-54D92FE28F71503A through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-1E06339900ED6C5A
 type: fact
 ---
+
+Definition not stated: the subject operator.plugin_reconcile is named by requirements REQ-operator-contested-browser-path-stops, REQ-operator-older-plugin-keeps-browser-path, REQ-operator-refuses-second-browser-view, REQ-operator-runs-only-granted, which link to the subject fact FACT-SUBJECT-1E06339900ED6C5A through constrains. The people who own that source can say what it is in the product and what it is not.

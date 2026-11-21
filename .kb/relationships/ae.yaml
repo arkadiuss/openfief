@@ -825,13 +825,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f807674270e2
-  - type: constrains
-    from: REQ-plugins-egress-test-exemption-warns-at-start
-    to: FACT-SUBJECT-4F2EEF738C32E61A
-    created_at: 2026-11-12T23:19:17.168Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6d177176065a
   - type: requires_property
     from: REQ-plugins-egress-test-exemption-warns-at-start
     to: FACT-PROP-4182B673B3FAD8BA
@@ -1217,3 +1210,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe739d41d83a
+  - type: constrains
+    from: REQ-plugins-egress-test-exemption-warns-at-start
+    to: FACT-SUBJECT-07E0E01FE8CEB822
+    created_at: 2026-11-20T12:59:08.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b62c259a187

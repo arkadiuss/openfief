@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8F3AFA5A57F4B4E0
 type: fact
 ---
+
+Definition not stated: the subject ingest.statement_service is named by requirement REQ-ingest-statement-service, which links to the subject fact FACT-SUBJECT-8F3AFA5A57F4B4E0 through constrains. The people who own that source can say what it is in the product and what it is not.

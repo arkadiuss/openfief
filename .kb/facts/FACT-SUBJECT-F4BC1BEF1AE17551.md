@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-F4BC1BEF1AE17551
 type: fact
 ---
+
+Definition not stated: the subject demo.automation is named by requirements REQ-tooling-demo-budget, REQ-tooling-demo-labels, REQ-tooling-demo-token, which link to the subject fact FACT-SUBJECT-F4BC1BEF1AE17551 through constrains. The people who own that source can say what it is in the product and what it is not.

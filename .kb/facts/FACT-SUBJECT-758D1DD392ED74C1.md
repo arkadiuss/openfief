@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-758D1DD392ED74C1
 type: fact
 ---
+
+Definition not stated: the subject ingest.market_data_scope is named by requirement REQ-ingest-market-data-scope-declared, which links to the subject fact FACT-SUBJECT-758D1DD392ED74C1 through constrains. The people who own that source can say what it is in the product and what it is not.

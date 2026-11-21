@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-7C2FEE31362B4307
 type: fact
 ---
+
+Definition not stated: the subject ledger.log is named by requirement REQ-ledger-whole-log-check, which links to the subject fact FACT-SUBJECT-7C2FEE31362B4307 through constrains. The people who own that source can say what it is in the product and what it is not.

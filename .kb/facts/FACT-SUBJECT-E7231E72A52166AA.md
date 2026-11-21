@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-E7231E72A52166AA
 type: fact
 ---
+
+Definition not stated: the subject credentials_job.role is named by requirement REQ-identity-credentials-role-create-secrets-only, which links to the subject fact FACT-SUBJECT-E7231E72A52166AA through constrains. The people who own that source can say what it is in the product and what it is not.

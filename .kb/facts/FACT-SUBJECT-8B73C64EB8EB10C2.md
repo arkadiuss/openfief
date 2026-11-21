@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8B73C64EB8EB10C2
 type: fact
 ---
+
+Definition not stated: the subject ingest.sync_history is named by requirement REQ-ingest-sync-attempt-history, which links to the subject fact FACT-SUBJECT-8B73C64EB8EB10C2 through constrains. The people who own that source can say what it is in the product and what it is not.

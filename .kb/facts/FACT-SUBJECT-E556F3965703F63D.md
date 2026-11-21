@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-E556F3965703F63D
 type: fact
 ---
+
+Definition not stated: the subject ingest.data is named by requirement REQ-AUTO-41A1F4D687DAA771, which links to the subject fact FACT-SUBJECT-E556F3965703F63D through constrains. The people who own that source can say what it is in the product and what it is not.

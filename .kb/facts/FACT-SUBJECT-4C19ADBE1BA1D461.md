@@ -21,3 +21,4 @@ origin:
 id: FACT-SUBJECT-4C19ADBE1BA1D461
 type: fact
 ---
+A broker account a connector reports: recorded for the instance with its institution, the day last seen and whether the last reporting delivery reported it, offered in the UI to pick from so the owner never types an account number, and remapped per instance when the owner chooses. It does not cover the OpenFief account it maps to.

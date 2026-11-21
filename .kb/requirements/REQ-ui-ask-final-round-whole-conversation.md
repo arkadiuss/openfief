@@ -20,6 +20,8 @@ semantic_inventory:
     span:
       start: 0
       end: 300
+    subjects:
+      - ask_box.final_round_conversation
 logic_claims:
   - CLAIM-F6CA3B739C783D99
 id: REQ-ui-ask-final-round-whole-conversation

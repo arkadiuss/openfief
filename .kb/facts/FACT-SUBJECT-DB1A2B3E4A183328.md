@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-DB1A2B3E4A183328
 type: fact
 ---
+
+Definition not stated: the subject valuation.holding_valuation is named by requirement REQ-valuation-missing-input, which links to the subject fact FACT-SUBJECT-DB1A2B3E4A183328 through constrains. The people who own that source can say what it is in the product and what it is not.

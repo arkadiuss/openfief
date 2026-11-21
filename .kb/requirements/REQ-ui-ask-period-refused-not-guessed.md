@@ -25,6 +25,8 @@ semantic_inventory:
     span:
       start: 0
       end: 129
+    subjects:
+      - ask_box.period_refusals
   - claim_key: CLAIM-AFF1220A48715348
     claim_text: a period the core refuses with a card that says why, and must never shorten, reorder or guess the period
     role: normative
@@ -32,6 +34,8 @@ semantic_inventory:
     span:
       start: 134
       end: 238
+    subjects:
+      - ask_box.period_refusals
 logic_claims:
   - CLAIM-F8B03EA95E075589
   - CLAIM-AFF1220A48715348

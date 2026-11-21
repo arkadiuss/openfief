@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B8835D65C4A064E6
 type: fact
 ---
+
+Definition not stated: the subject attention.checks is named by requirements REQ-attention-bond-fee-assumed, REQ-attention-checks, which link to the subject fact FACT-SUBJECT-B8835D65C4A064E6 through constrains. The people who own that source can say what it is in the product and what it is not.

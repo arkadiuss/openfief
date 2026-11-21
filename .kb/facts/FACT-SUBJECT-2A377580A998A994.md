@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-2A377580A998A994
 type: fact
 ---
+
+Definition not stated: the subject ui.settings is named by requirements REQ-ui-market-data-ranking, REQ-ui-market-data-series-sources, which link to the subject fact FACT-SUBJECT-2A377580A998A994 through constrains. The people who own that source can say what it is in the product and what it is not.

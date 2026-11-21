@@ -1,6 +1,6 @@
 ---
 title: Ingest Deliveries
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-182
 tags:
   - strict-modeling
@@ -20,4 +20,7 @@ origin:
   recorded_at: '2026-11-02T22:19:58.894Z'
 id: FACT-SUBJECT-CAD68A36D51B31B5
 type: fact
+part_of:
+  - ingest.delivery
 ---
+The institutions a connector's signed manifest declares and the whole refusal of a delivery naming another. It is a part of ingest.delivery, which also covers the connector contract messages a delivery is written in.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C9A2DD105594C862
 type: fact
 ---
+
+Definition not stated: the subject valuation.rekey is named by requirement REQ-valuation-rekey-inputs, which links to the subject fact FACT-SUBJECT-C9A2DD105594C862 through constrains. The people who own that source can say what it is in the product and what it is not.

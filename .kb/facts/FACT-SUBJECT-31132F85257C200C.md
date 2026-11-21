@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-31132F85257C200C
 type: fact
 ---
+
+Definition not stated: the subject ledger.transfer_service is named by requirement REQ-ledger-transfer-service, which links to the subject fact FACT-SUBJECT-31132F85257C200C through constrains. The people who own that source can say what it is in the product and what it is not.

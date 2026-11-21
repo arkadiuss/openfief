@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 130
+    subjects:
+      - maintainer.off_switch
 logic_claims:
   - CLAIM-0353F301ECDF9A41
 semantic_clauses:

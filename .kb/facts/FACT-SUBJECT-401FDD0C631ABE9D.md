@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-401FDD0C631ABE9D
 type: fact
 ---
+
+Definition not stated: the subject sdk.core_verifier is named by requirement REQ-sdk-go-jwks-verifier, which links to the subject fact FACT-SUBJECT-401FDD0C631ABE9D through constrains. The people who own that source can say what it is in the product and what it is not.

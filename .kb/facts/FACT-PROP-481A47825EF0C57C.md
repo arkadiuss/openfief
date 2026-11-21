@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: plugins.plugin_upgrade
+subject_key: plugins.upgrade
 property_key: deploy_until_they_are_approved
-canonical_key: knowledge-source-design-decisions:plugins.plugin_upgrade:deploy_until_they_are_approved:polarity:forbid
+canonical_key: knowledge-source-design-decisions:plugins.upgrade:deploy_until_they_are_approved:polarity:forbid
 operator: eq
 value_type: bool
 value_bool: true

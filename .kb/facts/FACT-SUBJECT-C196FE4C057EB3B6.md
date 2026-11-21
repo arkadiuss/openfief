@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C196FE4C057EB3B6
 type: fact
 ---
+
+Definition not stated: the subject valuation.gus_cpi is named by requirements REQ-valuation-cpi-final-only, REQ-valuation-gus-cpi, REQ-valuation-gus-cpi-indicators, which link to the subject fact FACT-SUBJECT-C196FE4C057EB3B6 through constrains. The people who own that source can say what it is in the product and what it is not.

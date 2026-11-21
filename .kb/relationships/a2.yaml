@@ -391,13 +391,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4277dda13cac
-  - type: constrains
-    from: REQ-ingest-broker-account-resolve
-    to: FACT-SUBJECT-ADDCB97B909F7AE1
-    created_at: 2026-10-29T11:36:53.764Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6a9372a49152
   - type: requires_property
     from: REQ-ingest-broker-account-resolve
     to: FACT-PROP-F8310DB9A517427A
@@ -678,13 +671,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46efc8f3a2fe
-  - type: constrains
-    from: REQ-plugins-statement-files-declared-in-manifest
-    to: FACT-SUBJECT-9245D1B907023D02
-    created_at: 2026-11-01T12:23:25.580Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-76ef0ec621a9
   - type: requires_property
     from: REQ-plugins-statement-files-declared-in-manifest
     to: FACT-PROP-408A31D61F618E7C
@@ -1105,3 +1091,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b2779d2de23
+  - type: constrains
+    from: REQ-plugins-statement-files-declared-in-manifest
+    to: FACT-SUBJECT-777F1580F1EE5686
+    created_at: 2026-11-20T12:59:34.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3315840bd424
+  - type: constrains
+    from: REQ-ingest-broker-account-resolve
+    to: FACT-SUBJECT-4C19ADBE1BA1D461
+    created_at: 2026-11-20T22:37:02.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c1ec7e7e1fa

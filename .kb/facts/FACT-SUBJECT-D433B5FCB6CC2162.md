@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-D433B5FCB6CC2162
 type: fact
 ---
+
+Definition not stated: the subject valuation.fx_rate_provider is named by requirements REQ-AUTO-D1568676DF81CAF7, REQ-valuation-fx-no-data, REQ-valuation-fx-range-splitting, which link to the subject fact FACT-SUBJECT-D433B5FCB6CC2162 through constrains. The people who own that source can say what it is in the product and what it is not.

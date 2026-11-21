@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-3AB1B991D0F6E0A2
 type: fact
 ---
+
+Definition not stated: the subject identity.authenticator is named by requirements REQ-identity-authenticators-prove-caller, REQ-identity-authenticators-prove-owner, which link to the subject fact FACT-SUBJECT-3AB1B991D0F6E0A2 through constrains. The people who own that source can say what it is in the product and what it is not.

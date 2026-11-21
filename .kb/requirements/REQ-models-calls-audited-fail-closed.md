@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 243
+    subjects:
+      - models.call_audit_fail_closed
 logic_claims:
   - CLAIM-06807EA982FF01CC
 semantic_clauses:

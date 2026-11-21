@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-1059EB7F0A7938BA
 type: fact
 ---
+
+Definition not stated: the subject ledger.sleeve_registry is named by requirements REQ-ledger-app-ensure-defaults, REQ-ledger-app-sleeve-kinds, REQ-ledger-pg-sleeve-kinds, which link to the subject fact FACT-SUBJECT-1059EB7F0A7938BA through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D03E993F94590A63
 type: fact
 ---
+
+Definition not stated: the subject e2e.release_bundle is named by requirement REQ-e2e-installs-release-bundle, which links to the subject fact FACT-SUBJECT-D03E993F94590A63 through constrains. The people who own that source can say what it is in the product and what it is not.

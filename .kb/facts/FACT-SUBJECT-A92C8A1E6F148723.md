@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-A92C8A1E6F148723
 type: fact
 ---
+
+Definition not stated: the subject attention.inbox_groups is named by requirement REQ-attention-inbox-groups, which links to the subject fact FACT-SUBJECT-A92C8A1E6F148723 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -440,13 +440,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a568edd32c8
-  - type: constrains
-    from: REQ-plugins-cluster-service-outside-openfief
-    to: FACT-SUBJECT-457059D043CC4DB6
-    created_at: 2026-10-29T15:11:05.001Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8ae2049d27f4
   - type: requires_property
     from: REQ-plugins-cluster-service-outside-openfief
     to: FACT-PROP-B190468D59D6ED53
@@ -1217,3 +1210,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e842aea268b6
+  - type: constrains
+    from: REQ-plugins-cluster-service-outside-openfief
+    to: FACT-SUBJECT-D637ED85034E36A7
+    created_at: 2026-11-20T22:38:48.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c3aced39a76

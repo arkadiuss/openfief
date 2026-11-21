@@ -1,6 +1,6 @@
 ---
 title: Ingest Sync Request
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-117
 tags:
   - strict-modeling
@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5769DD481E8026B5
 type: fact
 ---
+
+Definition not stated: the subject ingest.sync_request is named by requirements REQ-ingest-sync-carries-holdings, REQ-ingest-sync-carries-payout, which link to the subject fact FACT-SUBJECT-5769DD481E8026B5 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-9AC85D2CF36BFF5E
 type: fact
 ---
+
+Definition not stated: the subject tooling.proto_breaking_check is named by requirement REQ-tooling-breaking-check-one-exception, which links to the subject fact FACT-SUBJECT-9AC85D2CF36BFF5E through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 283
+    subjects:
+      - audit.admin_actor_entries
 logic_claims:
   - CLAIM-C2DEA1E0493C661A
 id: REQ-identity-audit-admin-actor

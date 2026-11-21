@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C38DC96D03DBD013
 type: fact
 ---
+
+Definition not stated: the subject treasurybonds.index_sync is named by requirements REQ-treasurybonds-cpi-first-sync-start, REQ-treasurybonds-cpi-years-per-sync, REQ-treasurybonds-index-sync, REQ-treasurybonds-reference-rate-rule, which link to the subject fact FACT-SUBJECT-C38DC96D03DBD013 through constrains. The people who own that source can say what it is in the product and what it is not.

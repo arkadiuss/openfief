@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 228
+    subjects:
+      - turnstile.token_verification
   - claim_key: CLAIM-D8FEC2CA978BA638
     claim_text: no token or a refused one stops the question with the box's own words, a check that can't be made (Cloudflare unreachable, an answer that is no JSON, a secret Cloudflare refuses or the UI can't read) stops it too and sends nothing, the secret key comes from the instance's Secret on each call and neither it, a token nor a question is logged, and the plugin's config sets the site key and siteverify URL together, whose host is the one egress host its manifest asks for
     role: normative
@@ -25,6 +27,8 @@ semantic_inventory:
     span:
       start: 230
       end: 699
+    subjects:
+      - turnstile.token_verification
 logic_claims:
   - CLAIM-78E18D7F2F8CAF0F
   - CLAIM-D8FEC2CA978BA638

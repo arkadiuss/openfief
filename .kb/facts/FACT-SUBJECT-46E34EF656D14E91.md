@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-46E34EF656D14E91
 type: fact
 ---
+
+Definition not stated: the subject ui.overview is named by requirements REQ-decision-d193-1-overview, REQ-decision-d195-1-figures-link-down, REQ-ui-overview-allocation-tab, REQ-ui-overview-places, which link to the subject fact FACT-SUBJECT-46E34EF656D14E91 through constrains. The people who own that source can say what it is in the product and what it is not.

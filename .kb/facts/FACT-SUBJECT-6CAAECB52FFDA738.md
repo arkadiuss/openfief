@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6CAAECB52FFDA738
 type: fact
 ---
+
+Definition not stated: the subject pl.sale_tax_cost is named by requirement REQ-pl-sale-tax-cost-includes-buy-fees, which links to the subject fact FACT-SUBJECT-6CAAECB52FFDA738 through constrains. The people who own that source can say what it is in the product and what it is not.

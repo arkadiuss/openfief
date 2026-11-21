@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-20EB0565F5698A4D
 type: fact
 ---
+
+Definition not stated: the subject ledger.store is named by requirements REQ-ledger-pg-append-only, REQ-ledger-pg-store, which link to the subject fact FACT-SUBJECT-20EB0565F5698A4D through constrains. The people who own that source can say what it is in the product and what it is not.

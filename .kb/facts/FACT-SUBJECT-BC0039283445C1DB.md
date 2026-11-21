@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-BC0039283445C1DB
 type: fact
 ---
+
+Definition not stated: the subject ui.statement_upload is named by requirements REQ-ui-statement-upload, REQ-ui-statement-upload-file-connectors-only, REQ-ui-statement-upload-start, which link to the subject fact FACT-SUBJECT-BC0039283445C1DB through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-010DD798EAB0E3D4
 type: fact
 ---
+
+Definition not stated: the subject plugins.secret_roles is named by requirements REQ-plugins-no-double-hyphen-in-instance-or-role, REQ-plugins-requested-secret-names, REQ-plugins-requested-secret-names-double-hyphen, which link to the subject fact FACT-SUBJECT-010DD798EAB0E3D4 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,4 @@ origin:
 id: FACT-SUBJECT-825F5042E5E6F174
 type: fact
 ---
+A session of the owner: an opaque, revocable token stored only as the SHA-256 hash of its random key, with an idle expiry and an absolute one and a scope, issued after an authenticator proves the owner, and the owner can sign out every session at once. It does not cover the authenticator.

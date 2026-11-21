@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-E96D53850D05A05E
 type: fact
 ---
+
+Definition not stated: the subject demo.first_run is named by requirement REQ-demo-no-wizard-until-loaded, which links to the subject fact FACT-SUBJECT-E96D53850D05A05E through constrains. The people who own that source can say what it is in the product and what it is not.

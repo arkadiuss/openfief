@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: plugins.cli_install
+subject_key: plugins.install_cli
 property_key: grants_operator_service_read
-canonical_key: mcp-kibi-model-requirement:plugins.cli_install:grants_operator_service_read:eq:true
+canonical_key: mcp-kibi-model-requirement:plugins.install_cli:grants_operator_service_read:eq:true
 operator: eq
 value_type: bool
 value_bool: true

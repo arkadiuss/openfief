@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 174
+    subjects:
+      - ui_access.pending_invites_list
 logic_claims:
   - CLAIM-65B0765A90131E13
 id: REQ-ui-access-pending-invites

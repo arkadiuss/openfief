@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5B135D3DC90BBD3B
 type: fact
 ---
+
+Definition not stated: the subject ledger.lot_buy_fees is named by requirement REQ-ledger-lot-buy-fees, which links to the subject fact FACT-SUBJECT-5B135D3DC90BBD3B through constrains. The people who own that source can say what it is in the product and what it is not.

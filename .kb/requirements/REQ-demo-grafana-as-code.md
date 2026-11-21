@@ -25,6 +25,8 @@ semantic_inventory:
     span:
       start: 206
       end: 476
+    subjects:
+      - demo.grafana_apply
   - claim_key: CLAIM-89BCBC95915BFBFE
     claim_text: task grafana:check validates offline that every file is JSON with a fixed uid, that every query uses only the stack's datasources and the metrics the core exports, and that no file holds a secret
     role: descriptive

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-172EB8B023F2FDDB
 type: fact
 ---
+
+Definition not stated: the subject pl.oki_announced_figures is named by requirements REQ-pl-oki-announced-figures-never-computed, REQ-pl-oki-exempt-amounts-from-announcements, REQ-pl-oki-exempt-amounts-never-fall, REQ-pl-oki-rate-from-announcements, which link to the subject fact FACT-SUBJECT-172EB8B023F2FDDB through constrains. The people who own that source can say what it is in the product and what it is not.

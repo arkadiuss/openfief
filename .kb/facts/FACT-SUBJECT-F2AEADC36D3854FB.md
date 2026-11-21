@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-F2AEADC36D3854FB
 type: fact
 ---
+
+Definition not stated: the subject connector.contract is named by requirements REQ-connector-broker-accounts, REQ-connector-contract-messages, which link to the subject fact FACT-SUBJECT-F2AEADC36D3854FB through constrains. The people who own that source can say what it is in the product and what it is not.

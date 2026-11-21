@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-494CEF16128E84E0
 type: fact
 ---
+
+Definition not stated: the subject views.ghostfolio_sync is named by requirement REQ-views-ghostfolio-checks-version-before-writes, which links to the subject fact FACT-SUBJECT-494CEF16128E84E0 through constrains. The people who own that source can say what it is in the product and what it is not.

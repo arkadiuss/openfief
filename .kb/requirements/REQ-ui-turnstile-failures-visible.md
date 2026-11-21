@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 209
+    subjects:
+      - turnstile.failure_messages
   - claim_key: CLAIM-DBA616B308E26DAD
     claim_text: 'when the check cannot finish in the browser, one message in the answer area says so with Cloudflare''s error code or a fixed word (blocked, timeout, unsupported) and what to do, with the hint to allow challenges.cloudflare.com (in Brave: turn Shields off), and the box has no status line'
     role: condition
@@ -25,19 +27,43 @@ semantic_inventory:
     span:
       start: 211
       end: 497
+    subjects:
+      - turnstile.failure_messages
   - claim_key: CLAIM-7361B046815DCA1B
     claim_text: no token, secret or question is ever shown or logged
     role: descriptive
-    status: missing
+    status: ontology_gap
     span:
       start: 499
       end: 551
+    reason: It limits what is shown or logged; no predicate of the ontology states a privacy limit on a message yet.
 logic_claims:
   - CLAIM-BDD32E7B2C8802B9
   - CLAIM-DBA616B308E26DAD
   - CLAIM-7361B046815DCA1B
 id: REQ-ui-turnstile-failures-visible
 type: req
+pair_reviews:
+  - with: REQ-ui-turnstile-verification
+    verdict: no_conflict
+    separated_by: the words shown to the person once the check stops a question or cannot finish, which this requirement fixes, against when and why the core stops a question, which the verification requirement fixes
+    claims:
+      - claim_key: CLAIM-BDD32E7B2C8802B9
+      - claim_key: CLAIM-DBA616B308E26DAD
+      - claim_key: CLAIM-78E18D7F2F8CAF0F
+      - claim_key: CLAIM-D8FEC2CA978BA638
+    origin:
+      kind: agent
+      ref: Author's decision to upgrade to kibi 2.45 and review the subjects, 2026-11-20
+  - with: REQ-ui-turnstile-stalled-check-falls-back-visible
+    verdict: no_conflict
+    separated_by: when the page gives up on the invisible check and recovers with a visible widget and a timed-out message, which the stalled-check requirement fixes, against the wording of each failure once the check ends, which this requirement fixes
+    claims:
+      - claim_key: CLAIM-BDD32E7B2C8802B9
+      - claim_key: CLAIM-DBA616B308E26DAD
+    origin:
+      kind: agent
+      ref: Author's decision to upgrade to kibi 2.45 and review the subjects, 2026-11-20
 ---
 When the Ask box's check stops a question, its card says why: no token reached OpenFief, Cloudflare refused the token (with Cloudflare's error codes), or the token was made for another host (naming both hosts); when the check cannot finish in the browser, one message in the answer area says so with Cloudflare's error code or a fixed word (blocked, timeout, unsupported) and what to do, with the hint to allow challenges.cloudflare.com (in Brave: turn Shields off), and the box has no status line; no token, secret or question is ever shown or logged.
 

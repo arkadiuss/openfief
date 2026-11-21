@@ -1,6 +1,6 @@
 ---
 title: Identity Sessions
-status: active
+status: archived
 text_ref: design-decisions:D-183#2
 tags:
   - strict-modeling
@@ -20,4 +20,7 @@ origin:
   recorded_at: '2026-11-03T02:41:30.004Z'
 id: FACT-SUBJECT-A09EF0400392628E
 type: fact
+part_of:
+  - identity.session
 ---
+The owner's ability to sign out every session at once. It is a part of identity.session, which covers how a session is issued, stored and expires.

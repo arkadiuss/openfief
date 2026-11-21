@@ -23,10 +23,11 @@ semantic_inventory:
   - claim_key: CLAIM-AAE9714B4F103E02
     claim_text: which path completed, invisible or visible fallback, is logged beside the verdict as one of two fixed words and nothing typed is ever logged or shown
     role: descriptive
-    status: missing
+    status: ontology_gap
     span:
       start: 423
       end: 572
+    reason: It names what is logged beside a verdict; no predicate of the ontology states a log field yet.
 logic_claims:
   - CLAIM-AAE9714B4F103E02
 ---

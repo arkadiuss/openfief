@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6F67BD2729C3241E
 type: fact
 ---
+
+Definition not stated: the subject jurisdiction.pl.oki_exemption_class is named by requirement REQ-pl-oki-exemption-class, which links to the subject fact FACT-SUBJECT-6F67BD2729C3241E through constrains. The people who own that source can say what it is in the product and what it is not.

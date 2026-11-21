@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-33527AA43F101B35
 type: fact
 ---
+
+Definition not stated: the subject ingest.connector_scheduling is named by requirement REQ-ingest-core-owns-schedules, which links to the subject fact FACT-SUBJECT-33527AA43F101B35 through constrains. The people who own that source can say what it is in the product and what it is not.

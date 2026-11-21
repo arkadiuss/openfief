@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-53D009F62FC7BEC6
 type: fact
 ---
+
+Definition not stated: the subject ingest.delivery_contract is named by requirement REQ-ingest-delivery-market-data, which links to the subject fact FACT-SUBJECT-53D009F62FC7BEC6 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -1,6 +1,6 @@
 ---
 title: Plugins Config Hosts
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-75
 tags:
   - strict-modeling
@@ -20,4 +20,7 @@ origin:
   recorded_at: '2026-10-29T15:10:49.418Z'
 id: FACT-SUBJECT-408AED85B10C0271
 type: fact
+part_of:
+  - plugins.config_field_host
 ---
+The host and port read from the https URL a config field holds when a manifest names it in egressFromConfig, lower-cased, nothing when absent, and an invalid Plugin when it is not a valid URL. It is a part of plugins.config_field_host.

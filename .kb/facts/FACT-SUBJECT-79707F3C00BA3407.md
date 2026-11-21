@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-79707F3C00BA3407
 type: fact
 ---
+
+Definition not stated: the subject attention.transfer_suggested is named by requirement REQ-attention-transfer-suggested-item, which links to the subject fact FACT-SUBJECT-79707F3C00BA3407 through constrains. The people who own that source can say what it is in the product and what it is not.

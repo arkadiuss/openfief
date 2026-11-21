@@ -29,8 +29,83 @@ semantic_inventory:
     span:
       start: 0
       end: 135
+    subjects:
+      - views.performance
 id: REQ-views-period-return-from-opening-close
 type: req
+pair_reviews:
+  - with: REQ-portfolio-twr-cash-flows-end-of-day
+    verdict: no_conflict
+    separated_by: 'which close a period''s return starts from (this requirement) against: The time-weighted return must count cash flows at the end of their day; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F8BA46C58CEF26A3
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-portfolio-twr-confirmed-transfers-only
+    verdict: no_conflict
+    separated_by: 'which close a period''s return starts from (this requirement) against: Only confirmed transfers must be left out of the time-weighted return''s cash flows; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F8BA46C58CEF26A3
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-portfolio-twr-opening-lots-inflows
+    verdict: no_conflict
+    separated_by: 'which close a period''s return starts from (this requirement) against: The time-weighted return must count opening lots as inflows at their market value on their date; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F8BA46C58CEF26A3
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-portfolio-twr-rounding
+    verdict: no_conflict
+    separated_by: 'which close a period''s return starts from (this requirement) against: The time-weighted return must round each daily factor and the running product half-even to 12 decimal places; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F8BA46C58CEF26A3
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-views-paid-out-payout-counts-as-return
+    verdict: no_conflict
+    separated_by: 'which close a period''s return starts from (this requirement) against: The time-weighted return must count a paid-out coupon or redemption as return, taking its withdrawal as an external cash flow; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F8BA46C58CEF26A3
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-views-performance-confirmed-transfers
+    verdict: no_conflict
+    separated_by: 'which close a period''s return starts from (this requirement) against: The performance series must leave out of its cash flows only the withdrawal and the deposit of each transfer the owner confirmed, counting the money in transit between th; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F8BA46C58CEF26A3
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-views-performance-gaps
+    verdict: no_conflict
+    separated_by: 'which close a period''s return starts from (this requirement) against: The performance series must stop before the first day that is after an account''s valued-through date, on which a holding lacks one complete valuation of its current quant; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F8BA46C58CEF26A3
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
+  - with: REQ-views-performance-twr
+    verdict: no_conflict
+    separated_by: 'which close a period''s return starts from (this requirement) against: The read API''s performance series must chain each day''s return of the portfolio''s value with the day''s net external cash flow taken at the end of the day, so that deposit; this requirement changes none of the other''s rules and the other changes none of this one''s'
+    claims:
+      - claim_key: CLAIM-F8BA46C58CEF26A3
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
 ---
 A period's return must run from the close of the day before its first day to the close of its last day, so its first day counts in full.
 

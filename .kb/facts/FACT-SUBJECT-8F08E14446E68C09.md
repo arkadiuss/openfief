@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8F08E14446E68C09
 type: fact
 ---
+
+Definition not stated: the subject core.token_commands is named by requirement REQ-core-token-commands, which links to the subject fact FACT-SUBJECT-8F08E14446E68C09 through constrains. The people who own that source can say what it is in the product and what it is not.

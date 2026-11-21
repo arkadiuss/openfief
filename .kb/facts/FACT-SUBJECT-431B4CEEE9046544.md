@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-431B4CEEE9046544
 type: fact
 ---
+
+Definition not stated: the subject valuation.market_data is named by requirements REQ-valuation-gap-item-per-account, REQ-valuation-gap-threshold-default, REQ-valuation-other-source-price-checks, REQ-valuation-series-source-owner-choice, REQ-valuation-series-source-recorded, REQ-valuation-source-rules-version, which link to the subject fact FACT-SUBJECT-431B4CEEE9046544 through constrains. The people who own that source can say what it is in the product and what it is not.

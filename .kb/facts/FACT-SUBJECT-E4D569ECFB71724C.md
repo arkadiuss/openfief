@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-E4D569ECFB71724C
 type: fact
 ---
+
+Definition not stated: the subject operator.allow_list is named by requirement REQ-operator-allow-list-publish, which links to the subject fact FACT-SUBJECT-E4D569ECFB71724C through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-FE8005F54B52310C
 type: fact
 ---
+
+Definition not stated: the subject valuation.rules_version is named by requirement REQ-valuation-rules-version-revalues, which links to the subject fact FACT-SUBJECT-FE8005F54B52310C through constrains. The people who own that source can say what it is in the product and what it is not.

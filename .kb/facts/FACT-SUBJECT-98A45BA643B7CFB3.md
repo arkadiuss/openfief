@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-98A45BA643B7CFB3
 type: fact
 ---
+
+Definition not stated: the subject ledger.account_registry is named by requirement REQ-ledger-app-accounts, which links to the subject fact FACT-SUBJECT-98A45BA643B7CFB3 through constrains. The people who own that source can say what it is in the product and what it is not.

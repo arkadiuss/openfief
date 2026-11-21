@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D76CF65945DB4D93
 type: fact
 ---
+
+Definition not stated: the subject ledger.cash_checkpoint_service is named by requirement REQ-ledger-cash-checkpoint-service, which links to the subject fact FACT-SUBJECT-D76CF65945DB4D93 through constrains. The people who own that source can say what it is in the product and what it is not.

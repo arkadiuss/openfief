@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-860E6BC7DB05E83B
 type: fact
 ---
+
+Definition not stated: the subject demo.cross_check_prices is named by requirement REQ-demo-dataset-flagged-price-check, which links to the subject fact FACT-SUBJECT-860E6BC7DB05E83B through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-201303AC32EB3165
 type: fact
 ---
+
+Definition not stated: the subject tooling.docs_site is named by requirement REQ-tooling-docs-report-e2e-receipts, which links to the subject fact FACT-SUBJECT-201303AC32EB3165 through constrains. The people who own that source can say what it is in the product and what it is not.

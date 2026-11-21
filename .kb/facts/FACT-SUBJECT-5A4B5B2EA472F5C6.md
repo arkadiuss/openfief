@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5A4B5B2EA472F5C6
 type: fact
 ---
+
+Definition not stated: the subject ui.price_checks_page is named by requirement REQ-ui-price-checks-page, which links to the subject fact FACT-SUBJECT-5A4B5B2EA472F5C6 through constrains. The people who own that source can say what it is in the product and what it is not.

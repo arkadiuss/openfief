@@ -21,3 +21,4 @@ origin:
 id: FACT-SUBJECT-777F1580F1EE5686
 type: fact
 ---
+A plugin's signed manifest: embedded in its image as a label on the image config, and declaring its capabilities, egress hosts, Secrets and their roles, mount paths, statement files and data tiers, validated so that every invalid field is reported by name. It does not cover the grant that approves what the manifest requests.

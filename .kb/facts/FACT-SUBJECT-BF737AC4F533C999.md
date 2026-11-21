@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-BF737AC4F533C999
 type: fact
 ---
+
+Definition not stated: the subject pl.published_data is named by requirement REQ-pl-published-series-rates, which links to the subject fact FACT-SUBJECT-BF737AC4F533C999 through constrains. The people who own that source can say what it is in the product and what it is not.

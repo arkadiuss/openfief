@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-E0B7FB80EF7389C6
 type: fact
 ---
+
+Definition not stated: the subject release.publish is named by requirement REQ-tooling-release-publish-resumable, which links to the subject fact FACT-SUBJECT-E0B7FB80EF7389C6 through constrains. The people who own that source can say what it is in the product and what it is not.

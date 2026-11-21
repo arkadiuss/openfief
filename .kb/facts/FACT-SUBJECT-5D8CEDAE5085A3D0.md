@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5D8CEDAE5085A3D0
 type: fact
 ---
+
+Definition not stated: the subject ingest.ibkrflex_mapper is named by requirement REQ-ibkrflex-cross-check-prices, which links to the subject fact FACT-SUBJECT-5D8CEDAE5085A3D0 through constrains. The people who own that source can say what it is in the product and what it is not.

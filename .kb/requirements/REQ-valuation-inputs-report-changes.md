@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 106
+    subjects:
+      - market_inputs.stored_change_counts
   - claim_key: CLAIM-D7092F13A17FC6B2
     claim_text: a row sent again unchanged must count for none
     role: normative
@@ -26,6 +28,8 @@ semantic_inventory:
     span:
       start: 112
       end: 158
+    subjects:
+      - market_inputs.stored_change_counts
 logic_claims:
   - CLAIM-3F09970B34AAB6A4
   - CLAIM-D7092F13A17FC6B2

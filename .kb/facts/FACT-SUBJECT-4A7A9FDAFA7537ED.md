@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-4A7A9FDAFA7537ED
 type: fact
 ---
+
+Definition not stated: the subject demo.loaded_data is named by requirement REQ-demo-owner-changes-after-load, which links to the subject fact FACT-SUBJECT-4A7A9FDAFA7537ED through constrains. The people who own that source can say what it is in the product and what it is not.

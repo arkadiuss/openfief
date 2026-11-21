@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-48574C3BDC2B27C0
 type: fact
 ---
+
+Definition not stated: the subject ingest.connector_client is named by requirements REQ-ingest-connector-answer-bounded, REQ-ingest-connector-answer-counted-on-wire, which link to the subject fact FACT-SUBJECT-48574C3BDC2B27C0 through constrains. The people who own that source can say what it is in the product and what it is not.

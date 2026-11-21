@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-C8D936D003BD7B6C
 type: fact
 ---
+
+Definition not stated: the subject platform.openfief_installation is named by requirements REQ-AUTO-3E7CF23DAD42DA83, REQ-platform-exposes-nothing-by-default, REQ-platform-httproute-component, which link to the subject fact FACT-SUBJECT-C8D936D003BD7B6C through constrains. The people who own that source can say what it is in the product and what it is not.

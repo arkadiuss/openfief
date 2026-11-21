@@ -14,10 +14,11 @@ semantic_inventory:
   - claim_key: CLAIM-3A6E056E534C6D37
     claim_text: With a model configured, a question that is one of the Ask box's fixed commands is answered by the UI itself, at once, without asking the model router, and any other question goes to the model
     role: descriptive
-    status: missing
+    status: ontology_gap
     span:
       start: 0
       end: 192
+    reason: It describes routing, which a predicate over the Ask box's commands cannot state yet; the claim is recorded as written and states no rule of its own.
 logic_claims:
   - CLAIM-3A6E056E534C6D37
 id: REQ-ui-ask-model-fixed-commands-first

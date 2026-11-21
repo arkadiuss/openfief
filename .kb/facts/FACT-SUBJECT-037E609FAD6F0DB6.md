@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-037E609FAD6F0DB6
 type: fact
 ---
+
+Definition not stated: the subject ingest.batch is named by requirement REQ-ingest-batch-record, which links to the subject fact FACT-SUBJECT-037E609FAD6F0DB6 through constrains. The people who own that source can say what it is in the product and what it is not.

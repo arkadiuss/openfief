@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6A5B146B76C8BD67
 type: fact
 ---
+
+Definition not stated: the subject valuation.owner_settings is named by requirement REQ-valuation-owner-settings, which links to the subject fact FACT-SUBJECT-6A5B146B76C8BD67 through constrains. The people who own that source can say what it is in the product and what it is not.

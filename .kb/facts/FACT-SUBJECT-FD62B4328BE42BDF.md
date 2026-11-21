@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-FD62B4328BE42BDF
 type: fact
 ---
+
+Definition not stated: the subject ledger.payout_setting is named by requirements REQ-ledger-first-payout-setting-whole-history, REQ-ledger-payout-change-from-owner-date, REQ-ledger-payout-setting, REQ-ledger-payout-setting-history, which link to the subject fact FACT-SUBJECT-FD62B4328BE42BDF through constrains. The people who own that source can say what it is in the product and what it is not.

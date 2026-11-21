@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-BF8827AE5AF75C88
 type: fact
 ---
+
+Definition not stated: the subject ui.inbox is named by requirements REQ-ui-account-attention-banner, REQ-ui-inbox-ask-column, REQ-ui-inbox-page, REQ-ui-inbox-price-checks, REQ-ui-inbox-settle-in-place, REQ-ui-inbox-sync-timeline, REQ-ui-inbox-tickers, REQ-ui-inbox-transfer-suggested-item, REQ-ui-inbox-transfers, REQ-ui-inbox-views-and-counts, REQ-ui-instrument-links, which link to the subject fact FACT-SUBJECT-BF8827AE5AF75C88 through constrains. The people who own that source can say what it is in the product and what it is not.

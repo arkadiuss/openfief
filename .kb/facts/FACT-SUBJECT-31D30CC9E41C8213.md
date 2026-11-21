@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-31D30CC9E41C8213
 type: fact
 ---
+
+Definition not stated: the subject views.ui is named by requirements REQ-ui-installable-app, REQ-ui-responsive-layout, REQ-ui-service-worker-static-only, which link to the subject fact FACT-SUBJECT-31D30CC9E41C8213 through constrains. The people who own that source can say what it is in the product and what it is not.

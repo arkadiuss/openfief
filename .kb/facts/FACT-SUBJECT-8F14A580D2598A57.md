@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-8F14A580D2598A57
 type: fact
 ---
+
+Definition not stated: the subject attention.outbox is named by requirements REQ-attention-outbox-read-subject, REQ-attention-outbox-same-transaction, REQ-attention-relay, which link to the subject fact FACT-SUBJECT-8F14A580D2598A57 through constrains. The people who own that source can say what it is in the product and what it is not.

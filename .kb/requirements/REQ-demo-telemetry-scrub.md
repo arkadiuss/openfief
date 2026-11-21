@@ -22,6 +22,8 @@ semantic_inventory:
     span:
       start: 0
       end: 256
+    subjects:
+      - demo.telemetry_scrub
   - claim_key: CLAIM-613E39881528ED59
     claim_text: it drops the attributes that carry a client address, a session or token ID, a credential, Authorization, Cookie or another header, the user agent, or a question or prompt, and rewrites any IPv4 or IPv6 address, any openfief token prefix (ofs_, ofsess_, ofenroll_), Bearer or Basic credential, JSON web token and long token-like string, in the resource, scope, span, span event, log record and metric data point attributes, the log body and the span's name and status message
     role: descriptive

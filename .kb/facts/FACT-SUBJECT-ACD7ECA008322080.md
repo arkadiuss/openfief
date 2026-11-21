@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-ACD7ECA008322080
 type: fact
 ---
+
+Definition not stated: the subject ui.tickers is named by requirement REQ-ui-tickers-to-confirm, which links to the subject fact FACT-SUBJECT-ACD7ECA008322080 through constrains. The people who own that source can say what it is in the product and what it is not.

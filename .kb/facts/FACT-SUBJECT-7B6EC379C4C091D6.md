@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-7B6EC379C4C091D6
 type: fact
 ---
+
+Definition not stated: the subject deploy.demo_stack is named by requirement REQ-e2e-demo-stack-local-clusters, which links to the subject fact FACT-SUBJECT-7B6EC379C4C091D6 through constrains. The people who own that source can say what it is in the product and what it is not.

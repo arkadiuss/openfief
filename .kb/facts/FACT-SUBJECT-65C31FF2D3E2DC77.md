@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-65C31FF2D3E2DC77
 type: fact
 ---
+
+Definition not stated: the subject identity.first_passkey is named by requirement REQ-identity-first-run-wizard-follows-outside-demo, which links to the subject fact FACT-SUBJECT-65C31FF2D3E2DC77 through constrains. The people who own that source can say what it is in the product and what it is not.

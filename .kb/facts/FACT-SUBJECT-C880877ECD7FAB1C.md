@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C880877ECD7FAB1C
 type: fact
 ---
+
+Definition not stated: the subject valuation.price_history is named by requirement REQ-valuation-instrument-price-history, which links to the subject fact FACT-SUBJECT-C880877ECD7FAB1C through constrains. The people who own that source can say what it is in the product and what it is not.

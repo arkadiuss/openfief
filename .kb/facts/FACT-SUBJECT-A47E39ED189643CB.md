@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-A47E39ED189643CB
 type: fact
 ---
+
+Definition not stated: the subject jurisdiction.regulatory_logic is named by requirement REQ-AUTO-98543BF4649E4961, which links to the subject fact FACT-SUBJECT-A47E39ED189643CB through constrains. The people who own that source can say what it is in the product and what it is not.

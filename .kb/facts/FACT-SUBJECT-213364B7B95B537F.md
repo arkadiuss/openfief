@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-213364B7B95B537F
 type: fact
 ---
+
+Definition not stated: the subject valuation.stored_rows is named by requirement REQ-valuation-stored-cost-basis, which links to the subject fact FACT-SUBJECT-213364B7B95B537F through constrains. The people who own that source can say what it is in the product and what it is not.

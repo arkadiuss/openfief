@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-7A1BF42C85C597E5
 type: fact
 ---
+
+Definition not stated: the subject demo.bonds_ike is named by requirement REQ-demo-ike-earlier-payments, which links to the subject fact FACT-SUBJECT-7A1BF42C85C597E5 through constrains. The people who own that source can say what it is in the product and what it is not.

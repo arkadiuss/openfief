@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D2FDAD9362808F55
 type: fact
 ---
+
+Definition not stated: the subject identity.core_token is named by requirement REQ-identity-core-tokens, which links to the subject fact FACT-SUBJECT-D2FDAD9362808F55 through constrains. The people who own that source can say what it is in the product and what it is not.

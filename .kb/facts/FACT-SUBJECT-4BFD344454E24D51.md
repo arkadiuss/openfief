@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-4BFD344454E24D51
 type: fact
 ---
+
+Definition not stated: the subject ingest.scheduler is named by requirements REQ-ingest-scheduler-due, REQ-ingest-scheduler-retry, REQ-ingest-scheduler-single-flight, REQ-ingest-scheduler-when-due, REQ-ingest-seeded-account-transactions-mode, REQ-ingest-sync-mode-from-ledger, which link to the subject fact FACT-SUBJECT-4BFD344454E24D51 through constrains. The people who own that source can say what it is in the product and what it is not.

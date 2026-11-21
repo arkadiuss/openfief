@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-78769BB3928FD422
 type: fact
 ---
+
+Definition not stated: the subject ledger.instrument_names is named by requirements REQ-decision-d197-1-instrument-display-name, REQ-ledger-instrument-names, which link to the subject fact FACT-SUBJECT-78769BB3928FD422 through constrains. The people who own that source can say what it is in the product and what it is not.

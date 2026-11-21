@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 230
+    subjects:
+      - maintainer.model_inputs
 logic_claims:
   - CLAIM-579FC32664121C2F
 semantic_clauses:

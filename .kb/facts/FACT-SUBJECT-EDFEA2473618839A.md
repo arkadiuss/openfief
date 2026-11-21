@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-EDFEA2473618839A
 type: fact
 ---
+
+Definition not stated: the subject demo.deploy is named by requirements REQ-tooling-demo-manifests, REQ-tooling-demo-signed-deploy, which link to the subject fact FACT-SUBJECT-EDFEA2473618839A through constrains. The people who own that source can say what it is in the product and what it is not.

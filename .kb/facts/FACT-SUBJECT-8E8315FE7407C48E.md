@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8E8315FE7407C48E
 type: fact
 ---
+
+Definition not stated: the subject views.account_performance is named by requirement REQ-views-account-performance, which links to the subject fact FACT-SUBJECT-8E8315FE7407C48E through constrains. The people who own that source can say what it is in the product and what it is not.

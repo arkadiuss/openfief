@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-E43784DF10DAFD6C
 type: fact
 ---
+
+Definition not stated: the subject valuation.revaluation_queue is named by requirement REQ-valuation-coalesce, which links to the subject fact FACT-SUBJECT-E43784DF10DAFD6C through constrains. The people who own that source can say what it is in the product and what it is not.

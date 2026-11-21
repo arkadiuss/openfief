@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-1FF018E868223570
 type: fact
 ---
+
+Definition not stated: the subject ledger.seed is named by requirement REQ-ledger-go-live, which links to the subject fact FACT-SUBJECT-1FF018E868223570 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B79DA0C69EEC5A10
 type: fact
 ---
+
+Definition not stated: the subject plugins.catalog is named by requirement REQ-plugins-catalog-in-repo, which links to the subject fact FACT-SUBJECT-B79DA0C69EEC5A10 through constrains. The people who own that source can say what it is in the product and what it is not.

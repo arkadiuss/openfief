@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-56AB79B2CF5A7899
 type: fact
 ---
+
+Definition not stated: the subject pl.reference_rate_day is named by requirement REQ-pl-reference-rate-day, which links to the subject fact FACT-SUBJECT-56AB79B2CF5A7899 through constrains. The people who own that source can say what it is in the product and what it is not.

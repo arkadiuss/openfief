@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6BE74B7343F9419D
 type: fact
 ---
+
+Definition not stated: the subject views.performance_value is named by requirement REQ-views-performance-value-reporting, which links to the subject fact FACT-SUBJECT-6BE74B7343F9419D through constrains. The people who own that source can say what it is in the product and what it is not.

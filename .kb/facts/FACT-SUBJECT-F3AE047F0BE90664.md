@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-F3AE047F0BE90664
 type: fact
 ---
+
+Definition not stated: the subject plugins.plugin_install is named by requirements REQ-plugins-install-shows-market-data-list, REQ-plugins-instance-per-install, which link to the subject fact FACT-SUBJECT-F3AE047F0BE90664 through constrains. The people who own that source can say what it is in the product and what it is not.

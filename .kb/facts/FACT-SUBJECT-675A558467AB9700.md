@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-675A558467AB9700
 type: fact
 ---
+
+Definition not stated: the subject ingest.connector_binding is named by requirement REQ-ingest-connector-binding, which links to the subject fact FACT-SUBJECT-675A558467AB9700 through constrains. The people who own that source can say what it is in the product and what it is not.

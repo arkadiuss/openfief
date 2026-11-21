@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: valuation.stored_valuations
+subject_key: valuation.stored_valuation
 property_key: stored_rows_derived_from_inputs
-canonical_key: mcp-kibi-model-requirement:valuation.stored_valuations:stored_rows_derived_from_inputs:eq:true
+canonical_key: mcp-kibi-model-requirement:valuation.stored_valuation:stored_rows_derived_from_inputs:eq:true
 operator: eq
 value_type: bool
 value_bool: true

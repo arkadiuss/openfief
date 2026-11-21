@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-53FC5E22263EFA3D
 type: fact
 ---
+
+Definition not stated: the subject valuation.lot_indices is named by requirement REQ-valuation-lot-indices, which links to the subject fact FACT-SUBJECT-53FC5E22263EFA3D through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,4 @@ origin:
 id: FACT-SUBJECT-7522D6C27E74C2F2
 type: fact
 ---
+A ledger transaction: it is recorded from go-live onward, has at least two postings that sum to zero in every currency, and an unbalanced one is rejected with the currency and amount it is off by. It does not cover the postings' accounts or how a transaction is imported.

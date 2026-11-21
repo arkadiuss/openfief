@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 114
+    subjects:
+      - maintainer.schedule
 logic_claims:
   - CLAIM-9C3EFC324DA97FBB
 semantic_clauses:

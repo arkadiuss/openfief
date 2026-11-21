@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-EBA808FE7BF21337
 type: fact
 ---
+
+Definition not stated: the subject tooling.proto_contracts is named by requirement REQ-tooling-proto-contracts, which links to the subject fact FACT-SUBJECT-EBA808FE7BF21337 through constrains. The people who own that source can say what it is in the product and what it is not.

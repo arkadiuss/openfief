@@ -902,13 +902,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68ee4871348e
-  - type: constrains
-    from: REQ-plugins-egress-test-exemption-one-host
-    to: FACT-SUBJECT-DA9ECC4C33E41EA4
-    created_at: 2026-11-12T23:18:58.595Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-37c588ab0cdd
   - type: requires_property
     from: REQ-plugins-egress-test-exemption-one-host
     to: FACT-PROP-D59D0DAE24E0068C
@@ -1154,3 +1147,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5dbd9936ae29
+  - type: constrains
+    from: REQ-plugins-egress-test-exemption-one-host
+    to: FACT-SUBJECT-07E0E01FE8CEB822
+    created_at: 2026-11-20T12:59:11.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6c4fab9dfae

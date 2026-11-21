@@ -21,3 +21,4 @@ origin:
 id: FACT-SUBJECT-BDF67386A1A22E37
 type: fact
 ---
+The openfief plugin install command: it verifies a plugin's signature and shows its requested permissions before applying the Plugin and PluginGrant with the owner's kubeconfig, and refuses an instance whose grant names a Secret another installed instance already names.

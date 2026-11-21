@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-35AB9D52039A8BCF
 type: fact
 ---
+
+Definition not stated: the subject ingest.account_start is named by requirements REQ-ingest-later-uploads-transactions, REQ-ingest-opening-upload-records-go-live, REQ-ingest-opening-upload-starts-account, REQ-ingest-waiting-positions-join-opening, which link to the subject fact FACT-SUBJECT-35AB9D52039A8BCF through constrains. The people who own that source can say what it is in the product and what it is not.

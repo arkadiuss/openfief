@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-51265BDA30800E3F
 type: fact
 ---
+
+Definition not stated: the subject ingest.ticker_service is named by requirement REQ-ingest-ticker-correction-service, which links to the subject fact FACT-SUBJECT-51265BDA30800E3F through constrains. The people who own that source can say what it is in the product and what it is not.

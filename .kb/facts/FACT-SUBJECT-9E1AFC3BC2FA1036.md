@@ -21,3 +21,4 @@ origin:
 id: FACT-SUBJECT-9E1AFC3BC2FA1036
 type: fact
 ---
+The host a manifest requests from a named config field instead of a fixed host: the host and port of the https URL the field holds, lower-cased, nothing when absent or empty and an invalid Plugin when it is not a valid https URL; the CLI reads and shows it and the grant approves exactly that host.

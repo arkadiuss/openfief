@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-8D841D423BEA5EE7
 type: fact
 ---
+
+Definition not stated: the subject views.mcp_server is named by requirements REQ-AUTO-B8D1BCB44E147E0C, REQ-views-mcp-only-as-d213-allows, which link to the subject fact FACT-SUBJECT-8D841D423BEA5EE7 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-DD938F202657A50C
 type: fact
 ---
+
+Definition not stated: the subject valuation.river_queue is named by requirement REQ-valuation-river-jobs, which links to the subject fact FACT-SUBJECT-DD938F202657A50C through constrains. The people who own that source can say what it is in the product and what it is not.

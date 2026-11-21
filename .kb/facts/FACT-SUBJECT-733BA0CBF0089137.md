@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-733BA0CBF0089137
 type: fact
 ---
+
+Definition not stated: the subject plugins.config_host_change is named by requirement REQ-plugins-config-host-change-keeps-approved, which links to the subject fact FACT-SUBJECT-733BA0CBF0089137 through constrains. The people who own that source can say what it is in the product and what it is not.

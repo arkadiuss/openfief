@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D599E85F8AF04C71
 type: fact
 ---
+
+Definition not stated: the subject core.connectors is named by requirement REQ-core-connector-commands, which links to the subject fact FACT-SUBJECT-D599E85F8AF04C71 through constrains. The people who own that source can say what it is in the product and what it is not.

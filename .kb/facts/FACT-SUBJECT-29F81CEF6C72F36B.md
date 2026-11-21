@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-29F81CEF6C72F36B
 type: fact
 ---
+
+Definition not stated: the subject operator.ca_bundle_status is named by requirement REQ-operator-ca-bundle-missing-condition, which links to the subject fact FACT-SUBJECT-29F81CEF6C72F36B through constrains. The people who own that source can say what it is in the product and what it is not.

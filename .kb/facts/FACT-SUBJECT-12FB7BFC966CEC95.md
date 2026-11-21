@@ -20,4 +20,7 @@ origin:
   recorded_at: '2026-11-03T07:23:11.078Z'
 id: FACT-SUBJECT-12FB7BFC966CEC95
 type: fact
+distinct_from:
+  - views.view_plugins
 ---
+The read API's Plugin record and the UI's plugins page, which show the institutions a grant approves next to those the manifest declares. It differs from views.view_plugins, which is how a view plugin reads the record through the public API.

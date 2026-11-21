@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-486D4C5AA66570AA
 type: fact
 ---
+
+Definition not stated: the subject docs.core_network_policy is named by requirement REQ-docs-core-kubernetes-api-rule, which links to the subject fact FACT-SUBJECT-486D4C5AA66570AA through constrains. The people who own that source can say what it is in the product and what it is not.

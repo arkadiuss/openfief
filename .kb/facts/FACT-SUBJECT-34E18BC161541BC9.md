@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-34E18BC161541BC9
 type: fact
 ---
+
+Definition not stated: the subject ingest.index_levels is named by requirements REQ-ingest-index-levels, REQ-ingest-index-levels-allowed-instances, which link to the subject fact FACT-SUBJECT-34E18BC161541BC9 through constrains. The people who own that source can say what it is in the product and what it is not.

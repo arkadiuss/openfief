@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-3C2FC1DC62221CB6
 type: fact
 ---
+
+Definition not stated: the subject plugins.image_reference is named by requirement REQ-plugins-image-digest-only, which links to the subject fact FACT-SUBJECT-3C2FC1DC62221CB6 through constrains. The people who own that source can say what it is in the product and what it is not.

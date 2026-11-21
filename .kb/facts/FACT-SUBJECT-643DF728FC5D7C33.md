@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-643DF728FC5D7C33
 type: fact
 ---
+
+Definition not stated: the subject ledger.changed_source_row is named by requirement REQ-AUTO-22E70B6530E994B1, which links to the subject fact FACT-SUBJECT-643DF728FC5D7C33 through constrains. The people who own that source can say what it is in the product and what it is not.

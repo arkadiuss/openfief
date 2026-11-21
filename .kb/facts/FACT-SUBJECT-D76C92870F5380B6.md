@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D76C92870F5380B6
 type: fact
 ---
+
+Definition not stated: the subject pl.belka_tax is named by requirements REQ-decision-d37-3-belka-half-up, REQ-pl-belka-tax, REQ-pl-oki-income-outside-pit, REQ-pl-oki-no-belka-tax, which link to the subject fact FACT-SUBJECT-D76C92870F5380B6 through constrains. The people who own that source can say what it is in the product and what it is not.

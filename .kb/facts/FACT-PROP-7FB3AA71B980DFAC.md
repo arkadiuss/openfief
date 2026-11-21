@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: ingest.deliveries
+subject_key: ingest.delivery
 property_key: declared_institution_only
-canonical_key: mcp-kibi-model-requirement:ingest.deliveries:declared_institution_only:eq:true
+canonical_key: mcp-kibi-model-requirement:ingest.delivery:declared_institution_only:eq:true
 operator: eq
 value_type: bool
 value_bool: true

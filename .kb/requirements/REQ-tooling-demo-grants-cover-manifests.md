@@ -13,6 +13,8 @@ semantic_inventory:
     span:
       start: 0
       end: 197
+    subjects:
+      - tooling.demo_manifest_grant_check
 logic_claims:
   - CLAIM-CF92676B5FF7256F
 origin:

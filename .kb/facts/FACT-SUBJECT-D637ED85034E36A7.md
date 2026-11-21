@@ -21,3 +21,4 @@ origin:
 id: FACT-SUBJECT-D637ED85034E36A7
 type: fact
 ---
+The one in-cluster service a plugin's signed manifest may request and the owner picks at install: namespace/service:port with DNS-label names and a namespace other than openfief, which the CLI asks for and shows and the grant approves exactly.

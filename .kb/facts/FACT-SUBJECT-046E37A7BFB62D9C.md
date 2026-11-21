@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-046E37A7BFB62D9C
 type: fact
 ---
+
+Definition not stated: the subject portfolio.registry is named by requirement REQ-portfolio-registry-checks-sleeves, which links to the subject fact FACT-SUBJECT-046E37A7BFB62D9C through constrains. The people who own that source can say what it is in the product and what it is not.

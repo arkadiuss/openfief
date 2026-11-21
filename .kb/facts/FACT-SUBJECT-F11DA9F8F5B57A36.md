@@ -1,6 +1,6 @@
 ---
 title: Ledger Opening Lots
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-98
 tags:
   - strict-modeling
@@ -20,4 +20,7 @@ origin:
   recorded_at: '2026-10-30T05:01:58.438Z'
 id: FACT-SUBJECT-F11DA9F8F5B57A36
 type: fact
+part_of:
+  - ledger.opening_lot
 ---
+The dating of opening lots added one at a time to an account: all on its go-live date when seeded, on one date when not, and refused when the account has a current transaction. It is a part of ledger.opening_lot.

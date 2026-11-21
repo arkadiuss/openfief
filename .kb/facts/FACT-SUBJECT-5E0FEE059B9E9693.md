@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5E0FEE059B9E9693
 type: fact
 ---
+
+Definition not stated: the subject plugins.ibkr_flex is named by requirement REQ-plugins-ibkr-flex-connector, which links to the subject fact FACT-SUBJECT-5E0FEE059B9E9693 through constrains. The people who own that source can say what it is in the product and what it is not.

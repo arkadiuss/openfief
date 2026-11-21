@@ -20,4 +20,7 @@ origin:
   recorded_at: '2026-11-01T12:27:03.383Z'
 id: FACT-SUBJECT-E5D0B2F84265953A
 type: fact
+kind_of:
+  - ingest.account_form
 ---
+The form an OKI account is given when it is created: a bank account, a treasury bond account, a brokerage account or a fund register. It is a kind of ingest.account_form, which covers account forms of every wrapper.

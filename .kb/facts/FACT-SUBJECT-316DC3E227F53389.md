@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-316DC3E227F53389
 type: fact
 ---
+
+Definition not stated: the subject ingest.connector_service is named by requirement REQ-ingest-core-calls-connectors, which links to the subject fact FACT-SUBJECT-316DC3E227F53389 through constrains. The people who own that source can say what it is in the product and what it is not.

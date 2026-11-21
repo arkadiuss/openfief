@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6A67E472A68A30B4
 type: fact
 ---
+
+Definition not stated: the subject release.signatures is named by requirement REQ-tooling-release-verify-signatures, which links to the subject fact FACT-SUBJECT-6A67E472A68A30B4 through constrains. The people who own that source can say what it is in the product and what it is not.

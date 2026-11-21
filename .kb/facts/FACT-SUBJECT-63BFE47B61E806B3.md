@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-63BFE47B61E806B3
 type: fact
 ---
+
+Definition not stated: the subject ingest.isin_lookup is named by requirement REQ-ingest-isin-lookup-allowed-connectors-only, which links to the subject fact FACT-SUBJECT-63BFE47B61E806B3 through constrains. The people who own that source can say what it is in the product and what it is not.

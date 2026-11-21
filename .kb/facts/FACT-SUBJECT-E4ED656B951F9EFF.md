@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-E4ED656B951F9EFF
 type: fact
 ---
+
+Definition not stated: the subject operator.cluster_topology is named by requirement REQ-operator-cluster-peers, which links to the subject fact FACT-SUBJECT-E4ED656B951F9EFF through constrains. The people who own that source can say what it is in the product and what it is not.

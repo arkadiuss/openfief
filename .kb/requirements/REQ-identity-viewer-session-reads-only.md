@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 156
+    subjects:
+      - sessions.viewer_read_scope
   - claim_key: CLAIM-462A663AC6A22F04
     claim_text: a viewer's passkey never confirms the owner's session, and signing out is all a viewer changes
     role: descriptive

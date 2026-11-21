@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-FDA8A1C642277888
 type: fact
 ---
+
+Definition not stated: the subject valuation.bond_holding is named by requirements REQ-valuation-bond-holding, REQ-valuation-bond-holding-values, which link to the subject fact FACT-SUBJECT-FDA8A1C642277888 through constrains. The people who own that source can say what it is in the product and what it is not.

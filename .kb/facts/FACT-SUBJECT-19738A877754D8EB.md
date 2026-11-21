@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-19738A877754D8EB
 type: fact
 ---
+
+Definition not stated: the subject operator.plugin_grant is named by requirement REQ-operator-grant-validity, which links to the subject fact FACT-SUBJECT-19738A877754D8EB through constrains. The people who own that source can say what it is in the product and what it is not.

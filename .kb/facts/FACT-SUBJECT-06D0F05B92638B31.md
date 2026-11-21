@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-06D0F05B92638B31
 type: fact
 ---
+
+Definition not stated: the subject ui.account_page is named by requirement REQ-ui-account-page-tabs, which links to the subject fact FACT-SUBJECT-06D0F05B92638B31 through constrains. The people who own that source can say what it is in the product and what it is not.

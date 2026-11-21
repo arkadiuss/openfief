@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 199
+    subjects:
+      - ask_box.question_data_tier
 logic_claims:
   - CLAIM-CB61F99BF376AA18
 id: REQ-ui-ask-question-tagged-t0

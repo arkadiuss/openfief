@@ -28,6 +28,8 @@ semantic_inventory:
     span:
       start: 241
       end: 720
+    subjects:
+      - plugin_metrics.core_endpoint
 id: REQ-plugin-metrics-through-core
 type: req
 ---

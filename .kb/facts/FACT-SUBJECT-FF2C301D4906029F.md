@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-FF2C301D4906029F
 type: fact
 ---
+
+Definition not stated: the subject ledger.re_imports is named by requirement REQ-AUTO-F19F621B67F14F4F, which links to the subject fact FACT-SUBJECT-FF2C301D4906029F through constrains. The people who own that source can say what it is in the product and what it is not.

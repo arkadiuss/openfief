@@ -587,13 +587,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4108ae0a2c17
-  - type: constrains
-    from: REQ-identity-sign-out-everywhere
-    to: FACT-SUBJECT-A09EF0400392628E
-    created_at: 2026-11-03T02:41:35.273Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dfba26c8762f
   - type: requires_property
     from: REQ-identity-sign-out-everywhere
     to: FACT-PROP-5007B401632A1611
@@ -1238,3 +1231,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebae8b12fab2
+  - type: constrains
+    from: REQ-identity-sign-out-everywhere
+    to: FACT-SUBJECT-825F5042E5E6F174
+    created_at: 2026-11-20T22:36:38.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-341b279c1cc3

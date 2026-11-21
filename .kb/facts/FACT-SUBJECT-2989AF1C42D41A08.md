@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-2989AF1C42D41A08
 type: fact
 ---
+
+Definition not stated: the subject connectors.endpoint is named by requirement REQ-connectors-configurable-endpoint, which links to the subject fact FACT-SUBJECT-2989AF1C42D41A08 through constrains. The people who own that source can say what it is in the product and what it is not.

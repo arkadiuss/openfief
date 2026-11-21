@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B27A8B10D4931BCB
 type: fact
 ---
+
+Definition not stated: the subject tooling.release_version is named by requirement REQ-tooling-release-version, which links to the subject fact FACT-SUBJECT-B27A8B10D4931BCB through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-E8D01CC33F2EE690
 type: fact
 ---
+
+Definition not stated: the subject e2e.core_plugin_port is named by requirement REQ-e2e-core-plugin-port-refuses-bad-tokens, which links to the subject fact FACT-SUBJECT-E8D01CC33F2EE690 through constrains. The people who own that source can say what it is in the product and what it is not.

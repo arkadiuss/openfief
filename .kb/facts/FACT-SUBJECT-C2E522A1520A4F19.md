@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C2E522A1520A4F19
 type: fact
 ---
+
+Definition not stated: the subject identity.demo_session is named by requirements REQ-identity-demo-owner-passkey, REQ-identity-demo-sessions, which link to the subject fact FACT-SUBJECT-C2E522A1520A4F19 through constrains. The people who own that source can say what it is in the product and what it is not.

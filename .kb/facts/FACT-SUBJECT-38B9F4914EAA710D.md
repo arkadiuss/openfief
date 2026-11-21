@@ -20,4 +20,7 @@ origin:
   recorded_at: '2026-11-01T07:39:39.388Z'
 id: FACT-SUBJECT-38B9F4914EAA710D
 type: fact
+kind_of:
+  - ingest.account_start
 ---
+How an XTB account starts, from an export of open positions or of its whole history. It is a kind of ingest.account_start, which covers how any account's go-live is recorded by its opening upload.

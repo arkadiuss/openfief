@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-99FBBD666AEDADD3
 type: fact
 ---
+
+Definition not stated: the subject docs.site_build is named by requirement REQ-docs-build-fails-broken, which links to the subject fact FACT-SUBJECT-99FBBD666AEDADD3 through constrains. The people who own that source can say what it is in the product and what it is not.

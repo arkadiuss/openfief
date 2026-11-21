@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 388
+    subjects:
+      - demo.model_layer
   - claim_key: CLAIM-150C71D09CCBB836
     claim_text: the maintainer has no route
     role: descriptive

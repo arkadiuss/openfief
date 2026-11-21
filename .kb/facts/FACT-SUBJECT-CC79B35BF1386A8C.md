@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-CC79B35BF1386A8C
 type: fact
 ---
+
+Definition not stated: the subject tooling.dco_check is named by requirement REQ-tooling-dco-signoff, which links to the subject fact FACT-SUBJECT-CC79B35BF1386A8C through constrains. The people who own that source can say what it is in the product and what it is not.

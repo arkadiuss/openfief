@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 154
+    subjects:
+      - maintainer.weight_computation
 logic_claims:
   - CLAIM-B166D9E17A65D801
 semantic_clauses:

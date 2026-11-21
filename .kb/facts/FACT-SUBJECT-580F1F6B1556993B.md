@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-580F1F6B1556993B
 type: fact
 ---
+
+Definition not stated: the subject plugins.workload is named by requirements REQ-plugins-egress-token-projected, REQ-plugins-workload-core-auth, REQ-plugins-workload-identity-secrets, which link to the subject fact FACT-SUBJECT-580F1F6B1556993B through constrains. The people who own that source can say what it is in the product and what it is not.

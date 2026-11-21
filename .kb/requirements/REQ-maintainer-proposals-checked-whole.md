@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 206
+    subjects:
+      - maintainer.proposal_validation
 logic_claims:
   - CLAIM-9A59FC0512AD685B
 semantic_clauses:

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-3D3B43A3E650E58A
 type: fact
 ---
+
+Definition not stated: the subject plugins.plugin_identity is named by requirement REQ-plugins-identity-service-account, which links to the subject fact FACT-SUBJECT-3D3B43A3E650E58A through constrains. The people who own that source can say what it is in the product and what it is not.

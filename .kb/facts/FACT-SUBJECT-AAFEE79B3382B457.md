@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-AAFEE79B3382B457
 type: fact
 ---
+
+Definition not stated: the subject valuation.index_readings is named by requirement REQ-valuation-index-readings-record-instance, which links to the subject fact FACT-SUBJECT-AAFEE79B3382B457 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D4980B15C47DCF8A
 type: fact
 ---
+
+Definition not stated: the subject operator.plugin_status is named by requirements REQ-operator-plugin-trust-status, REQ-operator-signature-signer-status, REQ-operator-upgrade-status, which link to the subject fact FACT-SUBJECT-D4980B15C47DCF8A through constrains. The people who own that source can say what it is in the product and what it is not.

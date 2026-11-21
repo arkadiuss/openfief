@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C2A5FD3DF4534135
 type: fact
 ---
+
+Definition not stated: the subject views.allocation_inputs is named by requirement REQ-views-allocation-inputs-reporting, which links to the subject fact FACT-SUBJECT-C2A5FD3DF4534135 through constrains. The people who own that source can say what it is in the product and what it is not.

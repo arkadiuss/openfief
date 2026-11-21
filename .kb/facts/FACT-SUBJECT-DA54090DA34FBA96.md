@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-DA54090DA34FBA96
 type: fact
 ---
+
+Definition not stated: the subject plugins.xtb is named by requirement REQ-plugins-xtb-connector, which links to the subject fact FACT-SUBJECT-DA54090DA34FBA96 through constrains. The people who own that source can say what it is in the product and what it is not.

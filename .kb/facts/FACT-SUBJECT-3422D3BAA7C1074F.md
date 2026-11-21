@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-3422D3BAA7C1074F
 type: fact
 ---
+
+Definition not stated: the subject views.removed_instance is named by requirements REQ-views-removed-instance-holdings-lots, REQ-views-removed-instance-mark, REQ-views-removed-instance-mark-at-read, which link to the subject fact FACT-SUBJECT-3422D3BAA7C1074F through constrains. The people who own that source can say what it is in the product and what it is not.

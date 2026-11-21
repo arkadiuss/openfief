@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8C7EBA84B405CABC
 type: fact
 ---
+
+Definition not stated: the subject jurisdiction.pack is named by requirement REQ-jurisdiction-in-process, which links to the subject fact FACT-SUBJECT-8C7EBA84B405CABC through constrains. The people who own that source can say what it is in the product and what it is not.

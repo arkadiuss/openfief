@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-54E9545854CF3051
 type: fact
 ---
+
+Definition not stated: the subject attention.item_scope is named by requirement REQ-attention-item-scope, which links to the subject fact FACT-SUBJECT-54E9545854CF3051 through constrains. The people who own that source can say what it is in the product and what it is not.

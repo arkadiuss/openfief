@@ -21,3 +21,4 @@ origin:
 id: FACT-SUBJECT-8EC6E0F87B5129F6
 type: fact
 ---
+The sync request the core sends to a connector instance bound to accounts: for each bound account once in ID order it carries the go-live date, tax wrapper, non-zero holdings and open lots, the stored payout settings and history, the bond series terms and the provisional names. It does not cover the connector's delivery.

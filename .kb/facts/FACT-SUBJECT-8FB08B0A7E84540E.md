@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8FB08B0A7E84540E
 type: fact
 ---
+
+Definition not stated: the subject demo.seed_database_wait is named by requirement REQ-demo-seed-waits-for-database, which links to the subject fact FACT-SUBJECT-8FB08B0A7E84540E through constrains. The people who own that source can say what it is in the product and what it is not.

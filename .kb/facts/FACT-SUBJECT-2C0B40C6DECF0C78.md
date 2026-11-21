@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-2C0B40C6DECF0C78
 type: fact
 ---
+
+Definition not stated: the subject pl.ikze_withdrawal_tax is named by requirements REQ-pl-ikze-early-withdrawal-tax, REQ-pl-ikze-liquidation-missing, which link to the subject fact FACT-SUBJECT-2C0B40C6DECF0C78 through constrains. The people who own that source can say what it is in the product and what it is not.

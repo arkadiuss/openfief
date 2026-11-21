@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-D9892CF5EBAA612F
 type: fact
 ---
+
+Definition not stated: the subject valuation.stored_currency is named by requirement REQ-valuation-stored-currency-never-assumed-pln, which links to the subject fact FACT-SUBJECT-D9892CF5EBAA612F through constrains. The people who own that source can say what it is in the product and what it is not.

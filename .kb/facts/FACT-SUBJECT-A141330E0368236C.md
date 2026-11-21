@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-A141330E0368236C
 type: fact
 ---
+
+Definition not stated: the subject core.browser_port is named by requirement REQ-core-browser-port-scope, which links to the subject fact FACT-SUBJECT-A141330E0368236C through constrains. The people who own that source can say what it is in the product and what it is not.

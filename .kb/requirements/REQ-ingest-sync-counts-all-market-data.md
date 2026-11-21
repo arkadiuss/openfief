@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 235
+    subjects:
+      - sync.audit_market_data_counts
 logic_claims:
   - CLAIM-237BD644B675E7B5
 id: REQ-ingest-sync-counts-all-market-data

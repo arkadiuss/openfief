@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C5C5766761B32202
 type: fact
 ---
+
+Definition not stated: the subject operator.trust_config is named by requirement REQ-operator-trust-config, which links to the subject fact FACT-SUBJECT-C5C5766761B32202 through constrains. The people who own that source can say what it is in the product and what it is not.

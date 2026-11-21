@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-E4F299C8ACE54DB9
 type: fact
 ---
+
+Definition not stated: the subject valuation.stored_cost_basis is named by requirement REQ-valuation-stored-cost-basis-named-currency, which links to the subject fact FACT-SUBJECT-E4F299C8ACE54DB9 through constrains. The people who own that source can say what it is in the product and what it is not.

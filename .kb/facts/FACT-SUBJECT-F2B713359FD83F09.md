@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-F2B713359FD83F09
 type: fact
 ---
+
+Definition not stated: the subject credentials_job.image is named by requirement REQ-identity-credentials-job-core-image, which links to the subject fact FACT-SUBJECT-F2B713359FD83F09 through constrains. The people who own that source can say what it is in the product and what it is not.

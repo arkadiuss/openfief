@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: ledger.opening_lots
+subject_key: ledger.opening_lot
 property_key: added_one_at_a_time_on_go_live
-canonical_key: mcp-kibi-model-requirement:ledger.opening_lots:added_one_at_a_time_on_go_live:eq:true
+canonical_key: mcp-kibi-model-requirement:ledger.opening_lot:added_one_at_a_time_on_go_live:eq:true
 operator: eq
 value_type: bool
 value_bool: true

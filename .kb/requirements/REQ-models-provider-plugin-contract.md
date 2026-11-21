@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 87
+    subjects:
+      - models.provider_plugin_contract
   - claim_key: CLAIM-4930667E5440D10F
     claim_text: it declares where its models run and the provider's retention terms, lists models, generates with tools and structured output, and reports each call's usage
     role: descriptive

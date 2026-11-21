@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-005E002D2AEB1A5D
 type: fact
 ---
+
+Definition not stated: the subject jurisdiction.fee_rule is named by requirement REQ-jurisdiction-fee-rule-sale-cost, which links to the subject fact FACT-SUBJECT-005E002D2AEB1A5D through constrains. The people who own that source can say what it is in the product and what it is not.

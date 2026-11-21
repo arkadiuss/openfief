@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 270
+    subjects:
+      - inbox.grant_household_button
 logic_claims:
   - CLAIM-10EA49BD5E426277
 id: REQ-ui-inbox-grant-ungranted-view-plugin

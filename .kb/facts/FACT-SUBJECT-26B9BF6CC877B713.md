@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-26B9BF6CC877B713
 type: fact
 ---
+
+Definition not stated: the subject plugins.uninstall is named by requirement REQ-plugins-uninstall-keeps-data, which links to the subject fact FACT-SUBJECT-26B9BF6CC877B713 through constrains. The people who own that source can say what it is in the product and what it is not.

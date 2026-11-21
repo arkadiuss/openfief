@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-19BB6D6420CA8BC1
 type: fact
 ---
+
+Definition not stated: the subject tooling.e2e_suite is named by requirement REQ-e2e-bundle-first-run, which links to the subject fact FACT-SUBJECT-19BB6D6420CA8BC1 through constrains. The people who own that source can say what it is in the product and what it is not.

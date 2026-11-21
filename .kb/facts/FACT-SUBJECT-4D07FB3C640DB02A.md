@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-4D07FB3C640DB02A
 type: fact
 ---
+
+Definition not stated: the subject e2e.core_plugin_calls is named by requirement REQ-e2e-core-plugin-tokens, which links to the subject fact FACT-SUBJECT-4D07FB3C640DB02A through constrains. The people who own that source can say what it is in the product and what it is not.

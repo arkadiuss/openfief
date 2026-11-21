@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-1B38C9922CF22905
 type: fact
 ---
+
+Definition not stated: the subject ingest.xtb_data is named by requirement REQ-AUTO-2C10EB8F716422D6, which links to the subject fact FACT-SUBJECT-1B38C9922CF22905 through constrains. The people who own that source can say what it is in the product and what it is not.

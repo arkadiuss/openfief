@@ -19,3 +19,4 @@ origin:
 id: FACT-SUBJECT-07E0E01FE8CEB822
 type: fact
 ---
+The exemption of one host from the egress proxy's refused address ranges that the end-to-end suite's cluster configuration may set: the proxy logs a warning at start whenever one is set, and the release bundle's test fails if the bundle sets one, so a shipped install never has one. It does not cover the refused ranges themselves.

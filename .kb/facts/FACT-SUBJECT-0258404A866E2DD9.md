@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0258404A866E2DD9
 type: fact
 ---
+
+Definition not stated: the subject plugins.sdk is named by requirement REQ-plugins-sdk-token-per-request, which links to the subject fact FACT-SUBJECT-0258404A866E2DD9 through constrains. The people who own that source can say what it is in the product and what it is not.

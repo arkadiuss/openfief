@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C18CCCB9808C203F
 type: fact
 ---
+
+Definition not stated: the subject docs.publishing is named by requirement REQ-docs-published, which links to the subject fact FACT-SUBJECT-C18CCCB9808C203F through constrains. The people who own that source can say what it is in the product and what it is not.

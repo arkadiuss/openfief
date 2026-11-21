@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-352DE87C51F6D635
 type: fact
 ---
+
+Definition not stated: the subject valuation.nbp_reference_rates is named by requirement REQ-valuation-nbp-reference-rates, which links to the subject fact FACT-SUBJECT-352DE87C51F6D635 through constrains. The people who own that source can say what it is in the product and what it is not.

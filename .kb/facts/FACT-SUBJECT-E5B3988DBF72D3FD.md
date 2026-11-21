@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-E5B3988DBF72D3FD
 type: fact
 ---
+
+Definition not stated: the subject e2e.plugin_isolation is named by requirement REQ-e2e-plugin-isolation, which links to the subject fact FACT-SUBJECT-E5B3988DBF72D3FD through constrains. The people who own that source can say what it is in the product and what it is not.

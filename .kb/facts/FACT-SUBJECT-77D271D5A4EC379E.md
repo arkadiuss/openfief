@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-77D271D5A4EC379E
 type: fact
 ---
+
+Definition not stated: the subject plugins.eodhd_config is named by requirement REQ-plugins-eodhd-config, which links to the subject fact FACT-SUBJECT-77D271D5A4EC379E through constrains. The people who own that source can say what it is in the product and what it is not.

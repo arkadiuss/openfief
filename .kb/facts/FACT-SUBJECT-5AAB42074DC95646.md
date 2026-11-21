@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5AAB42074DC95646
 type: fact
 ---
+
+Definition not stated: the subject ledger.import is named by requirements REQ-ledger-app-import-append, REQ-ledger-app-import-atomic, REQ-ledger-app-version-conflict, REQ-ledger-import-idempotent, REQ-ledger-import-supersede, which link to the subject fact FACT-SUBJECT-5AAB42074DC95646 through constrains. The people who own that source can say what it is in the product and what it is not.

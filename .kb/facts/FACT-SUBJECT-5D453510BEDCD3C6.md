@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5D453510BEDCD3C6
 type: fact
 ---
+
+Definition not stated: the subject tooling.docs_check is named by requirements REQ-tooling-docs-ground-rules-unchanged, REQ-tooling-docs-undefined-tag, REQ-tooling-docs-unique-ids, which link to the subject fact FACT-SUBJECT-5D453510BEDCD3C6 through constrains. The people who own that source can say what it is in the product and what it is not.

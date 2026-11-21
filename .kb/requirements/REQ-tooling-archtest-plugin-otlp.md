@@ -20,6 +20,8 @@ semantic_inventory:
     span:
       start: 0
       end: 374
+    subjects:
+      - tooling.archtest_plugin_otlp_imports
 id: REQ-tooling-archtest-plugin-otlp
 type: req
 ---

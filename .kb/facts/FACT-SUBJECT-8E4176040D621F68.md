@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8E4176040D621F68
 type: fact
 ---
+
+Definition not stated: the subject valuation.revaluation_trigger is named by requirement REQ-valuation-revaluation-triggers, which links to the subject fact FACT-SUBJECT-8E4176040D621F68 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -1,6 +1,6 @@
 ---
 title: Ingest Broker Accounts
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-72
 tags:
   - strict-modeling
@@ -20,4 +20,7 @@ origin:
   recorded_at: '2026-10-29T11:36:40.851Z'
 id: FACT-SUBJECT-ADDCB97B909F7AE1
 type: fact
+part_of:
+  - ingest.broker_account
 ---
+The record kept for each broker account a connector instance's delivery reports, with its institution, the day last seen and whether the last reporting delivery reported it. It is a part of ingest.broker_account, which also covers remapping and the owner's choice.

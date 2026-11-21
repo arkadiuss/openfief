@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6BC984889391251D
 type: fact
 ---
+
+Definition not stated: the subject valuation.revaluation_settings is named by requirement REQ-valuation-settings, which links to the subject fact FACT-SUBJECT-6BC984889391251D through constrains. The people who own that source can say what it is in the product and what it is not.

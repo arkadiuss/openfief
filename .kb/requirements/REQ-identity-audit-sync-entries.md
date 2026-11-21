@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 421
+    subjects:
+      - audit.sync_entries
 logic_claims:
   - CLAIM-3F3C97F56C1D59F6
 id: REQ-identity-audit-sync-entries

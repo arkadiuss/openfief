@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 537
+    subjects:
+      - ask_box.question_limits
   - claim_key: CLAIM-93BB3913ED7427C9
     claim_text: with no limit set every question is allowed and nothing is counted
     role: descriptive

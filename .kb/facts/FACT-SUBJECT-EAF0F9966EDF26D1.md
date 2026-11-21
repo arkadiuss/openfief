@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-EAF0F9966EDF26D1
 type: fact
 ---
+
+Definition not stated: the subject ui.navigation is named by requirements REQ-ui-four-places, REQ-ui-no-check-pages, REQ-ui-removed-pages-redirect, which link to the subject fact FACT-SUBJECT-EAF0F9966EDF26D1 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-33539288FED00E7B
 type: fact
 ---
+
+Definition not stated: the subject ingest.market_data_sync is named by requirements REQ-ingest-market-data-list-declared-granted, REQ-ingest-market-data-sync-instruments, REQ-ingest-market-data-watch-list, REQ-ingest-new-instrument-priced, which link to the subject fact FACT-SUBJECT-33539288FED00E7B through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-70F8289C4B07EE53
 type: fact
 ---
+
+Definition not stated: the subject ledger.balance_assertion is named by requirements REQ-ledger-app-assertion-flag, REQ-ledger-assertion-mismatch, which link to the subject fact FACT-SUBJECT-70F8289C4B07EE53 through constrains. The people who own that source can say what it is in the product and what it is not.

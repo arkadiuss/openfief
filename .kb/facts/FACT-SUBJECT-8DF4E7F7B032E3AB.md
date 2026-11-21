@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8DF4E7F7B032E3AB
 type: fact
 ---
+
+Definition not stated: the subject identity.authorization_model is named by requirements REQ-identity-authz-schema-assertions-ci, REQ-identity-authz-spicedb-schema, which link to the subject fact FACT-SUBJECT-8DF4E7F7B032E3AB through constrains. The people who own that source can say what it is in the product and what it is not.

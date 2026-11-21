@@ -384,13 +384,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1af4fe75b51
-  - type: constrains
-    from: REQ-ingest-broker-account-seeding
-    to: FACT-SUBJECT-ADDCB97B909F7AE1
-    created_at: 2026-10-29T11:37:01.278Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7318da2575fb
   - type: requires_property
     from: REQ-ingest-broker-account-seeding
     to: FACT-PROP-C1DD849DC6CE72C1
@@ -958,3 +951,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6989ddf5d5d6
+  - type: constrains
+    from: REQ-ingest-broker-account-seeding
+    to: FACT-SUBJECT-4C19ADBE1BA1D461
+    created_at: 2026-11-20T22:37:06.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-212fedb7c675

@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 277
+    subjects:
+      - models.router_daily_budget
   - claim_key: CLAIM-88774B46B9233BDA
     claim_text: withholds an answer whose cost it can't record
     role: normative
@@ -25,6 +27,8 @@ semantic_inventory:
     span:
       start: 283
       end: 329
+    subjects:
+      - models.router_daily_budget
   - claim_key: CLAIM-F3841463A5ABFE49
     claim_text: the day is the core's time zone's, the total is persisted so a restart and every replica see it, and with no cap set nothing is read or recorded
     role: descriptive

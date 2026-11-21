@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6F7481453A4533AF
 type: fact
 ---
+
+Definition not stated: the subject core.plugin_only_services is named by requirement REQ-core-plugin-port-scope, which links to the subject fact FACT-SUBJECT-6F7481453A4533AF through constrains. The people who own that source can say what it is in the product and what it is not.

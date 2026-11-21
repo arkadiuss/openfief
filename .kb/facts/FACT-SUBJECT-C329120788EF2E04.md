@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C329120788EF2E04
 type: fact
 ---
+
+Definition not stated: the subject ui.statement_upload_form is named by requirement REQ-ui-statement-upload-owner-form, which links to the subject fact FACT-SUBJECT-C329120788EF2E04 through constrains. The people who own that source can say what it is in the product and what it is not.

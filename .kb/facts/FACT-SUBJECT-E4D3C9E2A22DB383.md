@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-E4D3C9E2A22DB383
 type: fact
 ---
+
+Definition not stated: the subject views.attention_inbox is named by requirement REQ-views-attention-inbox, which links to the subject fact FACT-SUBJECT-E4D3C9E2A22DB383 through constrains. The people who own that source can say what it is in the product and what it is not.

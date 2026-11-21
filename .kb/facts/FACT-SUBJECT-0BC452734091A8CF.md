@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0BC452734091A8CF
 type: fact
 ---
+
+Definition not stated: the subject kernel.date is named by requirement REQ-kernel-calendar-date, which links to the subject fact FACT-SUBJECT-0BC452734091A8CF through constrains. The people who own that source can say what it is in the product and what it is not.

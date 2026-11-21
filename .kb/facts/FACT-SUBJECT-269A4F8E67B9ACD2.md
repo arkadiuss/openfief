@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-269A4F8E67B9ACD2
 type: fact
 ---
+
+Definition not stated: the subject core.browser_entry is named by requirements REQ-core-browser-entry-point, REQ-core-only-browser-entry-point, REQ-core-reverse-proxies-view-plugins, which link to the subject fact FACT-SUBJECT-269A4F8E67B9ACD2 through constrains. The people who own that source can say what it is in the product and what it is not.

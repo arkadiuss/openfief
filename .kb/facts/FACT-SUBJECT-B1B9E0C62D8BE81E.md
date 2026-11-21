@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B1B9E0C62D8BE81E
 type: fact
 ---
+
+Definition not stated: the subject attention.earlier_payments_missing is named by requirement REQ-attention-earlier-payments-missing, which links to the subject fact FACT-SUBJECT-B1B9E0C62D8BE81E through constrains. The people who own that source can say what it is in the product and what it is not.

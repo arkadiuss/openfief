@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-CADE945A153B2D8E
 type: fact
 ---
+
+Definition not stated: the subject portfolio.account_sleeves is named by requirement REQ-portfolio-account-in-one-sleeve, which links to the subject fact FACT-SUBJECT-CADE945A153B2D8E through constrains. The people who own that source can say what it is in the product and what it is not.

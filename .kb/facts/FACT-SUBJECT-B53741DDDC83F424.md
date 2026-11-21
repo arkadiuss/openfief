@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B53741DDDC83F424
 type: fact
 ---
+
+Definition not stated: the subject plugins.plugin_status is named by requirement REQ-plugins-verified-status, which links to the subject fact FACT-SUBJECT-B53741DDDC83F424 through constrains. The people who own that source can say what it is in the product and what it is not.

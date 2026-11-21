@@ -21,3 +21,5 @@ claim_key: CLAIM-69D0EA964920DF33
 id: FACT-SUBJECT-9A296B3D7B3E9839
 type: fact
 ---
+
+Definition not stated: the subject views.built_in_ui_charts is named by requirement REQ-ui-charts-number-format, which links to the subject fact FACT-SUBJECT-9A296B3D7B3E9839 through constrains. The people who own that source can say what it is in the product and what it is not.

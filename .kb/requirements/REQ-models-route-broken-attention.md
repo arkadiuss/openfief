@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 295
+    subjects:
+      - models.broken_route_attention
   - claim_key: CLAIM-08FBF01217B56FD9
     claim_text: a provider that is only slow or down falls through and raises none
     role: descriptive

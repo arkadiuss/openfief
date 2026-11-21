@@ -17,6 +17,8 @@ semantic_inventory:
     span:
       start: 0
       end: 140
+    subjects:
+      - ask_box.turnstile_on_demand
   - claim_key: CLAIM-CC9E5F073242BB82
     claim_text: the response to a model question that came with no token, and no other response, carries the HX-Trigger event openfief-check-needed
     role: descriptive

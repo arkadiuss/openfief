@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B0E482A244CF854F
 type: fact
 ---
+
+Definition not stated: the subject valuation.schema is named by requirement REQ-valuation-schema, which links to the subject fact FACT-SUBJECT-B0E482A244CF854F through constrains. The people who own that source can say what it is in the product and what it is not.

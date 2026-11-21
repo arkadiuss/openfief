@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C062A9F1D52AD7B2
 type: fact
 ---
+
+Definition not stated: the subject ledger.deletion is named by requirement REQ-ledger-deletion-supersedes, which links to the subject fact FACT-SUBJECT-C062A9F1D52AD7B2 through constrains. The people who own that source can say what it is in the product and what it is not.

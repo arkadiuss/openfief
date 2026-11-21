@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-9E73218422DD6946
 type: fact
 ---
+
+Definition not stated: the subject valuation.liquidation_value is named by requirement REQ-valuation-liquidation-value, which links to the subject fact FACT-SUBJECT-9E73218422DD6946 through constrains. The people who own that source can say what it is in the product and what it is not.

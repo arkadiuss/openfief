@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D53FC2954C60B518
 type: fact
 ---
+
+Definition not stated: the subject pl.bond_series is named by requirements REQ-pl-bond-isin-from-series, REQ-pl-series-code, which link to the subject fact FACT-SUBJECT-D53FC2954C60B518 through constrains. The people who own that source can say what it is in the product and what it is not.

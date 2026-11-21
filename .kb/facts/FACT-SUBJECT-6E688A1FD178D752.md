@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6E688A1FD178D752
 type: fact
 ---
+
+Definition not stated: the subject ingest.bond_lot_service is named by requirement REQ-ingest-bond-lot-service, which links to the subject fact FACT-SUBJECT-6E688A1FD178D752 through constrains. The people who own that source can say what it is in the product and what it is not.

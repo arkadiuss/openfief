@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6C3AD15C63FE7B0C
 type: fact
 ---
+
+Definition not stated: the subject plugins.connector_institutions is named by requirements REQ-plugins-install-warns-shared-institution, REQ-plugins-institutions-grant-approved, REQ-plugins-legacy-grants-approve-declared-institutions, REQ-plugins-upgrade-warns-shared-institution, which link to the subject fact FACT-SUBJECT-6C3AD15C63FE7B0C through constrains. The people who own that source can say what it is in the product and what it is not.

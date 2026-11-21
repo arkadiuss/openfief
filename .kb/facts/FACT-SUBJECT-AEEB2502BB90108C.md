@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-AEEB2502BB90108C
 type: fact
 ---
+
+Definition not stated: the subject operator.image_signature is named by requirements REQ-operator-signature-refusal-event, REQ-operator-signature-required, which link to the subject fact FACT-SUBJECT-AEEB2502BB90108C through constrains. The people who own that source can say what it is in the product and what it is not.

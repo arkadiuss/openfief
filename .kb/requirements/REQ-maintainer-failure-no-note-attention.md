@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 262
+    subjects:
+      - maintainer.failure_handling
 logic_claims:
   - CLAIM-3AABBEFD840C15B1
 semantic_clauses:

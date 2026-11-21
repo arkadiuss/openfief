@@ -15,6 +15,8 @@ semantic_inventory:
     span:
       start: 0
       end: 426
+    subjects:
+      - models.structured_answer_path
 logic_claims:
   - CLAIM-47A3AF09C4E10106
 origin:

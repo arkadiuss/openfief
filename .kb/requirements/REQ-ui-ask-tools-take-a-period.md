@@ -25,6 +25,8 @@ semantic_inventory:
     span:
       start: 0
       end: 290
+    subjects:
+      - ask_box.tool_periods
 logic_claims:
   - CLAIM-3FB3250217DF6AEA
 id: REQ-ui-ask-tools-take-a-period

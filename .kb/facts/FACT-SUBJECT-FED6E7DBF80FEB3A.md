@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-FED6E7DBF80FEB3A
 type: fact
 ---
+
+Definition not stated: the subject deploy.openfief_namespace is named by requirement REQ-operator-namespace-limit-range, which links to the subject fact FACT-SUBJECT-FED6E7DBF80FEB3A through constrains. The people who own that source can say what it is in the product and what it is not.

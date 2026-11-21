@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-4424A5AD6FE3AB29
 type: fact
 ---
+
+Definition not stated: the subject valuation.sale_fee_rule is named by requirements REQ-valuation-sale-fee-foreign-currency, REQ-valuation-sale-fee-market-priced-only, REQ-valuation-sale-fee-minimum-any-currency, REQ-valuation-sale-fee-minimum-before-conversion, REQ-valuation-sale-fee-rule, REQ-valuation-sale-fee-rule-zero, which link to the subject fact FACT-SUBJECT-4424A5AD6FE3AB29 through constrains. The people who own that source can say what it is in the product and what it is not.

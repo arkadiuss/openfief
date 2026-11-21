@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-967C451FC87BA375
 type: fact
 ---
+
+Definition not stated: the subject sdk.go.import_file is named by requirement REQ-sdk-go-receive-file, which links to the subject fact FACT-SUBJECT-967C451FC87BA375 through constrains. The people who own that source can say what it is in the product and what it is not.

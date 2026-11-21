@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: ingest.broker_accounts
+subject_key: ingest.broker_account
 property_key: seeded_after_mapping
-canonical_key: mcp-kibi-model-requirement:ingest.broker_accounts:seeded_after_mapping:eq:true
+canonical_key: mcp-kibi-model-requirement:ingest.broker_account:seeded_after_mapping:eq:true
 operator: eq
 value_type: bool
 value_bool: true

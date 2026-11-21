@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-CBE5237E6B3B40B6
 type: fact
 ---
+
+Definition not stated: the subject plugins.egress_allow_list is named by requirements REQ-plugins-allow-list-configmap-format, REQ-plugins-allow-list-exact-match, REQ-plugins-egress-allow-lists-fail-closed, REQ-plugins-egress-allow-lists-swapped-atomically, which link to the subject fact FACT-SUBJECT-CBE5237E6B3B40B6 through constrains. The people who own that source can say what it is in the product and what it is not.

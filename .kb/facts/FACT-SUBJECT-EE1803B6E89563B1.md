@@ -20,3 +20,4 @@ origin:
 id: FACT-SUBJECT-EE1803B6E89563B1
 type: fact
 ---
+The egress proxy's log as the end-to-end suite reads it on kind and k3d: each plugin request shows its host, its decision and the plugin instance and nothing of its path, query, headers, body or token, and every request of the configured destinations is shown.

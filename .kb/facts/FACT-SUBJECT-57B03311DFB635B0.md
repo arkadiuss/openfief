@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-57B03311DFB635B0
 type: fact
 ---
+
+Definition not stated: the subject plugins.first_party_manifest is named by requirement REQ-plugins-first-party-manifest-label, which links to the subject fact FACT-SUBJECT-57B03311DFB635B0 through constrains. The people who own that source can say what it is in the product and what it is not.

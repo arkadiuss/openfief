@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-058686C92437C05A
 type: fact
 ---
+
+Definition not stated: the subject views.browser_proxy is named by requirement REQ-views-browser-proxy-headers, which links to the subject fact FACT-SUBJECT-058686C92437C05A through constrains. The people who own that source can say what it is in the product and what it is not.

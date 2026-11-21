@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-77348ED358DBC6DF
 type: fact
 ---
+
+Definition not stated: the subject ingest.ticker_isin is named by requirements REQ-ingest-confirmed-isin-owner-corrects, REQ-ingest-confirmed-isin-per-institution, which link to the subject fact FACT-SUBJECT-77348ED358DBC6DF through constrains. The people who own that source can say what it is in the product and what it is not.

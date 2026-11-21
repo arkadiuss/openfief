@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-2DE79D898756870D
 type: fact
 ---
+
+Definition not stated: the subject ledger.lot is named by requirements REQ-decision-d34-1-consumed-cost-rounding, REQ-decision-d34-2-exact-remaining-cost, REQ-decision-d35-2-acquisitions-before-disposals, REQ-ledger-fifo, REQ-ledger-lot-cost-split, REQ-ledger-oversell, which link to the subject fact FACT-SUBJECT-2DE79D898756870D through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-33F2B4014D280B99
 type: fact
 ---
+
+Definition not stated: the subject plugins.core_grant_rights is named by requirement REQ-plugins-core-cannot-grant, which links to the subject fact FACT-SUBJECT-33F2B4014D280B99 through constrains. The people who own that source can say what it is in the product and what it is not.

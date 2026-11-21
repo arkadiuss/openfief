@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0C034E8357860F52
 type: fact
 ---
+
+Definition not stated: the subject identity.audit_entry is named by requirements REQ-identity-audit-entry-content, REQ-identity-audit-no-amount-secret-text, which link to the subject fact FACT-SUBJECT-0C034E8357860F52 through constrains. The people who own that source can say what it is in the product and what it is not.

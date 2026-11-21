@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-AC8FD430E6FAEE89
 type: fact
 ---
+
+Definition not stated: the subject ingest.sync_status is named by requirements REQ-decision-d198-1-keeps-failing, REQ-decision-d198-2-attempts-kept, REQ-ingest-sync-keeps-failing, which link to the subject fact FACT-SUBJECT-AC8FD430E6FAEE89 through constrains. The people who own that source can say what it is in the product and what it is not.

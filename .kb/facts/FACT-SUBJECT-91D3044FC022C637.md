@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-91D3044FC022C637
 type: fact
 ---
+
+Definition not stated: the subject ingest.bond_payout_entry is named by requirement REQ-ingest-bond-payout-setting, which links to the subject fact FACT-SUBJECT-91D3044FC022C637 through constrains. The people who own that source can say what it is in the product and what it is not.

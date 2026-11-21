@@ -21,3 +21,4 @@ origin:
 id: FACT-SUBJECT-CAC9841F468582C6
 type: fact
 ---
+A plugin upgrade: OpenFief reports exactly the requested permissions the grant does not approve, the version counts as needing approval whenever that report is not empty, and an upgrade that requests more permissions does not deploy until they are approved.

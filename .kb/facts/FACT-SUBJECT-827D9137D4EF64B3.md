@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-827D9137D4EF64B3
 type: fact
 ---
+
+Definition not stated: the subject plugins.manifest_label is named by requirement REQ-plugins-manifest-label-match, which links to the subject fact FACT-SUBJECT-827D9137D4EF64B3 through constrains. The people who own that source can say what it is in the product and what it is not.

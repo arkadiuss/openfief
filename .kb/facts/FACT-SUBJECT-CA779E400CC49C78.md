@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-CA779E400CC49C78
 type: fact
 ---
+
+Definition not stated: the subject e2e.apicontract is named by requirement REQ-e2e-apicontract-walks-contract, which links to the subject fact FACT-SUBJECT-CA779E400CC49C78 through constrains. The people who own that source can say what it is in the product and what it is not.

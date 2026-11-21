@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-F0B185DA59B9BB2C
 type: fact
 ---
+
+Definition not stated: the subject ingest.index_reading is named by requirement REQ-ingest-index-reading-valid, which links to the subject fact FACT-SUBJECT-F0B185DA59B9BB2C through constrains. The people who own that source can say what it is in the product and what it is not.

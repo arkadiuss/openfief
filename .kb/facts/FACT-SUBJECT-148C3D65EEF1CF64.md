@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-148C3D65EEF1CF64
 type: fact
 ---
+
+Definition not stated: the subject site.dns is named by requirement REQ-tooling-site-dns, which links to the subject fact FACT-SUBJECT-148C3D65EEF1CF64 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-377E7BAFECB96D53
 type: fact
 ---
+
+Definition not stated: the subject core.ports is named by requirement REQ-core-ports-bound-bodies, which links to the subject fact FACT-SUBJECT-377E7BAFECB96D53 through constrains. The people who own that source can say what it is in the product and what it is not.

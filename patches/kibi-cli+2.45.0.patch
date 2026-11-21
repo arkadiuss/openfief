@@ -1,0 +1,89 @@
+diff --git a/node_modules/kibi-cli/dist/commands/sync.js b/node_modules/kibi-cli/dist/commands/sync.js
+index 66b2bd2..be92466 100644
+--- a/node_modules/kibi-cli/dist/commands/sync.js
++++ b/node_modules/kibi-cli/dist/commands/sync.js
+@@ -42,6 +42,9 @@ import { persistEntities, persistRelationships, queryStoreTotals, retractEntitie
+ import { atomicPublish, atomicPublishGeneration, cleanupStaging, createUniqueStagingPath, prepareStagingEnvironment, } from "./sync/staging.js";
+ import { adoptUpsertOnlySymbolManifest, findUntrackedDocumentMatches, } from "./sync/untracked-targets.js";
+ export { SyncError };
++// Local patch (OpenFief): how long a sync waits for its compiling SWI process
++// to halt on its own after kb_detach. The wait ends as soon as it exits.
++const SYNC_COMPILER_EXIT_GRACE_MS = 60000;
+ /** The output of a git command run in `cwd`; throws when git fails. */
+ export function gitText(cwd, command) {
+     return execSync(command, {
+@@ -1161,8 +1164,22 @@ export async function syncCommand(options = {}, runtime = {}) {
+         if (!saveResult.success) {
+             throw new SyncError(`Failed to save staging KB: ${saveResult.error || "Unknown error"}`, "STAGING_SAVE_FAILED");
+         }
+-        await prolog.query("kb_detach");
+-        await prolog.terminate();
++        // Local patch (OpenFief, patches/kibi-cli+2.45.0.patch): let the
++        // compiling SWI process finish before the staging store is
++        // published. It halts on stdin EOF, running its at_halt hooks and
++        // closing its journal streams; publishing only after that exit
++        // means the store on disk is everything the compile wrote. A
++        // process that has to be signalled, or a failed detach, refuses
++        // publication instead of publishing a store that may be partial.
++        const compiler = prolog.process;
++        const detachResult = await prolog.query("kb_detach");
++        await prolog.terminate({ graceMs: SYNC_COMPILER_EXIT_GRACE_MS });
++        if (!detachResult.success) {
++            throw new SyncError(`Failed to detach the staging KB: ${detachResult.error || "Unknown error"}; the staging store was not published`, "STAGING_DETACH_FAILED");
++        }
++        if (compiler && compiler.exitCode !== 0) {
++            throw new SyncError(`The staging compiler did not exit cleanly within ${SYNC_COMPILER_EXIT_GRACE_MS} ms (exit code ${compiler.exitCode}, signal ${compiler.signalCode}); the staging store was not published`, "STAGING_COMPILER_UNCLEAN_EXIT");
++        }
+         const journaledLive = existsSync(path.join(livePath, "storage.json"));
+         if (recoveryBackupPath !== undefined) {
+             if (!existsSync(livePath)) {
+diff --git a/node_modules/kibi-cli/dist/engine.js b/node_modules/kibi-cli/dist/engine.js
+index 160d75d..453f0b7 100644
+--- a/node_modules/kibi-cli/dist/engine.js
++++ b/node_modules/kibi-cli/dist/engine.js
+@@ -809,6 +809,7 @@ export class EngineClient {
+     pending = new Map();
+     requestTail = Promise.resolve();
+     lastResult = null;
++    localDedupeReported = false;
+     constructor(options) {
+         if (!isValidBranchName(options.branch)) {
+             throw new Error(`Invalid Kibi engine branch name: ${options.branch}`);
+@@ -836,6 +837,7 @@ export class EngineClient {
+             try {
+                 await this.reconcileRuntime();
+                 await this.reconcileAttachment();
++                await this.reportLocalDedupe();
+                 return;
+             }
+             catch (error) {
+@@ -853,6 +855,29 @@ export class EngineClient {
+             }
+         }
+     }
++    /**
++     * Local patch (OpenFief, patches/kibi-cli+2.45.0.patch): print what the
++     * attach-time dedupe of patches/kibi-core+0.34.0.patch removed from the
++     * store this engine serves, once per client. The engine daemon's own
++     * stderr goes nowhere, so the count travels as kb_dedupe_report/2. Under
++     * GitHub Actions the line is a workflow warning.
++     */
++    async reportLocalDedupe() {
++        if (this.localDedupeReported)
++            return;
++        this.localDedupeReported = true;
++        let result;
++        try {
++            result = await this.query("kb:kb_dedupe_report(Triples, Entities)");
++        }
++        catch {
++            return;
++        }
++        if (!result?.success)
++            return;
++        const line = `kibi (local patch): removed ${result.bindings.Triples} duplicate triples (${result.bindings.Entities} entities stored twice) from the published store - kibi's publish defect, see docs/dev/kibi.md`;
++        console.error(process.env.GITHUB_ACTIONS === "true" ? `::warning title=kibi publish defect::${line}` : line);
++    }
+     async connect(allowSpawn) {
+         if (this.isRunning())
+             return;
