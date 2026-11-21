@@ -21,6 +21,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"sigs.k8s.io/yaml"
 
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
@@ -91,6 +92,8 @@ var (
 	errNoPrimary = errors.New("no ready primary in the openfief-db cluster")
 	// errQuery reports a database answer that isn't in the shape the test asked for.
 	errQuery = errors.New("unexpected database answer")
+	// errCoreArgs reports an install without the core container whose args the test extends.
+	errCoreArgs = errors.New("the install has no core container to start without default sleeves")
 	// errSeedJob reports a loader Job that isn't the one the test expects.
 	errSeedJob = errors.New("the loader's Job has not exactly one container")
 )
@@ -241,7 +244,13 @@ func installPublished(ctx context.Context, k *kube, logf func(string, ...any)) e
 		},
 		func() error { return kubectlApply(ctx, logf, "the published release's database", b.database) },
 		func() error { return waitDatabase(ctx, k, logf) },
-		func() error { return kubectlApply(ctx, logf, "the published release's install", b.install) },
+		func() error {
+			install, editErr := withoutDefaultSleeves(b.install)
+			if editErr != nil {
+				return editErr
+			}
+			return kubectlApply(ctx, logf, "the published release's install, its core without default sleeves", install)
+		},
 		func() error { return waitDeployments(ctx, k, b) },
 	}
 	for _, step := range steps {
@@ -250,6 +259,56 @@ func installPublished(ctx context.Context, k *kube, logf func(string, ...any)) e
 		}
 	}
 	return nil
+}
+
+// withoutDefaultSleeves returns install with the core started with --ensure-defaults=false, as the published
+// release's own demo layer does (deploy/demo/openfief): the core stores the three default sleeves at its first
+// start, and the demo loader refuses a database that holds data and no demo marker ("3 rows of ledger and valuation
+// data"), which is the guard a real portfolio relies on, so it stays on. The same kubectl applies the candidate's
+// install afterwards, whose args replace this list, and the candidate's core finds the demo's sleeves and adds none.
+func withoutDefaultSleeves(install []byte) ([]byte, error) {
+	objs, err := decodeEdited(install, noDefaultSleeves)
+	if err != nil {
+		return nil, err
+	}
+	var out bytes.Buffer
+	for _, obj := range objs {
+		doc, marshalErr := yaml.Marshal(obj.Object)
+		if marshalErr != nil {
+			return nil, fmt.Errorf("encoding %s %s: %w", obj.GetKind(), obj.GetName(), marshalErr)
+		}
+		out.WriteString("---\n")
+		out.Write(doc)
+	}
+	return out.Bytes(), nil
+}
+
+// noDefaultSleeves adds --ensure-defaults=false to the args of the core's container, and changes no other object.
+func noDefaultSleeves(obj *unstructured.Unstructured) error {
+	if obj.GetKind() != "Deployment" || obj.GetName() != coreDeployment {
+		return nil
+	}
+	containers, found, err := unstructured.NestedSlice(obj.Object, "spec", "template", "spec", "containers")
+	if err != nil || !found {
+		return fmt.Errorf("%w: the core's containers: %w", errCoreArgs, err)
+	}
+	for i, raw := range containers {
+		c, ok := raw.(map[string]any)
+		if !ok || c["name"] != "core" {
+			continue
+		}
+		args, ok := c["args"].([]any)
+		if !ok {
+			return errCoreArgs
+		}
+		c["args"] = append(args, "--ensure-defaults=false")
+		containers[i] = c
+		if err := unstructured.SetNestedSlice(obj.Object, containers, "spec", "template", "spec", "containers"); err != nil {
+			return fmt.Errorf("%w: %w", errCoreArgs, err)
+		}
+		return nil
+	}
+	return errCoreArgs
 }
 
 // waitDeployments waits until each Deployment of the bundle's install has rolled out its latest template on all
@@ -365,6 +424,11 @@ func seedPublished(t *testing.T, k *kube, rel *publishedRelease) seededInstall {
 // completes: it loads the synthetic demo dataset into the release's database through the release's own code.
 func loadDataset(t *testing.T, k *kube, ref string) {
 	t.Helper()
+	t.Cleanup(func() {
+		if t.Failed() {
+			logGuardTables(t, k)
+		}
+	})
 	seed, err := os.ReadFile(upgradeSeedFile)
 	if err != nil {
 		t.Fatalf("reading the loader's Job: %v", err)
@@ -389,6 +453,34 @@ func loadDataset(t *testing.T, k *kube, ref string) {
 		t.Fatalf("applying the loader's Job: %v", applyErr)
 	}
 	waitJobComplete(t, k, seedJob)
+}
+
+// guardTables are the tables whose rows make the demo loader refuse a database that has no demo marker
+// (cmd/demo-seed's dataTables, as the published release has them).
+func guardTables() []string {
+	return []string{
+		"portfolio.sleeves", "ledger.accounts", "ledger.transaction_versions", "valuation.prices", "valuation.fx_rates",
+		"valuation.index_readings", "valuation.bond_terms", "valuation.tax_wrappers",
+	}
+}
+
+// logGuardTables logs how many rows each of the loader's guard tables holds, and whether the demo marker is there, so
+// a refusal explains itself. It logs counts only.
+func logGuardTables(t *testing.T, k *kube) {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.WithoutCancel(t.Context()), diagnosticsTimeout)
+	defer cancel()
+	var query strings.Builder
+	for _, table := range guardTables() {
+		fmt.Fprintf(&query, "SELECT '%s' || '|' || count(*) FROM %s UNION ALL ", table, table)
+	}
+	query.WriteString("SELECT 'demo marker|' || coalesce((SELECT count(*)::text FROM demo.marker), 'no table')")
+	lines, err := queryLinesCtx(ctx, k, query.String())
+	if err != nil {
+		t.Logf("the loader's guard tables: %v", err)
+		return
+	}
+	t.Logf("the loader's guard tables (table|rows): %s", strings.Join(lines, ", "))
 }
 
 // checkSeeded checks that the seed put something in every kind of record the test promises to keep, so a loader

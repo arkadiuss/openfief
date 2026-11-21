@@ -1455,3 +1455,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70bf5703e921
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-log-guard-tables
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T13:18:02.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1898acbe10be
