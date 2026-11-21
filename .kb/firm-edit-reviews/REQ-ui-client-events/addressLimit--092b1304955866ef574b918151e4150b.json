@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-ui-client-events",
+  "sourceFile": "internal/views/ui/clientevents.go",
+  "symbol": "addressLimit",
+  "verdict": "keeps",
+  "note": "The type gains the window of every address's reports together; the per-address windows, their bound and the rule that the address is never recorded are as they were.",
+  "statementHash": "sha256:d740a60637eb7e854306e024a4139014d6322732a2c926b0c5a2a0164fb46f6d",
+  "codeHash": "sha256:2037c03a3f92adea3bf950ab8d7b411e0c3544d0ceedfa5b2d772b108bbee5e0",
+  "startLine": 275,
+  "endLine": 281,
+  "recordedAt": "2026-11-21T18:20:15.513Z"
+}

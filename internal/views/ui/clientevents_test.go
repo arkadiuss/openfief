@@ -2,6 +2,7 @@ package ui
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
 	"net/http"
 	"strings"
@@ -235,6 +236,74 @@ func TestAddressLimitForgetsOldAddressesAndRefusesNewOnesWhenFull(t *testing.T) 
 	}
 	if len(l.windows) > clientRateAddresses {
 		t.Errorf("the table holds %d addresses, over its bound", len(l.windows))
+	}
+}
+
+func TestAddressLimitCountsAnIPv6AddressByItsNetwork(t *testing.T) {
+	t.Parallel()
+	now := time.Date(2026, 11, 18, 12, 0, 0, 0, time.UTC)
+	l := &addressLimit{now: func() time.Time { return now }, windows: map[string]clientWindow{}}
+	// A host with a /64 can take any of its 2^64 addresses: a report from a new
+	// one must not start a new allowance, or take a new place in the table.
+	for i := range clientReportsPerMinute {
+		if !l.allow(fmt.Sprintf("2001:db8:1:2::%x", i+1)) {
+			t.Fatalf("report %d refused, within the network's limit", i+1)
+		}
+	}
+	if l.allow("2001:db8:1:2:ffff:ffff:ffff:ffff") {
+		t.Error("a report from another address of the same /64 was allowed past the network's limit")
+	}
+	if !l.allow("2001:db8:1:3::1") {
+		t.Error("an address of another /64 was refused for the first network's reports")
+	}
+	if got := len(l.windows); got != 2 {
+		t.Errorf("the table holds %d entries for two networks, want 2", got)
+	}
+}
+
+func TestAddressLimitCountsAnIPv4AddressAsItself(t *testing.T) {
+	t.Parallel()
+	now := time.Date(2026, 11, 18, 12, 0, 0, 0, time.UTC)
+	l := &addressLimit{now: func() time.Time { return now }, windows: map[string]clientWindow{}}
+	for range clientReportsPerMinute {
+		l.allow("198.51.100.1")
+	}
+	if l.allow("::ffff:198.51.100.1") {
+		t.Error("the same IPv4 address written as IPv4-mapped IPv6 started a new allowance")
+	}
+	if !l.allow("198.51.100.2") {
+		t.Error("the next IPv4 address was refused for the first one's reports")
+	}
+}
+
+func TestAddressLimitCapsReportsFromEveryAddressTogether(t *testing.T) {
+	t.Parallel()
+	now := time.Date(2026, 11, 18, 12, 0, 0, 0, time.UTC)
+	l := &addressLimit{now: func() time.Time { return now }, windows: map[string]clientWindow{}}
+	allowed := 0
+	for i := range clientReportsPerMinuteTotal + clientReportsPerMinute {
+		if l.allow(fmt.Sprintf("198.51.%d.%d", i/250, i%250+1)) {
+			allowed++
+		}
+	}
+	if allowed != clientReportsPerMinuteTotal {
+		t.Errorf("allowed %d reports from many addresses in a minute, want the cap of %d", allowed, clientReportsPerMinuteTotal)
+	}
+	now = now.Add(time.Minute)
+	if !l.allow("203.0.113.9") {
+		t.Error("a report was refused a minute after the cap was reached")
+	}
+}
+
+func TestAddressLimitRefusalsTakeNothingOfTheSharedCap(t *testing.T) {
+	t.Parallel()
+	now := time.Date(2026, 11, 18, 12, 0, 0, 0, time.UTC)
+	l := &addressLimit{now: func() time.Time { return now }, windows: map[string]clientWindow{}}
+	for range clientReportsPerMinuteTotal + clientReportsPerMinute {
+		l.allow("198.51.100.1")
+	}
+	if !l.allow("198.51.100.2") {
+		t.Error("one address past its own limit used up every other address's reports")
 	}
 }
 

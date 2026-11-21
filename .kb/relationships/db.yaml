@@ -1098,3 +1098,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a7ef57a4874
+  - type: implements
+    from: SYM-m5-internal-views-ui-clientevents-go-clientlimitkey
+    to: REQ-ui-client-events-limit-network-and-cap
+    created_at: 2026-11-21T18:16:56.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ecfd15aa078
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-clientevents-go-clientlimitkey
+    to: TEST-ui-client-events-limit-network-and-cap
+    created_at: 2026-11-21T18:16:56.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f156b3b55e78

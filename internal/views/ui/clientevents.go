@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"net/netip"
 	"regexp"
 	"strings"
 	"sync"
@@ -44,6 +45,9 @@ const (
 	// a minute, and how many addresses the limit remembers at once.
 	clientReportsPerMinute = 30
 	clientRateAddresses    = 4096
+	// clientReportsPerMinuteTotal caps the reports of every address together in a
+	// minute, so that many addresses can't flood the log and the metrics.
+	clientReportsPerMinuteTotal = 600
 	// cloudflareScript is how an event names a script that came from Cloudflare:
 	// the host only, never a path or a query.
 	cloudflareScript = "challenges.cloudflare.com"
@@ -262,15 +266,18 @@ func majorAfter(ua, token string) (int, bool) {
 	return n, digits > 0
 }
 
-// addressLimit lets one address make clientReportsPerMinute reports a minute. It
-// keeps at most clientRateAddresses addresses, forgetting the ones whose minute
-// has ended; when all are current, an address it does not know is refused, so
-// that many addresses cannot grow it. The address is used for this and never
-// recorded.
+// addressLimit lets one address make clientReportsPerMinute reports a minute,
+// an IPv6 address counted as its /64 network (clientLimitKey), and every address
+// together clientReportsPerMinuteTotal. It keeps at most clientRateAddresses
+// addresses, forgetting the ones whose minute has ended; when all are current, an
+// address it does not know is refused, so that many addresses cannot grow it.
+// The address is used for this and never recorded.
 type addressLimit struct {
 	mu      sync.Mutex
 	now     func() time.Time
 	windows map[string]clientWindow
+	// total is the reports of every address in the current minute.
+	total clientWindow
 }
 
 type clientWindow struct {
@@ -278,11 +285,37 @@ type clientWindow struct {
 	count int
 }
 
-// allow counts a report from address and says whether it is within the limit.
+// ipv6LimitBits is the prefix an IPv6 address is counted under: a host given
+// one has the whole /64, as the Ask box's limits count it too (D-208).
+const ipv6LimitBits = 64
+
+// clientLimitKey returns what a report from address is counted under: an IPv4
+// address as itself (an IPv4-mapped IPv6 one too), an IPv6 address as its /64
+// network, and "" for an address that is unknown or no address, which all such
+// reports share.
+func clientLimitKey(address string) string {
+	addr, err := netip.ParseAddr(address)
+	if err != nil {
+		return ""
+	}
+	addr = addr.Unmap().WithZone("")
+	if addr.Is4() {
+		return addr.String()
+	}
+	prefix, err := addr.Prefix(ipv6LimitBits)
+	if err != nil {
+		return ""
+	}
+	return prefix.String()
+}
+
+// allow counts a report from address and says whether it is within the limit:
+// the address's, and every address's together.
 func (l *addressLimit) allow(address string) bool {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	now := l.now()
+	address = clientLimitKey(address)
 	w, known := l.windows[address]
 	if !known && len(l.windows) >= clientRateAddresses {
 		for a, old := range l.windows {
@@ -297,9 +330,18 @@ func (l *addressLimit) allow(address string) bool {
 	if now.Sub(w.start) >= time.Minute {
 		w = clientWindow{start: now}
 	}
+	if now.Sub(l.total.start) >= time.Minute {
+		l.total = clientWindow{start: now}
+	}
+	// A report the address's own limit refuses takes nothing of the shared
+	// cap, so one address can't spend every other's.
 	w.count++
 	l.windows[address] = w
-	return w.count <= clientReportsPerMinute
+	if w.count > clientReportsPerMinute || l.total.count >= clientReportsPerMinuteTotal {
+		return false
+	}
+	l.total.count++
+	return true
 }
 
 // clientEvents receives the pages' events (D-227), logs each as a record without
