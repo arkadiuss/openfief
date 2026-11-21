@@ -270,6 +270,7 @@ func (f *fakeAuth) WhoAmI(_ context.Context, r *connect.Request[identityv1.WhoAm
 		return nil, err
 	}
 	out := &identityv1.WhoAmIResponse{Owner: &identityv1.Owner{}, Session: issued(scope)}
+	out.Session.Id = "s-" + r.Msg.GetSessionToken() // each session has its own, as the pass is tied to one
 	if r.Msg.GetSessionToken() == viewerSession {
 		out.Person = &identityv1.Person{Id: "0123456789abcdef", Kind: identityv1.PersonKind_PERSON_KIND_VIEWER, Name: "Alice"}
 	}

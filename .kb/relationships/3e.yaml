@@ -1007,3 +1007,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2460e785a891
+  - type: executable_for
+    from: SYM-pass-clientevents-test-go-fakeclientevents
+    to: TEST-valuation-client-events-switch
+    created_at: 2026-11-21T12:30:27.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6045f583a2a
+  - type: executable_for
+    from: SYM-pass-clientevents-test-go-testclienteventsareonuntiltheownerturnsthemoff
+    to: TEST-valuation-client-events-switch
+    created_at: 2026-11-21T12:31:06.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e59a559a977f
+  - type: executable_for
+    from: SYM-pass-clientswitch-test-go-testclock-advance
+    to: TEST-ui-client-events-switch
+    created_at: 2026-11-21T12:32:45.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-327fc4084a53

@@ -1189,3 +1189,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-306c55abff94
+  - type: implements
+    from: SYM-pass-settings-pb-go-getclienteventsrequest-string
+    to: REQ-settings-client-events-switch
+    created_at: 2026-11-21T12:36:23.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7f44f352a47
+  - type: covered_by
+    from: SYM-pass-settings-pb-go-getclienteventsrequest-string
+    to: TEST-core-client-events
+    created_at: 2026-11-21T12:36:23.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e99cbf505aa

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-ui-client-events",
+  "sourceFile": "internal/views/ui/clientevents.go",
+  "symbol": "clientEvents.handler",
+  "verdict": "keeps",
+  "note": "The handler still answers 204 and discards unread when reporting is off, and takes the same capped, rate-limited, validated reports when it is on; only where on comes from changed, from the plugin's config to the owner's setting in the core, which is the switch D-227 asks for.",
+  "statementHash": "sha256:d740a60637eb7e854306e024a4139014d6322732a2c926b0c5a2a0164fb46f6d",
+  "codeHash": "sha256:cc74b90a9d1b984aa36678f4e00279b06d81bc97b50f7c3d710bc11e94407af1",
+  "startLine": 342,
+  "endLine": 366,
+  "recordedAt": "2026-11-21T12:50:07.626Z"
+}

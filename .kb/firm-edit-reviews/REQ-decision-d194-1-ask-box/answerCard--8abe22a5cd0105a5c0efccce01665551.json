@@ -4,10 +4,10 @@
   "sourceFile": "internal/views/ui/askcards.go",
   "symbol": "answerCard",
   "verdict": "keeps",
-  "note": "The card gained one field, the turn it adds to the conversation (D-224); the commands, their cards and their links are unchanged, and the box still reads only the read API and changes nothing.",
+  "note": "answerCard only gained an unexported field that carries the pass cookie of a model question to the response; the commands, their cards and links, the unlogged question and the no-model wording are unchanged.",
   "statementHash": "sha256:e18a941dbb20b5afe20fe339a2dffcbe28c940ae7dcf1bdaf1199780aeb428dc",
-  "codeHash": "sha256:e6b29985333c2c2e0c4a064cd56d58417789812a4b1a6a736c9b68300490dee5",
+  "codeHash": "sha256:57808e44bb24a16a59e9f0fee581c6b2ebddc0e32947e2732680ea5bf7ec2dcf",
   "startLine": 36,
-  "endLine": 81,
-  "recordedAt": "2026-11-21T10:03:55.641Z"
+  "endLine": 84,
+  "recordedAt": "2026-11-21T12:50:07.626Z"
 }

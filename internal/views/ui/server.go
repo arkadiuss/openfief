@@ -127,8 +127,10 @@ type Config struct {
 	// optional: without it the Models page answers 404.
 	ModelSettings modelsv1connect.ModelSettingsServiceClient
 	// DisableClientEvents turns off the reports the pages make about themselves
-	// (D-227): the page then loads no reporting script and the endpoint discards
-	// what it is sent. The zero value is on, as D-227 decides.
+	// (D-227) for the install, whatever the owner chose in Settings: the page then
+	// loads no reporting script and the endpoint discards what it is sent. The
+	// zero value leaves it to the owner's setting in the core, which is on until
+	// they turn it off, as D-227 decides.
 	DisableClientEvents bool
 	// Meter counts the client events; nil is the process's own meter, which
 	// exports only where OpenTelemetry is set (D-172).
@@ -138,6 +140,10 @@ type Config struct {
 	Read viewsv1connect.ReadServiceClient
 	// Today returns today's date; nil is the UTC date of the clock.
 	Today func() kernel.Date
+	// Now is the clock of what runs on time here: the Turnstile pass's windows
+	// (D-208) and how long the setting of the client events is kept (D-227). Nil is
+	// time.Now; tests set it.
+	Now func() time.Time
 	// Log gets one line per failed call to the core, with no token or
 	// amount in it; nil discards.
 	Log *slog.Logger
@@ -171,6 +177,7 @@ type server struct {
 	pages       *pages
 	pwa         *pwa
 	today       func() kernel.Date
+	now         func() time.Time
 	log         *slog.Logger
 	settings    valuationv1connect.SettingsServiceClient
 	transfers   ledgerv1connect.TransferServiceClient
@@ -194,10 +201,10 @@ type server struct {
 	// modelSettings is the core's agents-and-models settings (D-212); nil
 	// without Config.ModelSettings.
 	modelSettings modelsv1connect.ModelSettingsServiceClient
-	// clientEvents takes the pages' reports about themselves (D-227), and
-	// reportClientEvents is whether it keeps them.
-	clientEvents       *clientEvents
-	reportClientEvents bool
+	// clientEvents takes the pages' reports about themselves (D-227), and events
+	// is whether it keeps them: the owner's setting in the core.
+	clientEvents *clientEvents
+	events       *clientEventsSwitch
 }
 
 // New returns the UI's HTTP handler: its pages, their static files, the
@@ -224,10 +231,10 @@ func New(cfg *Config) (http.Handler, error) {
 		sleeves: cfg.Sleeves, accounts: cfg.Accounts, marketData: cfg.MarketData, priceChecks: cfg.PriceChecks,
 		settings: cfg.Settings, transfers: cfg.Transfers, tickers: cfg.Tickers, attention: cfg.Attention, syncs: cfg.Syncs,
 		instruments: cfg.Instruments, checkpoints: cfg.CashCheckpoints,
-		pages: p, pwa: app, today: cfg.Today, log: cfg.Log, maintainer: cfg.Maintainer, modelSettings: cfg.ModelSettings,
+		pages: p, pwa: app, today: cfg.Today, now: cfg.Now, log: cfg.Log, maintainer: cfg.Maintainer, modelSettings: cfg.ModelSettings,
 	}
 	s.fillDefaults()
-	err = s.setUpClientEvents(cfg, p)
+	err = s.setUpClientEvents(cfg)
 	if err != nil {
 		return nil, err
 	}
@@ -259,11 +266,15 @@ func (s *server) fillDefaults() {
 	if s.log == nil {
 		s.log = slog.New(slog.DiscardHandler)
 	}
+	if s.now == nil {
+		s.now = time.Now
+	}
 }
 
 // setUpClientEvents sets up the receiver of the pages' reports about themselves
-// (D-227) and whether the pages send them.
-func (s *server) setUpClientEvents(cfg *Config, p *pages) error {
+// (D-227) and whether the pages send them, which the owner's setting in the core
+// says, and the install's config can only turn off.
+func (s *server) setUpClientEvents(cfg *Config) error {
 	meter := cfg.Meter
 	if meter == nil {
 		meter = otel.Meter("openfief-ui")
@@ -273,8 +284,7 @@ func (s *server) setUpClientEvents(cfg *Config, p *pages) error {
 		return err
 	}
 	s.clientEvents = events
-	s.reportClientEvents = !cfg.DisableClientEvents
-	p.clientEvents = s.reportClientEvents
+	s.events = &clientEventsSwitch{settings: cfg.Settings, now: s.now, log: s.log, operatorOff: cfg.DisableClientEvents}
 	return nil
 }
 
@@ -292,7 +302,7 @@ func (s *server) withTurnstile(cfg *Config) (string, error) {
 	if err := cfg.Turnstile.validate(); err != nil {
 		return "", err
 	}
-	s.turnstile = &turnstileCheck{cfg: *cfg.Turnstile, log: s.log}
+	s.turnstile = &turnstileCheck{cfg: *cfg.Turnstile, log: s.log, now: s.now}
 	return contentSecurityPolicyWithTurnstile, nil
 }
 
@@ -315,7 +325,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.Handle("GET /static/", staticFiles("/static/", static))
 	mux.Handle("GET /static/design/", staticFiles("/static/design/", design.Files))
 	mux.HandleFunc("GET /healthz", healthz)
-	mux.HandleFunc("POST "+clientEventsPath, s.clientEvents.handler(s.reportClientEvents))
+	mux.HandleFunc("POST "+clientEventsPath, s.clientEvents.handler(s.events.enabled))
 	s.pwa.routes(mux)
 	mux.HandleFunc("GET /login", s.loginPage)
 	mux.HandleFunc("POST /login/passkey/begin", s.loginBegin)
@@ -374,6 +384,7 @@ func (s *server) settingsRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST /settings/market-data/gap", s.withOwner(s.setGapThreshold))
 	mux.HandleFunc("POST /settings/market-data/series", s.withOwner(s.setSeriesSource))
 	mux.HandleFunc("POST /settings/number-format", s.withOwner(s.setNumberFormat))
+	mux.HandleFunc("POST /settings/client-events", s.withOwner(s.setClientEvents))
 	mux.HandleFunc("POST /settings/marginal-rate", s.withOwner(s.setMarginalRate))
 	mux.HandleFunc("POST /settings/exemption-class", s.withOwner(s.setExemptionClass))
 }

@@ -1077,3 +1077,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9b18b2ef716
+  - type: implements
+    from: SYM-pass-clientevents-go-settings-withclientevents
+    to: REQ-settings-client-events-switch
+    created_at: 2026-11-21T12:20:34.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c44fc54d6ea7
+  - type: covered_by
+    from: SYM-pass-clientevents-go-settings-withclientevents
+    to: TEST-valuation-client-events-switch
+    created_at: 2026-11-21T12:20:34.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-921e6c2fea94
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-testpassisnotrenewedbyaquestionthecheckstops
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:35:38.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a7ef57a4874

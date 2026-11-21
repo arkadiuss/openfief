@@ -256,7 +256,7 @@ func buildPWA(p *pages, static fs.FS) (*pwa, error) {
 	if err != nil {
 		return nil, err
 	}
-	offline, err := p.execute("offline", "layout.html", page{Title: "Offline"}, plainFormat())
+	offline, err := p.execute("offline", "layout.html", page{Title: "Offline"}, plainFormat(), false)
 	if err != nil {
 		return nil, err
 	}
