@@ -1322,3 +1322,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c15772ad7a5
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-grantpolicy-test-checkdemoaccounts
+    to: TEST-identity-grant-policy
+    created_at: 2026-11-21T22:29:23.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dddf7de6d97d

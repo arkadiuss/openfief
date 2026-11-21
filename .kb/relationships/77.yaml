@@ -622,13 +622,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76dcce73897b
-  - type: requires_property
-    from: REQ-identity-authz-owner-acts-every-account
-    to: FACT-PROP-EEFBEFCC9428CC87
-    created_at: 2026-11-01T22:45:15.136Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0e1e944d72fa
   - type: implements
     from: SYM-valuation-app-input-recorder-record-fxrates
     to: REQ-valuation-stored-rates-name-base
@@ -1161,3 +1154,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8b14de818b2
+  - type: requires_property
+    from: REQ-identity-authz-owner-acts-every-account
+    to: FACT-PROP-3A01939DB708AF23
+    created_at: 2026-11-21T22:19:17.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bacea3afcf6

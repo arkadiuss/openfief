@@ -1373,8 +1373,8 @@ relationships:
     id: rel-4ebf545fb1a0
   - type: validates
     from: TEST-identity-access
-    to: REQ-identity-authz-grants-hold-under-either-mode
-    created_at: 2026-11-21T21:49:44.591Z
+    to: REQ-identity-authz-demo-holds-household
+    created_at: 2026-11-21T22:21:42.098Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-1e329d833d4d
+    id: rel-4e2caa8f209d

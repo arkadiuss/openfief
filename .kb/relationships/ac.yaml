@@ -1035,10 +1035,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-487116f0316f
-  - type: implements
-    from: SYM-identity-app-policy
-    to: REQ-identity-authz-grants-hold-under-either-mode
-    created_at: 2026-11-21T21:49:12.393Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-49d082d73007

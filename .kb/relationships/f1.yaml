@@ -1252,3 +1252,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-218dabc0b743
+  - type: validates
+    from: TEST-identity-authz-schema
+    to: REQ-identity-authz-owner-acts-every-account
+    created_at: 2026-11-21T22:21:39.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6545927f0418
+  - type: validates
+    from: TEST-identity-authz-schema
+    to: REQ-identity-authz-demo-holds-household
+    created_at: 2026-11-21T22:21:47.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-daae2220d50b

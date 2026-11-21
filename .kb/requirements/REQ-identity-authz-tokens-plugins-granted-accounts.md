@@ -32,12 +32,13 @@ origin:
   recorded_at: '2026-11-01T22:45:47.352Z'
 id: REQ-identity-authz-tokens-plugins-granted-accounts
 type: req
+approval_ref: The author approved this Context-only fix (script tokens and view plugins are limited to their grants under the policy and SpiceDB) in chat with the orchestrator, 2026-11-21
 ---
 From the second alpha, script tokens and view plugins must be granted accounts as viewers are.
 
 ## Context
 
-The author decided it on 2026-11-01, when planning viewers for the second alpha (D-65). D-65's viewers are granted the accounts they may view; script tokens (D-27) and view plugins get the same grants then. Not built: until then they view every account (D-163). No end-to-end test proves it yet, so its evidence floor is asserted.
+The author decided it on 2026-11-01, when planning viewers for the second alpha (D-65). D-65's viewers are granted the accounts they may view; script tokens (D-27) and view plugins get the same grants then. Built: GrantPolicy (the default `--authz=policy`) and SpiceDB both limit script tokens and view plugins to their grants (D-209, D-163). No end-to-end test proves it yet, so its evidence floor is asserted.
 
 ## Source
 

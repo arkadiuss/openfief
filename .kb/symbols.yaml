@@ -124849,8 +124849,6 @@ symbols:
       - type: covered_by
         target: TEST-identity-access
       - type: implements
-        target: REQ-identity-authz-grants-hold-under-either-mode
-      - type: implements
         target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-action-string
     title: Action.String
@@ -124863,8 +124861,6 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-identity-access
-      - type: implements
-        target: REQ-identity-authz-grants-hold-under-either-mode
       - type: implements
         target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-holder
@@ -124880,7 +124876,7 @@ symbols:
       - type: covered_by
         target: TEST-identity-access
       - type: implements
-        target: REQ-identity-authz-grants-hold-under-either-mode
+        target: REQ-identity-authz-demo-holds-household
       - type: implements
         target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-holder-string
@@ -124895,8 +124891,6 @@ symbols:
       - type: covered_by
         target: TEST-identity-access
       - type: implements
-        target: REQ-identity-authz-grants-hold-under-either-mode
-      - type: implements
         target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-caller
     title: Caller
@@ -124909,8 +124903,6 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-identity-access
-      - type: implements
-        target: REQ-identity-authz-grants-hold-under-either-mode
       - type: implements
         target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-may-act
@@ -124925,7 +124917,7 @@ symbols:
       - type: covered_by
         target: TEST-identity-access
       - type: implements
-        target: REQ-identity-authz-grants-hold-under-either-mode
+        target: REQ-identity-authz-demo-holds-household
       - type: implements
         target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-app-authorizer
@@ -124956,8 +124948,6 @@ symbols:
       - type: covered_by
         target: TEST-identity-app-access
       - type: implements
-        target: REQ-identity-authz-grants-hold-under-either-mode
-      - type: implements
         target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-app-policy-may-act
     title: Policy.MayAct
@@ -124971,7 +124961,7 @@ symbols:
       - type: covered_by
         target: TEST-identity-app-access
       - type: implements
-        target: REQ-identity-authz-grants-hold-under-either-mode
+        target: REQ-identity-authz-demo-holds-household
       - type: implements
         target: REQ-identity-authz-owner-acts-every-account
       - type: implements
@@ -196235,6 +196225,8 @@ symbols:
       - type: covered_by
         target: TEST-identity-grant-policy
       - type: implements
+        target: REQ-identity-authz-grants-hold-under-either-mode
+      - type: implements
         target: REQ-identity-viewer-views-granted-accounts
   - id: SYM-viewers-internal-identity-app-grantpolicy-grantpolicy-actableaccounts
     title: GrantPolicy.ActableAccounts
@@ -196248,6 +196240,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-identity-grant-policy
+      - type: implements
+        target: REQ-identity-authz-grants-hold-under-either-mode
       - type: implements
         target: REQ-identity-viewer-views-granted-accounts
   - id: SYM-viewers-internal-identity-app-grantpolicy-grantpolicy-vieweraccounts
@@ -255012,3 +255006,48 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-audit-log-behind
+  - id: SYM-viewers-internal-identity-app-grantpolicy-test-listcover
+    title: listCover
+    status: active
+    sourceFile: internal/identity/app/grantpolicy_test.go
+    origin:
+      kind: agent
+      ref: 'D-163, D-209: a demo session holds the household grant; the author''s split of 2026-11-21'
+      recorded_at: 2026-11-21T22:22:50.766Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-policy
+  - id: SYM-viewers-internal-identity-app-grantpolicy-test-listcover-targetaccounts
+    title: listCover.TargetAccounts
+    status: active
+    sourceFile: internal/identity/app/grantpolicy_test.go
+    origin:
+      kind: agent
+      ref: 'D-163, D-209: a demo session holds the household grant; the author''s split of 2026-11-21'
+      recorded_at: 2026-11-21T22:23:00.508Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-policy
+  - id: SYM-viewers-internal-identity-app-grantpolicy-test-checkdemoholdshousehold
+    title: checkDemoHoldsHousehold
+    status: active
+    sourceFile: internal/identity/app/grantpolicy_test.go
+    origin:
+      kind: agent
+      ref: 'D-163, D-209: a demo session holds the household grant; the author''s split of 2026-11-21'
+      recorded_at: 2026-11-21T22:29:10.387Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-policy
+  - id: SYM-viewers-internal-identity-app-grantpolicy-test-checkdemoaccounts
+    title: checkDemoAccounts
+    status: active
+    sourceFile: internal/identity/app/grantpolicy_test.go
+    origin:
+      kind: agent
+      ref: 'D-163, D-209: a demo session holds the household grant; the author''s split of 2026-11-21'
+      recorded_at: 2026-11-21T22:29:19.397Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-policy
