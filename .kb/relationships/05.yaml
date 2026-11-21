@@ -1056,3 +1056,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8821faa6ad9a
+  - type: implements
+    from: SYM-pass-settings-pb-go-setclienteventsrequest-protomessage
+    to: REQ-settings-client-events-switch
+    created_at: 2026-11-21T12:38:09.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92e5e200139f
+  - type: covered_by
+    from: SYM-pass-settings-pb-go-setclienteventsrequest-protomessage
+    to: TEST-core-client-events
+    created_at: 2026-11-21T12:38:09.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fca9fae664b
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-askevery20minutes
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:51:33.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1375e04ed27

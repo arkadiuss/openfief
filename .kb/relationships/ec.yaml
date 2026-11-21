@@ -1238,3 +1238,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69f9c99e23e8
+  - type: executable_for
+    from: SYM-pass-clientevents-test-go-recordingauditor-audited
+    to: TEST-valuation-client-events-switch
+    created_at: 2026-11-21T12:30:58.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ade3215e07e

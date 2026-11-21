@@ -1350,3 +1350,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0336cad84597
+  - type: implements
+    from: SYM-pass-settings-pb-go-setclienteventsresponse-reset
+    to: REQ-settings-client-events-switch
+    created_at: 2026-11-21T12:39:02.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f25a74e788b3
+  - type: covered_by
+    from: SYM-pass-settings-pb-go-setclienteventsresponse-reset
+    to: TEST-core-client-events
+    created_at: 2026-11-21T12:39:02.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b4e5b3ed88e
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-askcookie
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:51:14.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb76874d190b

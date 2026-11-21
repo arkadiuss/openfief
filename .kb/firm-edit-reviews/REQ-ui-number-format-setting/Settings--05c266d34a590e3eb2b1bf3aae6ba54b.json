@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-ui-number-format-setting",
+  "sourceFile": "internal/valuation/app/settings.go",
+  "symbol": "Settings",
+  "verdict": "keeps",
+  "note": "Settings gained a field for the client events store; the number format, the reporting currency and the pack's default are read and set exactly as before.",
+  "statementHash": "sha256:1507d12e6193d1890e468506e2350c33273d51b0fa62d4e408209110ae0d1aec",
+  "codeHash": "sha256:3799b8778f9cc6d4464cb6660d90d52cb9057efa8454ce6faa7496f2b3d78746",
+  "startLine": 41,
+  "endLine": 56,
+  "recordedAt": "2026-11-21T12:50:07.626Z"
+}

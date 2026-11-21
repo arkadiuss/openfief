@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-ui-client-events",
+  "sourceFile": "internal/views/ui/server.go",
+  "symbol": "server.setUpClientEvents",
+  "verdict": "keeps",
+  "note": "setUpClientEvents still builds the receiver with its meters and now builds the switch that follows the owner's setting, on by default, with the install's config only able to turn it off, so reports are still on by default and can be turned off in Settings, and then nothing is sent or kept.",
+  "statementHash": "sha256:d740a60637eb7e854306e024a4139014d6322732a2c926b0c5a2a0164fb46f6d",
+  "codeHash": "sha256:462361e3557bd47918d7356872fc79ec16191624c814d5b1db9d0a172ebdbabb",
+  "startLine": 277,
+  "endLine": 289,
+  "recordedAt": "2026-11-21T12:50:07.626Z"
+}

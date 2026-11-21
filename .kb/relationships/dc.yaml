@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b7699f55fa1
+  - type: implements
+    from: SYM-pass-turnstilepass-go-turnstilecheck-issue
+    to: REQ-ui-turnstile-pass-window
+    created_at: 2026-11-21T12:19:15.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee0added8353
+  - type: covered_by
+    from: SYM-pass-turnstilepass-go-turnstilecheck-issue
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:19:15.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf4b09b5bf21

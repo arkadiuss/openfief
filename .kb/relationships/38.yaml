@@ -1259,3 +1259,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b1b8697744f8
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-passtimes
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:34:24.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-012418402771

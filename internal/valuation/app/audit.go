@@ -28,6 +28,7 @@ const (
 	settingExemptionClass   = "tax:exemption_class"
 	settingEarlyRedemption  = "tax:early_redemption_fee"
 	settingChartStart       = "chart:start"
+	settingClientEvents     = "ui:client_events"
 	settingPortfolioStart   = "chart:portfolio_start"
 	settingPriceCheck       = "pricecheck:threshold"
 	settingSeriesSource     = "marketdata:series_source"
