@@ -110,6 +110,20 @@
   </form>
 </section>
 {{end}}
+{{with .ClientEvents}}
+<section class="card" aria-labelledby="client-events-title">
+  <h2 id="client-events-title">Client events</h2>
+  <p>
+    {{if .On}}<span class="pill pill-ok">On</span>{{else}}<span class="pill pill-neutral">Off</span>{{end}}
+    <span class="muted">The pages report a fixed list of events about themselves, such as the person check's states, script errors and failed requests: nothing you type and no amounts. They stay on this install unless OpenTelemetry export is set.</span>
+  </p>
+  {{if .Forced}}<p class="help">This install's UI configuration turns them off.</p>
+  {{else}}<form method="post" action="/settings/client-events" class="actions">
+    {{if .On}}<input type="hidden" name="enabled" value="0"><button type="submit">Turn client events off</button>
+    {{else}}<input type="hidden" name="enabled" value="1"><button type="submit" class="primary">Turn client events on</button>{{end}}
+  </form>{{end}}
+</section>
+{{end}}
 {{with .Taxes}}{{if .Classes}}{{$year := .Year}}{{$classes := .Classes}}
 <section class="card" aria-labelledby="taxes-title">
   <h2 id="taxes-title">Yearly taxes in {{.Year}}</h2>

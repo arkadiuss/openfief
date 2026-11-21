@@ -1231,3 +1231,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a335901b7db
+  - type: implements
+    from: SYM-pass-turnstilepass-go-passmac
+    to: REQ-ui-turnstile-pass-cookie
+    created_at: 2026-11-21T12:19:34.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c74ed7e909eb
+  - type: covered_by
+    from: SYM-pass-turnstilepass-go-passmac
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:19:34.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c223a9ab15bd
+  - type: executable_for
+    from: SYM-pass-clientswitch-test-go-testclienteventssettingshowsinsettingswithwhatiscollected
+    to: TEST-ui-client-events-switch
+    created_at: 2026-11-21T12:33:16.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9816367cf0f

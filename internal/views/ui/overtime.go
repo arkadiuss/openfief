@@ -190,6 +190,9 @@ func (s *server) askFragment(w http.ResponseWriter, r *http.Request, sess sessio
 	if card.CheckNeeded {
 		w.Header().Set(hxTrigger, checkNeededTrigger)
 	}
+	if card.pass != nil {
+		http.SetCookie(w, card.pass)
+	}
 	s.showTemplate(w, r, http.StatusOK, "overview", "ask-answer", card)
 }
 

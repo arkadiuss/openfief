@@ -1035,3 +1035,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc1ccc35a4a5
+  - type: implements
+    from: SYM-pass-clientswitch-go-server-setclientevents
+    to: REQ-ui-client-events-owner-switch
+    created_at: 2026-11-21T12:22:37.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb4b8c16cd11
+  - type: covered_by
+    from: SYM-pass-clientswitch-go-server-setclientevents
+    to: TEST-ui-client-events-switch
+    created_at: 2026-11-21T12:22:37.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ee03ed40b22

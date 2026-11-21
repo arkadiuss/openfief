@@ -62,6 +62,11 @@ type TurnstileConfig struct {
 	// HTTP calls VerifyURL: the plugin's egress client, which reaches only the
 	// granted host.
 	HTTP *http.Client
+	// PassIdle and PassMax are the windows of the pass a visitor who passed the
+	// check gets (D-208): not checked again for PassIdle after their last model
+	// question, and at most PassMax from the check. A zero value is D-208's: 30
+	// minutes and 2 hours. Only tests shorten them.
+	PassIdle, PassMax time.Duration
 }
 
 // validate returns nil, or an error wrapping ErrBadTurnstile for a config without
@@ -73,6 +78,8 @@ func (c *TurnstileConfig) validate() error {
 		return fmt.Errorf("%w: a site key, a secret and a client", ErrBadTurnstile)
 	case err != nil || u.Scheme != "https" || u.Hostname() == "" || u.User != nil:
 		return fmt.Errorf("%w: the verify URL is an https URL", ErrBadTurnstile)
+	case c.PassIdle < 0 || c.PassMax < 0:
+		return fmt.Errorf("%w: the pass's windows are not negative", ErrBadTurnstile)
 	}
 	return nil
 }
@@ -154,6 +161,8 @@ type turnstileOutcome struct {
 type turnstileCheck struct {
 	cfg TurnstileConfig
 	log *slog.Logger
+	// now is the clock the pass's windows run on.
+	now func() time.Time
 }
 
 // siteverifyReply is the part of Cloudflare's answer the check reads.

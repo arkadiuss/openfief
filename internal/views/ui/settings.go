@@ -47,6 +47,9 @@ type settingsData struct {
 	// Taxes are this year's yearly taxes and the classification form
 	// (D-127, D-132).
 	Taxes *taxesSettings
+	// ClientEvents is whether the pages report client events about themselves
+	// (D-227).
+	ClientEvents *clientEventsSetting
 }
 
 // settingsPage shows the owner's settings.
@@ -68,6 +71,7 @@ func (s *server) renderSettings(w http.ResponseWriter, r *http.Request, sess ses
 		return
 	}
 	data.Plugins = plugins
+	data.ClientEvents = s.loadClientEvents(r)
 	if data.Values, err = s.loadValuesSettings(r, sess); err != nil {
 		s.coreFailed(w, r, "GetOwnerSettings", err)
 		return

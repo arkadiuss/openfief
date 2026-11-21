@@ -993,3 +993,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ff668a69f5a
+  - type: executable_for
+    from: SYM-pass-clientevents-test-go-testclienteventsthroughthefrontdoor
+    to: TEST-e2e-client-events
+    created_at: 2026-11-21T12:40:10.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83201bd5eecc
