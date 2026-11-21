@@ -1035,3 +1035,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e36feeae7016
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-portfolio-twr-cash-flows-end-of-day
+    created_at: 2026-11-21T08:38:21.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94795831333d
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-portfolio-twr-confirmed-transfers-only
+    created_at: 2026-11-21T08:38:21.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49c32de5cd9e
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-portfolio-twr-opening-lots-inflows
+    created_at: 2026-11-21T08:38:21.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75f312995f8f
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-portfolio-twr-rounding
+    created_at: 2026-11-21T08:38:21.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2d744f32cad
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-ui-account-chart-default-start
+    created_at: 2026-11-21T08:38:21.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3dc71a12752
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-21T08:38:21.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c06e0bd92181
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-21T08:38:21.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4132f76fb9e2
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-ui-opened-account-keeps-default-start
+    created_at: 2026-11-21T08:38:22.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bdcbac590bb
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-ui-performance-index-100-on-start
+    created_at: 2026-11-21T08:38:22.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e3228e372c7
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-ui-portfolio-chart-default-start
+    created_at: 2026-11-21T08:38:22.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-276619cf2b5a
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-ui-portfolio-chart-start-ignores-full-history
+    created_at: 2026-11-21T08:38:22.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e54cc904ce0
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-ui-time-chart-marks-tracking-start
+    created_at: 2026-11-21T08:38:22.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5acf5dc7dab6
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-ui-time-chart-start-owner-chosen
+    created_at: 2026-11-21T08:38:22.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cfb3dd1317f
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-ui-unmarked-seeded-account-moves-start
+    created_at: 2026-11-21T08:38:22.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-637c88a3ded0
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-views-paid-out-payout-counts-as-return
+    created_at: 2026-11-21T08:38:22.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7f1c5b77460
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-views-performance-confirmed-transfers
+    created_at: 2026-11-21T08:38:22.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-955224e52245
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-views-performance-gaps
+    created_at: 2026-11-21T08:38:22.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b4f3a49e60d
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-views-performance-twr
+    created_at: 2026-11-21T08:38:22.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f519c54dbad
+  - type: relates_to
+    from: REQ-ui-period-opens-chart-on-opening-close
+    to: REQ-views-period-return-from-opening-close
+    created_at: 2026-11-21T08:38:22.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed145a5aad56

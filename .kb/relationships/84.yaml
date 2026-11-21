@@ -1329,3 +1329,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76172d28dc80
+  - type: relates_to
+    from: REQ-decision-d222-1-model-answer-shows-name-line-and-link
+    to: REQ-ui-ask-shows-model-and-disclaimer
+    created_at: 2026-11-21T08:38:19.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-514fe23bd8f0

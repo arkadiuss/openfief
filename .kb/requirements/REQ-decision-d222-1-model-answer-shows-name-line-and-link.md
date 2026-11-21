@@ -22,7 +22,7 @@ semantic_inventory:
       start: 0
       end: 129
     subjects:
-      - ask_box.answer_attribution
+      - ask_box.answer_foot_note
   - claim_key: CLAIM-94D67B578313D72A
     claim_text: check the cards
     role: descriptive
@@ -43,6 +43,19 @@ logic_claims:
   - CLAIM-042A565E60D43F42
 id: REQ-decision-d222-1-model-answer-shows-name-line-and-link
 type: req
+pair_reviews:
+  - with: REQ-ui-ask-shows-model-and-disclaimer
+    verdict: no_conflict
+    separated_by: what the note must state (name from the settings entry, the disclaimer line, the docs link, not evaluated; D-222) against where it sits and how many cards it counts (the UI requirement); the UI requirement restates D-222's single note
+    claims:
+      - claim_key: CLAIM-042A565E60D43F42
+      - claim_key: CLAIM-07955DF152B6858B
+      - claim_key: CLAIM-94D67B578313D72A
+      - claim_key: CLAIM-F9BBDE701438CEA4
+    origin:
+      kind: agent
+      ref: 'The author approved the subjects and every pair verdict of the kibi 2.45 review: "Approve all, please continue", chat with the orchestrator, 2026-11-21'
+      approved_by: author, 2026-11-21
 ---
 When a model answers in the Ask box, the answer shows the model's display name from its settings entry, the line "AI can be wrong; check the cards. Not investment advice.", and a link to the docs page that reports how models did in the Ask box's eval (D-217): each model and host with its verdict, failing cases, reliability, cost and run dates, regenerated from the bench's reports.
 

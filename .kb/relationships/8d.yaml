@@ -1140,3 +1140,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f36ce1a210a
+  - type: relates_to
+    from: REQ-views-period-return-from-opening-close
+    to: REQ-portfolio-twr-cash-flows-end-of-day
+    created_at: 2026-11-21T08:38:24.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd8466a47c76
+  - type: relates_to
+    from: REQ-views-period-return-from-opening-close
+    to: REQ-portfolio-twr-confirmed-transfers-only
+    created_at: 2026-11-21T08:38:24.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcb6e52bff83
+  - type: relates_to
+    from: REQ-views-period-return-from-opening-close
+    to: REQ-portfolio-twr-opening-lots-inflows
+    created_at: 2026-11-21T08:38:24.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbab4de0f73b
+  - type: relates_to
+    from: REQ-views-period-return-from-opening-close
+    to: REQ-portfolio-twr-rounding
+    created_at: 2026-11-21T08:38:24.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d27b5ca932e0
+  - type: relates_to
+    from: REQ-views-period-return-from-opening-close
+    to: REQ-views-paid-out-payout-counts-as-return
+    created_at: 2026-11-21T08:38:24.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1b41fcdfd24
+  - type: relates_to
+    from: REQ-views-period-return-from-opening-close
+    to: REQ-views-performance-confirmed-transfers
+    created_at: 2026-11-21T08:38:24.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ee64d8709f5
+  - type: relates_to
+    from: REQ-views-period-return-from-opening-close
+    to: REQ-views-performance-gaps
+    created_at: 2026-11-21T08:38:24.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dd17ee88fb2
+  - type: relates_to
+    from: REQ-views-period-return-from-opening-close
+    to: REQ-views-performance-twr
+    created_at: 2026-11-21T08:38:24.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-686ad22e2ff6
