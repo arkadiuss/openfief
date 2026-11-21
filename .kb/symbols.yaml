@@ -242093,3 +242093,47 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-without-default-sleeves
+    title: withoutDefaultSleeves
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-no-default-sleeves
+    title: noDefaultSleeves
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-guard-tables
+    title: guardTables
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-log-guard-tables
+    title: logGuardTables
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data

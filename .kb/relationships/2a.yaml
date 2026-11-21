@@ -1224,3 +1224,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b23fec7c99f6
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-without-default-sleeves
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T13:17:32.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edabe1170419
