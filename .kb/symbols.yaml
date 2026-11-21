@@ -255051,3 +255051,16 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-identity-grant-policy
+  - id: SYM-release-notes-internal-scope
+    title: internal_scope
+    status: active
+    sourceFile: scripts/release-notes.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T23:06:59.387Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-notes
+      - type: implements
+        target: REQ-tooling-release-notes-internal-scopes

@@ -22,6 +22,22 @@ previous_release() {
   git describe --tags --abbrev=0 --match '[0-9][0-9][0-9][0-9].*' "${exclude[@]}" "$ref" 2>/dev/null || true
 }
 
+# internal_scope reports whether a Conventional Commit scope, such as "(kibi)" or "(demo,askbench)", names only
+# OpenFief's own tooling or its public demo: what an owner installs never changes in such a commit, so its feature or
+# fix goes to Other changes. A scope that also names a part of the product keeps its section.
+internal_scope() {
+  local scope="${1#(}" part
+  scope="${scope%)}"
+  [ -n "$scope" ] || return 1
+  IFS=',' read -ra parts <<<"$scope"
+  for part in "${parts[@]}"; do
+    case "${part// /}" in
+      kibi | askbench | demo | grafana | e2e | tooling | release | release-fetch | ci | hooks) ;;
+      *) return 1 ;;
+    esac
+  done
+}
+
 # section prints the notes section a commit belongs in, from its Conventional Commit subject and body.
 section() {
   local re='^([a-z]+)(\([^)]*\))?(!)?: '
@@ -30,7 +46,12 @@ section() {
   elif [ -n "${BASH_REMATCH[3]}" ] || grep -qE '^BREAKING[ -]CHANGE: ' <<<"$2"; then
     echo breaking
   else
-    case "${BASH_REMATCH[1]}" in
+    local type="${BASH_REMATCH[1]}" scope="${BASH_REMATCH[2]}"
+    if [[ "$type" =~ ^(feat|fix)$ ]] && internal_scope "$scope"; then
+      echo other
+      return
+    fi
+    case "$type" in
       feat) echo features ;;
       fix) echo fixes ;;
       perf) echo performance ;;
