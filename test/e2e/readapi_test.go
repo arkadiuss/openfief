@@ -35,6 +35,7 @@ import (
 	_ "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1"
 	_ "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1"
 	_ "github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1"
+	_ "github.com/arkadiuss/openfief/sdk/go/gen/openfief/thesis/v1"
 	_ "github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
