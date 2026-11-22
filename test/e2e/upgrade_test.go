@@ -23,6 +23,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/yaml"
 
+	"github.com/arkadiuss/openfief/internal/plugins"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
@@ -353,8 +354,9 @@ func cliRun(t *testing.T, cmd *exec.Cmd) {
 
 // TestUpgradeFromPublished upgrades a published release in place to this checkout's bundle and checks that nothing
 // the owner stored is lost or changed, that the household-grant cutover ran exactly once, that the SpiceDB
-// credentials Job made its Secrets, that the agentic switch stays off, and that the core is ready and the UI serves
-// (SCEN-e2e-upgrade-keeps-stored-data).
+// credentials Job made its Secrets, that the upgraded core answers from SpiceDB, the default, with the cutover's
+// household grants written into it for the script token and the view plugin that existed, that the agentic switch
+// stays off, and that the core is ready and the UI serves (SCEN-e2e-upgrade-keeps-stored-data).
 func TestUpgradeFromPublished(t *testing.T) {
 	t.Parallel()
 	k := mustConnect(t)
@@ -381,6 +383,7 @@ func TestUpgradeFromPublished(t *testing.T) {
 	checkTickerConfirmations(t, k)
 	checkGrantCutover(t, k, seeded)
 	checkSpiceDBCredentials(t, k)
+	checkCutoverInSpiceDB(t, k, seeded)
 	checkAgenticSwitchOff(t, k, seeded.kept)
 	checkServing(t, k, seeded)
 	checkCutoverRanOnce(t, k)
@@ -632,6 +635,64 @@ func checkSpiceDBCredentials(t *testing.T, k *kube) {
 	if bytes.Equal(key, password) {
 		t.Errorf("Secrets %s and %s hold the same value", spicedbPresharedName, spicedbRoleName)
 	}
+}
+
+// checkCutoverInSpiceDB checks that after the upgrade SpiceDB answers, by default (D-164), and holds what the cutover
+// gave (D-209): the core runs SpiceDB and has reconciled with it, and the script token issued before the upgrade and
+// the UI plugin installed before it, each given the household grant by the cutover, list every account the published
+// release stored, which only SpiceDB's household relationships for them can answer: under SpiceDB a holder with no
+// grant there views nothing.
+func checkCutoverInSpiceDB(t *testing.T, k *kube, s seededInstall) {
+	t.Helper()
+	d, err := k.clients.AppsV1().Deployments(namespace).Get(t.Context(), coreDeployment, metav1.GetOptions{})
+	if err != nil {
+		t.Fatalf("getting Deployment %s: %v", coreDeployment, err)
+	}
+	if !coreRunsSpiceDB(d) {
+		t.Fatalf("the upgraded core runs without SpiceDB: the bundle's core must run %s (D-164)", authzSpiceDBFlag)
+	}
+	waitCoreAvailable(t, k)
+	waitReconciled(t, k)
+	stored := queryLines(t, k, `SELECT id FROM ledger.accounts ORDER BY 1`)
+	if len(stored) == 0 {
+		t.Fatal("the published release stored no account to check the grants against")
+	}
+	slices.Sort(stored) // as the lists below are, whatever the database's collation
+	f := forwardCoreUntilStopped(t, k)
+	defer f.stop()
+	if got := sortedAccounts(t, bundleGet(t, f.base+"/v1/accounts", s.kept.secret)); !slices.Equal(got, stored) {
+		t.Errorf("the script token issued before the upgrade lists %v under SpiceDB, want every stored account %v", got, stored)
+	}
+	owner := newOwnerAPI(t, k)
+	ui := k.token(t, plugins.ServiceAccountName(uiPlugin), plugins.CoreAudience)
+	err = waitFor(t.Context(), spicedbTimeout, func(ctx context.Context) (string, bool, error) {
+		ids, listErr := owner.accountsOf(ctx, ui)
+		if listErr != nil {
+			return "", false, listErr
+		}
+		return fmt.Sprintf("%d accounts", len(ids)), slices.Equal(ids, stored), nil
+	})
+	if err != nil {
+		t.Errorf("waiting for the UI plugin, installed before the upgrade, to list every stored account under SpiceDB: %v", err)
+	}
+}
+
+// sortedAccounts returns the IDs of the accounts in a 200 answer of GET /v1/accounts, sorted, or fails t.
+func sortedAccounts(t *testing.T, r reply) []string {
+	t.Helper()
+	if r.status != http.StatusOK {
+		t.Fatalf("GET /v1/accounts: status %d, body %q; want 200", r.status, r.body)
+	}
+	var accounts viewsv1.ListAccountsResponse
+	if err := protojson.Unmarshal(r.body, &accounts); err != nil {
+		t.Fatalf("decoding the accounts: %v", err)
+	}
+	ids := make([]string, 0, len(accounts.GetAccounts()))
+	for _, a := range accounts.GetAccounts() {
+		ids = append(ids, a.GetId())
+	}
+	slices.Sort(ids)
+	return ids
 }
 
 // checkAgenticSwitchOff checks D-212: agents and models are off, on a fresh install and after an upgrade: the switch

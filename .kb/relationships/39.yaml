@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee8bac0af625
+  - type: verified_by
+    from: SCEN-tooling-release-bundle-authz-spicedb
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-22T08:41:13.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d580ca31018d

@@ -1329,3 +1329,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-222cf686f783
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-core-authz-flag-default-spicedb
+    created_at: 2026-11-22T08:42:41.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d540ac780230

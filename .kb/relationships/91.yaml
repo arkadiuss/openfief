@@ -1273,3 +1273,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b89abb75fd49
+  - type: verified_by
+    from: SCEN-core-authz-flag-default-spicedb
+    to: TEST-core-authz-flags
+    created_at: 2026-11-22T08:42:38.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28076ca3f7bd

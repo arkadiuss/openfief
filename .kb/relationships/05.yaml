@@ -1112,3 +1112,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed27c5a3c366
+  - type: executable_for
+    from: SYM-core-authzwait-test-demo-ledger
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T09:29:39.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba25adb84e0c

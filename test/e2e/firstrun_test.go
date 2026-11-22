@@ -129,6 +129,37 @@ func TestBundleFirstRun(t *testing.T) {
 	checkOnlyTheUIInstalled(t, k)
 	checkNoOTLPExport(t, k)
 	checkClientEventsOnAndLocal(t, k)
+	checkAuthorizedBySpiceDB(t, k)
+}
+
+// checkAuthorizedBySpiceDB checks the fresh install's authorization (D-164): the bundle's core runs --authz=spicedb,
+// spelled out, and no other --authz, and it has reconciled with SpiceDB, which answered with its schema, so SpiceDB, not
+// the policy, answers every check.
+func checkAuthorizedBySpiceDB(t *testing.T, k *kube) {
+	t.Helper()
+	d, err := k.clients.AppsV1().Deployments(namespace).Get(t.Context(), coreDeployment, metav1.GetOptions{})
+	if err != nil {
+		t.Fatalf("getting Deployment %s: %v", coreDeployment, err)
+	}
+	for i := range d.Spec.Template.Spec.Containers {
+		c := &d.Spec.Template.Spec.Containers[i]
+		if c.Name != "core" {
+			continue
+		}
+		var authz []string
+		for _, a := range c.Args {
+			if strings.HasPrefix(a, "--authz") {
+				authz = append(authz, a)
+			}
+		}
+		if !slices.Equal(authz, []string{authzSpiceDBFlag}) {
+			t.Errorf("a fresh install's core runs %v, want %s alone: SpiceDB is the default (D-164)", authz, authzSpiceDBFlag)
+		}
+	}
+	if !coreRunsSpiceDB(d) {
+		t.Errorf("a fresh install's core doesn't run SpiceDB")
+	}
+	waitReconciled(t, k)
 }
 
 // checkOnlyTheUIInstalled checks that the UI the owner installed is the install's only plugin: no model provider

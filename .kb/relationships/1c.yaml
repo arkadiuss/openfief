@@ -1245,3 +1245,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f0b361ae48a
+  - type: implements
+    from: SYM-core-authzwait-demo-step
+    to: REQ-demo-spicedb-reconciled-after-reseed
+    created_at: 2026-11-22T09:29:14.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db18393fac7d
+  - type: covered_by
+    from: SYM-core-authzwait-demo-step
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T09:29:14.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad8ebbe341ee

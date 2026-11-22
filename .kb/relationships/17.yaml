@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ffe4fe033dd1
+  - type: executable_for
+    from: SYM-core-authzwait-test-demo-sweeps
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T09:30:35.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-374afedb3e10

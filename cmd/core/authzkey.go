@@ -27,11 +27,16 @@ type keyGate struct {
 	poll time.Duration
 	log  *slog.Logger
 	conn atomic.Pointer[spicedbConn]
-	// waiting is whether the wait was logged; only step reads it.
-	waiting bool
+	// misses counts the looks that found no key; only step reads it, to log
+	// the wait at the first and again every keyRemindEvery.
+	misses int
 	// connected is closed when the key is read and the client made.
 	connected chan struct{}
 }
+
+// keyRemindEvery is how often a gate still without the key logs that it
+// waits, so a Secret that never comes shows in the log, not only at start.
+const keyRemindEvery = time.Minute
 
 // newKeyGate returns the gate for cfg, which has no key of its own. Call run
 // to start it waiting.
@@ -64,14 +69,15 @@ func (g *keyGate) run(ctx context.Context) {
 }
 
 // step looks at the key's file once and, when it holds a key, connects and
-// returns true. It logs that it waits once, and never the key.
+// returns true. It logs that it waits, naming the Secret and the file, at the
+// first look and then every keyRemindEvery, as a warning, and never the key.
 func (g *keyGate) step() bool {
 	key := readKeyFile(g.cfg.KeyFile)
 	if key == "" {
-		if !g.waiting {
-			g.waiting = true
-			g.log.Info("waiting for SpiceDB's preshared key; every authorization check is refused and the core is not ready until it is there", "file", g.cfg.KeyFile)
+		if g.misses%remindAfter(g.poll) == 0 {
+			g.log.Warn(keyPendingReason(g.cfg.KeyFile), "secret", identity.PresharedKeyName, "file", g.cfg.KeyFile)
 		}
+		g.misses++
 		return false
 	}
 	cfg := g.cfg
@@ -85,6 +91,15 @@ func (g *keyGate) step() bool {
 	close(g.connected)
 	g.log.Info("SpiceDB's preshared key is there; connected")
 	return true
+}
+
+// remindAfter returns how many looks, poll apart, make keyRemindEvery: at
+// least one.
+func remindAfter(poll time.Duration) int {
+	if poll <= 0 || poll >= keyRemindEvery {
+		return 1
+	}
+	return int(keyRemindEvery / poll)
 }
 
 // wait returns true once the gate is connected, or false when ctx ends first.
@@ -104,7 +119,10 @@ func (g *keyGate) isConnected() bool { return g.conn.Load() != nil }
 // missing: the gate's authorizer and syncer, which refuse until the gate has
 // connected, then answer as SpiceDB's.
 func gatedAuthorization(g *keyGate) authorization {
-	return authorization{authorizer: gatedAuthorizer{g}, syncer: gatedSyncer{g}, closer: g, gate: g, ping: gatedAuthorizer{g}.Ping, started: new(atomic.Bool)}
+	return authorization{
+		authorizer: gatedAuthorizer{g}, syncer: gatedSyncer{g}, closer: g, gate: g, ping: gatedAuthorizer{g}.Ping,
+		start: new(startState),
+	}
 }
 
 // gatedAuthorizer is identityapp.Authorizer and AccountLister over the gate.

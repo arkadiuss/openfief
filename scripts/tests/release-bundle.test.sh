@@ -78,6 +78,11 @@ registry.example.org:5000/e2e/core@$da"
   [ -z "$(images "a/openfief-crds-$version.yaml")" ] || fail_case "the CRDs file runs an image"
   gojq -e --yaml-input -s 'any(.[]; .kind == "Deployment" and .metadata.name == "openfief-core")' \
     "a/openfief-install-$version.yaml" >/dev/null || fail_case "the install has no core Deployment"
+  # SpiceDB answers authorization (D-164): the core runs --authz=spicedb, reaches SpiceDB's Service in plaintext behind
+  # its NetworkPolicy, from the environment so the commands run in its pod do too, and mounts the key's Secret.
+  authz="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Deployment" and .metadata.name == "openfief-core") | .spec.template.spec | (.containers[] | select(.name == "core") | ([.args[] | select(startswith("--authz") or startswith("--spicedb"))] | join(" ")), ([.env[] | select(.name | startswith("OPENFIEF_SPICEDB")) | "\(.name)=\(.value)"] | join(" "))), (.volumes[] | select(.secret.secretName == "openfief-spicedb-key") | "optional=\(.secret.optional)")] | join(",")' "a/openfief-install-$version.yaml")"
+  [ "$authz" = "--authz=spicedb,OPENFIEF_SPICEDB_ENDPOINT=openfief-spicedb:50051 OPENFIEF_SPICEDB_INSECURE=true,optional=true" ] ||
+    fail_case "the install's core runs authorization as '$authz', want SpiceDB over its Service with the key's Secret mounted"
   # The credentials Job runs the core's image, the very digest the core runs, and `core init-credentials` (D-216).
   job_image="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Job" and .metadata.labels["app.kubernetes.io/name"] == "openfief-init-credentials") | .spec.template.spec.containers[] | "\(.image) \(.args | join(" "))"] | join(",")' "a/openfief-install-$version.yaml")"
   [ "$job_image" = "registry.example.org:5000/e2e/core@$da init-credentials" ] ||
@@ -194,6 +199,7 @@ for base in operator egress-proxy core spicedb; do
   printf 'apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: %s\nspec:\n  template:\n    spec:\n      containers:\n        - name: %s\n          image: ghcr.io/arkadiuss/openfief/%s\n' \
     "$base" "$base" "$base" >"fake/$base/deployment.yaml"
 done
+printf '          args: ["serve", "--authz=spicedb"]\n' >>fake/core/deployment.yaml
 # The stand-in for deploy/spicedb also holds the credentials Job, as the real one does, so the bundle can name it.
 printf 'resources:\n  - deployment.yaml\n  - job.yaml\n' >fake/spicedb/kustomization.yaml
 printf 'apiVersion: batch/v1\nkind: Job\nmetadata:\n  name: openfief-init-credentials\n  labels:\n    app.kubernetes.io/name: openfief-init-credentials\nspec:\n  template:\n    metadata:\n      labels:\n        app.kubernetes.io/name: openfief-init-credentials\n    spec:\n      restartPolicy: Never\n      containers:\n        - name: init-credentials\n          image: ghcr.io/arkadiuss/openfief/core\n' >fake/spicedb/job.yaml
@@ -239,6 +245,13 @@ deploy="$work/fake" expect_fail "an exemption set by an environment variable" "O
   "$version" d "${refs[@]}"
 [ ! -e d ] || fail_case "a bundle with an exemption wrote files"
 sed -i '$d;$d;$d' fake/egress-proxy/deployment.yaml
+# A core on the policy, or with no --authz, is refused: a release's authorization is SpiceDB's (D-164).
+sed -i 's|"--authz=spicedb"|"--authz=policy"|' fake/core/deployment.yaml
+deploy="$work/fake" expect_fail "a core on the policy" "must run --authz=spicedb" "$version" d "${refs[@]}"
+sed -i 's|, "--authz=policy"||' fake/core/deployment.yaml
+deploy="$work/fake" expect_fail "a core with no --authz" "it runs: 'no --authz'" "$version" d "${refs[@]}"
+[ ! -e d ] || fail_case "a bundle whose core isn't on SpiceDB wrote files"
+sed -i 's|args: \["serve"\]|args: ["serve", "--authz=spicedb"]|' fake/core/deployment.yaml
 sed -i 's|name: openfief-db$|name: other-db|' fake/database/openfief-db.yaml
 deploy="$work/fake" expect_fail "a database the install doesn't read" "exactly the Cluster openfief/openfief-db" \
   "$version" d "${refs[@]}"
@@ -271,4 +284,4 @@ grep -qF "$pinned_sum" "$root/docs/guides/install.md" || fail_case "the install 
 if [ "$failures" -ne 0 ]; then
   exit 1
 fi
-echo "release-bundle: 33 cases passed"
+echo "release-bundle: 37 cases passed"

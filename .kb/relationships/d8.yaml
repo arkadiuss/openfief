@@ -1196,3 +1196,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-745fcc8aa99a
+  - type: executable_for
+    from: SYM-core-authzwait-test-read-spicedb-store-on-postgres
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T08:37:12.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80fc81dc6cab
+  - type: executable_for
+    from: SYM-core-authzwait-test-demo-keeps-reconciling
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T08:58:05.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9c0ac2111ce

@@ -46,7 +46,7 @@ func TestGuardFlags(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := parseServe(tt.args, func(string) string { return "" })
+			got, err := parseServe(append([]string{"--authz=policy"}, tt.args...), func(string) string { return "" })
 			if !errors.Is(err, tt.wantErr) {
 				t.Fatalf("error = %v, want %v", err, tt.wantErr)
 			}

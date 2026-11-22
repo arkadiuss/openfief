@@ -1077,3 +1077,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bbec7cbadfed
+  - type: implements
+    from: SYM-core-authzwait-placements
+    to: REQ-demo-spicedb-reconciled-after-reseed
+    created_at: 2026-11-22T09:29:23.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49596af69d48
+  - type: covered_by
+    from: SYM-core-authzwait-placements
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T09:29:23.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-404a6e594750

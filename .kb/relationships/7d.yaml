@@ -1399,3 +1399,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dbd8a0e53f1f
+  - type: implements
+    from: SYM-core-authzkey-remind-after
+    to: REQ-core-spicedb-not-ready-says-why
+    created_at: 2026-11-22T08:40:22.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ca076c9a9f0
+  - type: covered_by
+    from: SYM-core-authzkey-remind-after
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-22T08:40:22.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e71d22e02f9

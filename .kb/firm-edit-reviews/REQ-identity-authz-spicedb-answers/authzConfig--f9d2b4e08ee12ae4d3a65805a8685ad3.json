@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-identity-authz-spicedb-answers",
+  "sourceFile": "cmd/core/authz.go",
+  "symbol": "authzConfig",
+  "verdict": "keeps",
+  "note": "Comment only; Mode's flag default is now spicedb. Reviewed and approved by the author in chat with the orchestrator, 2026-11-22.",
+  "statementHash": "sha256:3fa2afbefe1b953ea3ecdb984119d4841eb8350de0c337a64d431cf9c4fcf2b1",
+  "codeHash": "sha256:a17a2d996a44b9938774574ca3d8e9c9f8f63b44ae6a4447fd2cce81f80b82eb",
+  "startLine": 108,
+  "endLine": 127,
+  "recordedAt": "2026-11-22T15:13:36.227Z"
+}

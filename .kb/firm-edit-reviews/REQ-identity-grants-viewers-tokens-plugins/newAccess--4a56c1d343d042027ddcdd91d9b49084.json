@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-identity-grants-viewers-tokens-plugins",
+  "sourceFile": "cmd/core/core.go",
+  "symbol": "newAccess",
+  "verdict": "keeps",
+  "note": "Sets the SpiceDB diagnosis and starts the demo's followDemo reconcile; the grants wiring for viewers, script tokens and view plugins is unchanged. Reviewed and approved by the author in chat with the orchestrator, 2026-11-22.",
+  "statementHash": "sha256:dde22772fae4bf108cfd363cab8628ef9a2d5a8deb58073c60d9c269cab12e25",
+  "codeHash": "sha256:cbda041fb51659d6b5a2bb47dff4ecb002c64ddb621c201d078908a28db4aeb9",
+  "startLine": 316,
+  "endLine": 356,
+  "recordedAt": "2026-11-22T15:13:36.227Z"
+}

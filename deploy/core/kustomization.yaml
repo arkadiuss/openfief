@@ -27,6 +27,8 @@
 #   kubectl -n openfief exec deploy/openfief-core -- /core token issue --name my-script --ttl 168h
 #   kubectl -n openfief exec deploy/openfief-core -- /core token list
 #   kubectl -n openfief exec deploy/openfief-core -- /core token revoke <id>
+# They answer from SpiceDB, the default, with the address, plaintext setting and key the pod has; a core an owner put
+# on --authz=policy needs --authz=policy on issue and revoke too.
 #
 # A connector instance writes only to the accounts it is bound to, and the owner binds them:
 #   kubectl -n openfief exec deploy/openfief-core -- /core connector bind --instance ibkr-main --account <account id>

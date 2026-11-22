@@ -1336,3 +1336,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a8905f8eabb6
+  - type: executable_for
+    from: SYM-core-authzkey-test-key-gate-warns-and-reminds
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-22T08:37:20.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab84047d1b16

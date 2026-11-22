@@ -1217,3 +1217,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1702de2ff47d
+  - type: executable_for
+    from: SYM-core-authzwait-test-not-ready-says-what-is-missing
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T08:37:04.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a83a4a8bc242

@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a19a77b89402
+  - type: executable_for
+    from: SYM-core-authz-test-no-spicedb-says-how-to-opt-out
+    to: TEST-core-authz-flags
+    created_at: 2026-11-22T08:37:28.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1dae392b71d5

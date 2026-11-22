@@ -33,8 +33,10 @@ func warsaw(t *testing.T) *time.Location {
 	return loc
 }
 
-// defaultServe returns serve's configuration with every flag at its
-// default.
+// defaultServe returns serve's configuration with every flag at its default
+// but --authz, which is the policy: the tests that serve a core run it
+// without SpiceDB, so they pass --authz=policy (TestParseArgs checks the
+// default, SpiceDB).
 func defaultServe(t *testing.T) serveConfig {
 	t.Helper()
 	pln, err := kernel.ParseCurrency("PLN")
@@ -59,10 +61,21 @@ func defaultServe(t *testing.T) serveConfig {
 	}
 }
 
-// policyAuthz is the authorization the token commands have when no flag asks
-// for SpiceDB.
-func policyAuthz() authzConfig {
-	return authzConfig{Mode: authzPolicy, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout}
+// clusterSpiceDB is the environment the core's Deployment gives its pod for
+// SpiceDB (deploy/core/deployment.yaml), with the key in the environment
+// rather than its file, which a test has no kubelet to mount.
+func clusterSpiceDB() map[string]string {
+	return map[string]string{spicedbEndpointEnv: "openfief-spicedb:50051", spicedbInsecureEnv: "true", spicedbKeyEnv: testKey}
+}
+
+// clusterAuthz is the authorization serve and the token commands have with
+// no --authz flag in the core's pod: SpiceDB, the default (D-164), over
+// plaintext gRPC on the in-cluster Service.
+func clusterAuthz() authzConfig {
+	return authzConfig{
+		Mode: authzSpiceDB, Endpoint: "openfief-spicedb:50051", Key: testKey, KeyFile: defaultSpiceDBKeyFile,
+		Insecure: true, Timeout: defaultSpiceDBTimeout,
+	}
 }
 
 // mustOrigins returns the allow-list of texts.
@@ -88,6 +101,7 @@ func mustOrigin(t *testing.T, text string) identity.Origin {
 func TestParseArgs(t *testing.T) {
 	t.Parallel()
 	def := defaultServe(t)
+	def.Authz = clusterAuthz()
 	utc := def
 	utc.EndOfDay = valuationpg.DailyAt{Hour: 22, Minute: 5, Location: time.UTC}
 	utc.Listen, utc.PluginListen, utc.Workers, utc.EnsureDefaults, utc.ShutdownTimeout = "127.0.0.1:9090", "127.0.0.1:9091", 4, false, time.Second
@@ -189,14 +203,14 @@ func TestParseArgs(t *testing.T) {
 		{name: "connector sync in an unknown mode", args: []string{"connector", "sync", "--instance=x", "--mode=full"}, dsn: testDSN, wantErr: errBadMode},
 		{name: "connector sync with an argument", args: []string{"connector", "sync", "--instance=x", "now"}, dsn: testDSN, wantErr: errUsage},
 		{name: "migrate", args: []string{"migrate"}, dsn: testDSN, want: command{Name: cmdMigrate, DSN: testDSN}},
-		{name: "token issue", args: []string{"token", "issue", "--name", "demo", "--ttl", "168h"}, dsn: testDSN, want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "demo", TTL: 168 * time.Hour, SpiceDBWait: time.Minute, Authz: policyAuthz()}},
-		{name: "token issue default lifetime", args: []string{"token", "issue", "--name=x"}, dsn: testDSN, want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "x", TTL: 720 * time.Hour, SpiceDBWait: time.Minute, Authz: policyAuthz()}},
+		{name: "token issue", args: []string{"token", "issue", "--name", "demo", "--ttl", "168h"}, dsn: testDSN, want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "demo", TTL: 168 * time.Hour, SpiceDBWait: time.Minute, Authz: clusterAuthz()}},
+		{name: "token issue default lifetime", args: []string{"token", "issue", "--name=x"}, dsn: testDSN, want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "x", TTL: 720 * time.Hour, SpiceDBWait: time.Minute, Authz: clusterAuthz()}},
 		{
 			name: "token issue with the household grant", args: []string{"token", "issue", "--name=x", "--grant-household"}, dsn: testDSN,
-			want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "x", TTL: 720 * time.Hour, GrantHousehold: true, SpiceDBWait: time.Minute, Authz: policyAuthz()},
+			want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "x", TTL: 720 * time.Hour, GrantHousehold: true, SpiceDBWait: time.Minute, Authz: clusterAuthz()},
 		},
 		{name: "token list", args: []string{"token", "list"}, dsn: testDSN, want: command{Name: cmdTokenList, DSN: testDSN}},
-		{name: "token revoke", args: []string{"token", "revoke", "0123456789abcdef"}, dsn: testDSN, want: command{Name: cmdTokenRevoke, DSN: testDSN, TokenID: "0123456789abcdef", Authz: policyAuthz()}},
+		{name: "token revoke", args: []string{"token", "revoke", "0123456789abcdef"}, dsn: testDSN, want: command{Name: cmdTokenRevoke, DSN: testDSN, TokenID: "0123456789abcdef", Authz: clusterAuthz()}},
 		// The credentials Job has no database: it needs no DSN, and takes no argument (D-216).
 		{name: "init-credentials needs no DSN", args: []string{"init-credentials"}, want: command{Name: cmdInitCredentials}},
 		{name: "init-credentials ignores a DSN", args: []string{"init-credentials"}, dsn: testDSN, want: command{Name: cmdInitCredentials}},
@@ -224,7 +238,8 @@ func TestParseArgs(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			env := map[string]string{dsnEnv: tt.dsn, authOriginsEnv: tt.origins}
+			env := clusterSpiceDB()
+			env[dsnEnv], env[authOriginsEnv] = tt.dsn, tt.origins
 			if tt.pod {
 				env[inClusterEnv] = "192.0.2.1"
 			}

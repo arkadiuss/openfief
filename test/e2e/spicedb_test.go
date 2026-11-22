@@ -39,9 +39,10 @@ const (
 	spicedbJobApp = "openfief-init-credentials"
 	// spicedbDatabase is the CloudNativePG Database SpiceDB's datastore is.
 	spicedbDatabase = "openfief-db-spicedb"
-	// authzSpiceDBFlag and authzInsecureFlag switch the core to SpiceDB, plaintext on the Service behind its policy.
-	authzSpiceDBFlag  = "--authz=spicedb"
-	authzInsecureFlag = "--spicedb-insecure"
+	// authzSpiceDBFlag is the core's default, SpiceDB answering (deploy/core spells it out); authzPolicyFlag is the
+	// owner's opt-out, the policy over the grants table.
+	authzSpiceDBFlag = "--authz=spicedb"
+	authzPolicyFlag  = "--authz=policy"
 	// reconciledLine is what the core logs once SpiceDB holds the schema and the relationships it owns.
 	reconciledLine = "authorization reconciled with SpiceDB"
 	// spicedbTimeout bounds the waits for SpiceDB and the core to follow each change the test makes.
@@ -427,8 +428,8 @@ func podLogs(ctx context.Context, t *testing.T, k *kube, app string) []byte {
 	return all
 }
 
-// TestSpiceDBFailsClosed checks, on the core that runs from SpiceDB (the suite's
-// overlay adds --authz=spicedb to the demo's core, so the whole suite runs under
+// TestSpiceDBFailsClosed checks, on the core that runs from SpiceDB (the default,
+// which deploy/core spells out, so the demo's core and the whole suite run under
 // it), that SpiceDB is what answers: a script token with no grant views nothing
 // while one with the household grant views every account, both from SpiceDB's
 // relationships; then stops SpiceDB, and checks that the core refuses instead of
@@ -452,7 +453,7 @@ func TestSpiceDBFailsClosed(t *testing.T) {
 		t.Fatalf("getting Deployment %s: %v", coreDeployment, err)
 	}
 	if !coreRunsSpiceDB(core) {
-		t.Fatalf("the core runs without %s: the suite's overlay (test/e2e/overlays/openfief) must switch it to SpiceDB", authzSpiceDBFlag)
+		t.Fatalf("the core runs without %s: deploy/core and the demo must run it on SpiceDB, the default (D-164)", authzSpiceDBFlag)
 	}
 	checkCoreKeyIsMounted(t, core)
 	waitReconciled(t, k)

@@ -1609,3 +1609,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b4fddef65ea
+  - type: executable_for
+    from: SYM-core-authzwait-test-locked-buffer-write
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T08:58:23.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e7f7e7305a6

@@ -1154,3 +1154,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92512f62a881
+  - type: verified_by
+    from: SCEN-core-spicedb-not-ready-says-why
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T08:40:35.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18fc7b687a28
+  - type: verified_by
+    from: SCEN-core-spicedb-not-ready-says-why
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-22T08:40:35.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b687c606440c
