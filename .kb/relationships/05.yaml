@@ -1098,3 +1098,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-569012c882bd
+  - type: implements
+    from: SYM-ab9-internal-views-ui-askevalnote-go-noteanswerer-answer
+    to: REQ-decision-d225-2-opinions-not-evaluated-until-the-opinions-eval-passes
+    created_at: 2026-11-22T01:39:44.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e02b78bc627e
+  - type: covered_by
+    from: SYM-ab9-internal-views-ui-askevalnote-go-noteanswerer-answer
+    to: TEST-ui-ask-opinions-evaluated
+    created_at: 2026-11-22T01:39:44.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed27c5a3c366

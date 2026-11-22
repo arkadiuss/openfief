@@ -230461,10 +230461,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-ask-eval-note
+      - type: covered_by
+        target: TEST-ui-ask-opinions-evaluated
       - type: implements
         target: REQ-decision-d222-1-model-answer-shows-name-line-and-link
       - type: implements
         target: REQ-decision-d222-3-commands-show-no-model-note
+      - type: implements
+        target: REQ-decision-d225-2-opinions-not-evaluated-until-the-opinions-eval-passes
       - type: implements
         target: REQ-ui-ask-shows-model-and-disclaimer
   - id: SYM-ab9-internal-views-ui-askevalnote-go-modelname
@@ -255064,3 +255068,67 @@ symbols:
         target: TEST-tooling-release-notes
       - type: implements
         target: REQ-tooling-release-notes-internal-scopes
+  - id: SYM-d225-internal-views-ui-askevalnote-evaluatedopinionmodels
+    title: evaluatedOpinionModels
+    status: active
+    sourceFile: internal/views/ui/askevalnote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Opinions eval set design answers, rounds 1 and 2 (design session, 2026-11-21)
+      recorded_at: 2026-11-21T22:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-opinions-evaluated
+      - type: implements
+        target: REQ-decision-d225-2-opinions-not-evaluated-until-the-opinions-eval-passes
+  - id: SYM-d225-internal-views-ui-askevalnote-evaluatedin
+    title: evaluatedIn
+    status: active
+    sourceFile: internal/views/ui/askevalnote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Opinions eval set design answers, rounds 1 and 2 (design session, 2026-11-21)
+      recorded_at: 2026-11-21T22:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-opinions-evaluated
+      - type: implements
+        target: REQ-decision-d225-2-opinions-not-evaluated-until-the-opinions-eval-passes
+  - id: SYM-d225-internal-views-ui-askevalnote-resultrows
+    title: resultRows
+    status: active
+    sourceFile: internal/views/ui/askevalnote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Opinions eval set design answers, rounds 1 and 2 (design session, 2026-11-21)
+      recorded_at: 2026-11-21T22:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-opinions-evaluated
+      - type: implements
+        target: REQ-decision-d225-2-opinions-not-evaluated-until-the-opinions-eval-passes
+  - id: SYM-d225-internal-views-ui-askevalnote-test-testanopinionisevaluatedonlybytheopinionsset
+    title: TestAnOpinionIsEvaluatedOnlyByTheOpinionsSet
+    status: active
+    sourceFile: internal/views/ui/askevalnote_test.go
+    origin:
+      kind: agent
+      ref: Opinions eval set design answers, rounds 1 and 2 (design session, 2026-11-21)
+      recorded_at: 2026-11-21T22:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-opinions-evaluated
+  - id: SYM-d225-internal-views-ui-askevalnote-test-testresultsoftheopinionssetnevercountfortheevalsowncases
+    title: TestResultsOfTheOpinionsSetNeverCountForTheEvalsOwnCases
+    status: active
+    sourceFile: internal/views/ui/askevalnote_test.go
+    origin:
+      kind: agent
+      ref: Opinions eval set design answers, rounds 1 and 2 (design session, 2026-11-21)
+      recorded_at: 2026-11-21T22:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-opinions-evaluated

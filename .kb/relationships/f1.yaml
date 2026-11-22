@@ -1266,3 +1266,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-daae2220d50b
+  - type: implements
+    from: SYM-d225-internal-views-ui-askevalnote-evaluatedopinionmodels
+    to: REQ-decision-d225-2-opinions-not-evaluated-until-the-opinions-eval-passes
+    created_at: 2026-11-22T01:39:51.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c19f7ef3bbcb
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askevalnote-evaluatedopinionmodels
+    to: TEST-ui-ask-opinions-evaluated
+    created_at: 2026-11-22T01:39:51.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ae391b35479
