@@ -2,11 +2,14 @@
 // `task authz:validate` checks it against the relationships and assertions
 // in validation.yaml; CI runs it as part of `task check`.
 //
-// Until SpiceDB answers the core's authorization interface (the --authz flag,
-// D-164), identity.MayAct gives the same answers as this schema with the
-// relationships below: the owner may act on every account, and every other
-// holder of read access (D-137) views every account, each through a household
-// grant (D-209). The contract test (internal/identity/spicedb) checks it.
+// Under either implementation of the core's authorization interface (the
+// --authz flag, D-164), the policy over the grants table or SpiceDB, the answers
+// are this schema's over the owner's grants: the owner may act on every account;
+// viewers, script tokens and view plugins view exactly the accounts their grants
+// name (D-209); and demo sessions hold the household grant (D-163). The contract
+// test (internal/identity/spicedb) checks that SpiceDB answers as identity.MayAct
+// does when every holder of read access has the household grant; GrantPolicy's
+// tests check narrower grants.
 
 // person is someone with their own passkey: the owner, and from the second
 // alpha the viewers the owner enrolls (D-65).

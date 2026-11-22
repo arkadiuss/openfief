@@ -186,7 +186,38 @@ elif ! grep -q 'known-limits.md is empty' <<<"$out"; then
   failures=$((failures + 1))
 fi
 
+git tag -d $(git tag) >/dev/null
+commit -m "chore: base of the scope cases"
+git tag 2026.12.0
+commit -m "feat(kibi): model the subjects"
+commit -m "feat(demo,askbench): a demo bench run"
+commit -m "fix(e2e): wait for the rollout"
+commit -m "feat(ui,demo): a page the demo shows too"
+commit -m "feat(kibi)!: a breaking tooling change"
+commit -m "fix(ledger): round a fee"
+expect_notes "features and fixes of our own tooling and the demo go to other changes" 2026.12.1 "## 2026.12.1
+
+Changes since 2026.12.0.
+
+### Breaking changes
+
+- feat(kibi)!: a breaking tooling change
+
+### Features
+
+- feat(ui,demo): a page the demo shows too
+
+### Fixes
+
+- fix(ledger): round a fee
+
+### Other changes
+
+- fix(e2e): wait for the rollout
+- feat(demo,askbench): a demo bench run
+- feat(kibi): model the subjects"
+
 if [ "$failures" -ne 0 ]; then
   exit 1
 fi
-echo "release-notes: 8 cases passed"
+echo "release-notes: 9 cases passed"

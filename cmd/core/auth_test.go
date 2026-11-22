@@ -35,7 +35,8 @@ import (
 const uiCaller = "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzeW50aGV0aWMtdWktY2FsbGVyIn0.c3ludGhldGlj"
 
 // viewCluster is a fake cluster with the view plugin ui installed and
-// ready: the TokenReview API accepts uiCaller as ui's ServiceAccount, so
+// ready, serving browsers at "/" as the built-in UI does, so it reads with the
+// signed-in person's session and needs no grant of its own (D-209): the TokenReview API accepts uiCaller as ui's ServiceAccount, so
 // the core admits it through the same check as in a real cluster, with no
 // way around authentication in the binary (D-84).
 func viewCluster(t *testing.T) *cluster {
@@ -47,7 +48,7 @@ func viewCluster(t *testing.T) *cluster {
 			"metadata": map[string]any{"name": "ui", "namespace": "openfief"},
 			"status": map[string]any{
 				"conditions": []any{map[string]any{"type": "Ready", "status": "True"}},
-				"effective":  map[string]any{"capabilities": []any{"view"}},
+				"effective":  map[string]any{"capabilities": []any{"view"}, "browserPaths": []any{"/"}},
 			},
 		}})
 	client := fake.NewClientset()

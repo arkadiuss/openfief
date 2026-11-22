@@ -52,6 +52,17 @@ func (f fakeCover) TargetAccounts(_ context.Context, t identity.GrantTarget) ([]
 	return nil, nil
 }
 
+// listCover covers the household with the accounts it holds now, so a test can
+// add one after a session started.
+type listCover struct{ accounts *[]string }
+
+func (c listCover) TargetAccounts(_ context.Context, t identity.GrantTarget) ([]string, error) {
+	if t.Kind == identity.GrantTargetHousehold {
+		return slices.Clone(*c.accounts), nil
+	}
+	return nil, nil
+}
+
 // TestGrantPolicy checks that under the policy a viewer, a script token and a
 // view plugin view exactly the accounts their grants cover and change none,
 // while the owner is answered as identity.MayAct answers, and that errors
@@ -121,6 +132,8 @@ func TestGrantPolicy(t *testing.T) {
 	if err != nil || !slices.Equal(slices.Sorted(maps.Keys(set)), []string{"a1", "a2", "a3"}) {
 		t.Errorf("ActableAccounts(alice) = %v, %v, want a1, a2, a3", set, err)
 	}
+
+	checkDemoHoldsHousehold(t)
 }
 
 // errDown is what the fakes say when they can't be read.
@@ -142,5 +155,39 @@ func TestGrantPolicyFailsClosed(t *testing.T) {
 		if set, err := p.ActableAccounts(t.Context(), caller, identity.ActionView); len(set) != 0 || !errors.Is(err, errDown) {
 			t.Errorf("ActableAccounts with %s = %v, %v, want none with the error", name, set, err)
 		}
+	}
+}
+
+// checkDemoHoldsHousehold checks that a demo session holds the household grant
+// (D-163, D-209): it views every account of the household, one that exists only
+// after its session started too, and changes none.
+func checkDemoHoldsHousehold(t *testing.T) {
+	t.Helper()
+	accounts := make([]string, 0, 3)
+	accounts = append(accounts, "a1", "a2")
+	live := app.NewGrantPolicy(fakeGrantReader{}, listCover{accounts: &accounts})
+	demo := identity.Caller{Holder: identity.HolderDemoSession, ID: "d"}
+	checkDemoAccounts(t, live, demo, accounts, "at the start")
+	accounts = append(accounts, "a3")
+	checkDemoAccounts(t, live, demo, accounts, "after an account was added")
+}
+
+// checkDemoAccounts checks that demo views each of accounts and changes none.
+func checkDemoAccounts(t *testing.T, p *app.GrantPolicy, demo identity.Caller, accounts []string, step string) {
+	t.Helper()
+	for _, id := range accounts {
+		if ok, err := p.MayAct(t.Context(), demo, identity.ActionView, id); err != nil || !ok {
+			t.Errorf("a demo session views %q %s = %v, %v, want true", id, step, ok, err)
+		}
+		if ok, err := p.MayAct(t.Context(), demo, identity.ActionChange, id); err != nil || ok {
+			t.Errorf("a demo session changes %q %s = %v, %v, want false", id, step, ok, err)
+		}
+	}
+	set, err := p.ActableAccounts(t.Context(), demo, identity.ActionView)
+	if err != nil || !slices.Equal(slices.Sorted(maps.Keys(set)), accounts) {
+		t.Errorf("ActableAccounts(demo) %s = %v, %v, want %v", step, set, err, accounts)
+	}
+	if set, err := p.ActableAccounts(t.Context(), demo, identity.ActionChange); err != nil || len(set) != 0 {
+		t.Errorf("ActableAccounts(demo, change) %s = %v, %v, want none", step, set, err)
 	}
 }

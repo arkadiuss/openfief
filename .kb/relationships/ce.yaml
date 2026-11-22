@@ -1336,3 +1336,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5481d43914b4
+  - type: relates_to
+    from: REQ-tooling-release-notes-internal-scopes
+    to: REQ-tooling-release-notes
+    created_at: 2026-11-21T23:06:56.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-840fde1c1c2a
+  - type: constrains
+    from: REQ-tooling-release-notes-internal-scopes
+    to: FACT-SUBJECT-5BEFAC16C6D21646
+    created_at: 2026-11-21T23:12:59.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3eb21af846bc
