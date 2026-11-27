@@ -10,6 +10,7 @@
   - `default` and `exploratory` may be revisited on evidence.
 - **New behavior** gets a modeled requirement with a scenario, before or with the code. Each behavioral function is owned by a kibi `symbol` that `implements` the requirement and is `covered_by` the test that verifies its scenario. `// implements` comments are not the record.
 - **Decisions and open questions:** a requirement imported from DESIGN.md is `firm` and cites the item, such as `design-decisions:D-18#2`. Open questions are observation facts tagged `review:open-question`. Proposals stay in docs/proposals/ until the author decides them.
+- **One recorded exception to "a firm requirement changes only through `supersedes`".** On 2026-11-21 the owner approved rewording the firm REQ-identity-authz-owner-acts-every-account in place, and its Context records it. The owner chose to keep it as it is, so it stays; it is no precedent, and any other firm requirement still changes only through `supersedes`.
 - **Blocked commit:** the pre-commit gate blocks unowned or uncovered behavioral symbols. Fix the cause with kibi's own `kibi-commit-review` skill; never bypass the hook.
 - **Learn the workflow on demand** from kibi's bundled skills (`kibi-usage`, `kibi-commit-review`). Don't preload them.
 - **Before handing work back,** run the full check, and show kibi's signoff summary when requirements changed.
