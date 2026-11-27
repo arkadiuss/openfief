@@ -396,7 +396,7 @@ func TestValueBondHoldingRejects(t *testing.T) {
 		wrapper jurisdiction.Wrapper
 		wantErr error
 	}{
-		{name: "an unknown wrapper", lot: bondLot(t, bond, "2024-03-15", "10", "1000", "b1"), wrapper: "ppk", wantErr: pl.ErrUnknownTaxWrapper},
+		{name: "an unknown wrapper", lot: bondLot(t, bond, "2024-03-15", "10", "1000", "b1"), wrapper: "ppk", wantErr: jurisdiction.ErrUnknownWrapper},
 		{name: "cost not in PLN", lot: usdLot, wrapper: "taxable", wantErr: valuation.ErrBondLot},
 		{name: "lot outside its series' sale month", lot: bondLot(t, bond, "2024-04-15", "10", "1000", "b1"), wrapper: "taxable", wantErr: pl.ErrSeriesMismatch},
 	}

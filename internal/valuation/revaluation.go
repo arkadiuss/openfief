@@ -229,6 +229,11 @@ type BondHolding struct {
 // over its quantity, which must be in the pack's currency. A missing period index reading
 // gives a row with Missing set, not an error.
 func ValueBondHolding(h *ledger.Holding, b *BondHolding) (HoldingValuation, error) {
+	// The account's pack says which wrappers exist (D-76); only the early-redemption fee, which
+	// pl.ValueLot decides by the Polish wrapper, needs the pack's own type.
+	if !jurisdiction.HasWrapper(b.Account.Pack, b.Account.Wrapper) {
+		return HoldingValuation{}, fmt.Errorf("valuing %s: %w: %q", h.Instrument, jurisdiction.ErrUnknownWrapper, b.Account.Wrapper)
+	}
 	wrapper, err := pl.ParseTaxWrapper(string(b.Account.Wrapper))
 	if err != nil {
 		return HoldingValuation{}, fmt.Errorf("valuing %s: %w", h.Instrument, err)
