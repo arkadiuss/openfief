@@ -4,7 +4,7 @@
 
 Self-hosted portfolio tracker and orchestrator for AI investment agents. Each agent gets a revocable capital lease with hard limits enforced outside the LLM. Bring your own agents, models and brokers.
 
-**Status:** M0 in progress. The core service with its read API, the domain libraries, the plugin operator with image signature checks and the egress proxy are built; the UI and connector plugins are not yet. The [status page](https://openfief.dev/docs/status/) tracks every decision.
+**Status:** pre-1.0 alpha. M0 is built and released as alphas: the core service with its read API, the domain libraries, the plugin operator with image signature checks, the egress proxy, the built-in UI and the first-party connector plugins. Leases, execution and the agents' orchestration are design only. The [status page](https://openfief.dev/docs/status/) tracks every decision.
 
 ## Documents
 

@@ -164,7 +164,7 @@ func run(ctx context.Context, log *slog.Logger) error {
 
 ### The contract
 
-The core calls `openfief.connector.v1.ConnectorService`, defined in [connector.proto](../../proto/openfief/connector/v1/connector.proto) (D-49). Its three methods are `Sync`, `ImportFile` and `ImportBondLots`. nbp-fx embeds the generated `UnimplementedConnectorServiceHandler`, so the two it doesn't serve answer `UNIMPLEMENTED`, and writes only `Sync` ([connector.go](../../plugins/nbp-fx/connector.go)):
+The core calls `openfief.connector.v1.ConnectorService`, defined in [connector.proto](../../proto/openfief/connector/v1/connector.proto) (D-49). Its five methods are `Sync`, `ImportFile`, `ImportBondLots`, `LookupInstruments` and `LookupQuote`. nbp-fx embeds the generated `UnimplementedConnectorServiceHandler`, so the four it doesn't serve answer `UNIMPLEMENTED`, and writes only `Sync` ([connector.go](../../plugins/nbp-fx/connector.go)):
 
 ```go
 type connector struct {

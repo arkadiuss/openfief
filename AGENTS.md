@@ -1,6 +1,6 @@
 # OpenFief: agent guide
 
-Self-hosted portfolio tracker and orchestrator for AI investment agents (docs/OVERVIEW.md). Status: design phase. M0 (tracker plus Polish imports) is next; there's no product code yet.
+Self-hosted portfolio tracker and orchestrator for AI investment agents (docs/OVERVIEW.md). Status: pre-1.0 alpha. M0 (tracker plus Polish imports) is built: the core, the plugin operator, the built-in UI and the first-party connectors; alphas are released and 2026.11.0-alpha.2 is next. Later milestones are design only (docs/DESIGN.md).
 
 ## Authority, highest first
 
