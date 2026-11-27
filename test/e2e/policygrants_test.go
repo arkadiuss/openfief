@@ -28,13 +28,14 @@ import (
 // errNoCoreContainer reports a core Deployment without its container.
 var errNoCoreContainer = errors.New("the core Deployment has no container named core")
 
-// TestPolicyModeGrantsLimitTokensAndKeepThePagesWorking checks D-209, D-213 and D-165 on the core as the default
-// install and the live demo run it, --authz=policy (SCEN-identity-grants-limit-tokens-under-policy): the suite
-// runs under SpiceDB, so this test restarts the core without --authz and --spicedb-insecure, checks, and restores
-// them. A script token granted one account views that account alone over /v1 and over /mcp (with the switch and the
-// MCP toggle on) while the household's token views every account; no token is listed an attention item of an
-// unmapped broker account, which is tied to no account and the owner's alone; and the built-in UI still renders the
-// accounts for the owner's session and for a demo session.
+// TestPolicyModeGrantsLimitTokensAndKeepThePagesWorking checks D-209, D-213 and D-165 on the core as an owner who
+// opts out of SpiceDB runs it, --authz=policy (SCEN-identity-grants-limit-tokens-under-policy): the suite runs under
+// SpiceDB, the default that the install and the demo run, so this test is the policy's pass: it restarts the core
+// with --authz=policy in place of its --authz, checks, and restores its args. A script token granted one account
+// views that account alone over /v1 and over /mcp (with the switch and the MCP toggle on) while the household's token
+// views every account; no token is listed an attention item of an unmapped broker account, which is tied to no
+// account and the owner's alone; and the built-in UI still renders the accounts for the owner's session and for a
+// demo session.
 //
 // It is not parallel, on purpose: it restarts the core, which the other tests must not see, so Go runs it before
 // any parallel test starts. The core is back on SpiceDB, with the switch off again, when it ends.
@@ -49,9 +50,9 @@ func TestPolicyModeGrantsLimitTokensAndKeepThePagesWorking(t *testing.T) {
 	waitReconciled(t, k)
 
 	original := setCoreArgs(t.Context(), t, k, func(args []string) []string {
-		return slices.DeleteFunc(slices.Clone(args), func(a string) bool {
+		return append(slices.DeleteFunc(slices.Clone(args), func(a string) bool {
 			return strings.HasPrefix(a, "--authz") || strings.HasPrefix(a, "--spicedb")
-		})
+		}), authzPolicyFlag)
 	})
 	// Whatever happens, put the core back on SpiceDB before the next test: those after this one in the order
 	// (TestSpiceDBFailsClosed, TestViewersAndTokensReadOnlyTheirGrants and every parallel test) need it. A

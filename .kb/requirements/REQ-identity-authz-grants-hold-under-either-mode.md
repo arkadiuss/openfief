@@ -33,12 +33,13 @@ origin:
 semantic_source_hash: 59ebe8bd12beeb7e0207d5b1d188a76502e7f788bdaa8df19ec37273b7c87a38
 id: REQ-identity-authz-grants-hold-under-either-mode
 type: req
+approval_ref: The author approved this Context-only update for SpiceDB as the default (D-164) in chat with the orchestrator, 2026-11-22
 ---
 Under either implementation, viewers, script tokens and view plugins must view exactly the accounts their grants name.
 
 ## Context
 
-Author decision D-163, clause 5 of its last sentence, as amended on main (5317aac). GrantPolicy, the default `--authz=policy`, limits a viewer, a script token and a view plugin to the accounts their grants name, as SpiceDB does (D-209), so D-163 says what both implementations do. This requirement supersedes REQ-identity-authz-readers-view-every-account, which quotes the old interim sentence; the author approved the supersession in chat with the orchestrator on 2026-11-21. It first covered the whole sentence under the range text_ref #4-6; the author then approved one requirement per clause (the owner's is REQ-identity-authz-owner-acts-every-account, the demo's REQ-identity-authz-demo-holds-household), because one requirement would hide the thin demo clause. Evidence: unit and integration tests only, so the evidence floor is asserted. TestGrantPolicy (TEST-identity-grant-policy) shows a viewer, a script token and a view plugin viewing exactly their granted accounts and changing none, and the zed assertions in authz/validation.yaml (TEST-identity-authz-schema) show the same under SpiceDB.
+Author decision D-163, clause 5 of its last sentence, as amended on main (5317aac). GrantPolicy, the opt-out `--authz=policy`, limits a viewer, a script token and a view plugin to the accounts their grants name, as SpiceDB, the default `--authz=spicedb` (D-164), does (D-209), so D-163 says what both implementations do. This requirement supersedes REQ-identity-authz-readers-view-every-account, which quotes the old interim sentence; the author approved the supersession in chat with the orchestrator on 2026-11-21. It first covered the whole sentence under the range text_ref #4-6; the author then approved one requirement per clause (the owner's is REQ-identity-authz-owner-acts-every-account, the demo's REQ-identity-authz-demo-holds-household), because one requirement would hide the thin demo clause. Evidence: unit and integration tests only, so the evidence floor is asserted. TestGrantPolicy (TEST-identity-grant-policy) shows a viewer, a script token and a view plugin viewing exactly their granted accounts and changing none, and the zed assertions in authz/validation.yaml (TEST-identity-authz-schema) show the same under SpiceDB.
 
 ## Why this changed
 

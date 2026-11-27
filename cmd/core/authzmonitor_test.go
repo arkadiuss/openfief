@@ -311,19 +311,19 @@ func TestReadyOnlyAfterSpiceDBAnsweredWithItsSchema(t *testing.T) {
 	t.Parallel()
 	perms := &failingPerms{}
 	perms.down.Store(true)
-	az := authorization{authorizer: &scriptedAuthorizer{}, syncer: spicedb.NewSyncer(perms), started: new(atomic.Bool)}
+	az := authorization{authorizer: &scriptedAuthorizer{}, syncer: spicedb.NewSyncer(perms), start: new(startState)}
 	s := readyServer(az)
 	load := func(context.Context) (spicedb.Desired, error) { return spicedb.Desired{}, nil }
 	const waiting = "waiting for SpiceDB to answer and take its schema"
 	if got := readyz(t, s); got != (answer{http.StatusServiceUnavailable, waiting}) {
 		t.Fatalf("GET /readyz before the reconcile = %v, want 503 %q", got, waiting)
 	}
-	reconcileAccess(t.Context(), az.syncer, load, slog.New(slog.DiscardHandler), az.markStarted)
+	reconcileAccess(t.Context(), az.syncer, load, slog.New(slog.DiscardHandler), az.markStarted, nil)
 	if got := readyz(t, s); got != (answer{http.StatusServiceUnavailable, waiting}) {
 		t.Fatalf("GET /readyz after a reconcile SpiceDB refused = %v, want 503 %q", got, waiting)
 	}
 	perms.down.Store(false)
-	reconcileAccess(t.Context(), az.syncer, load, slog.New(slog.DiscardHandler), az.markStarted)
+	reconcileAccess(t.Context(), az.syncer, load, slog.New(slog.DiscardHandler), az.markStarted, nil)
 	if got := readyz(t, s); got != (answer{http.StatusOK, "ok"}) {
 		t.Errorf("GET /readyz after the reconcile = %v, want 200 ok", got)
 	}
@@ -338,7 +338,7 @@ func TestReadyStaysReadyDuringAnOutage(t *testing.T) {
 	t.Parallel()
 	m, _, _ := testMonitor(t, nil, time.Hour)
 	inner := &scriptedAuthorizer{}
-	az := m.watch(authorization{authorizer: inner, syncer: spicedb.NewSyncer(&writeLog{}), started: new(atomic.Bool)})
+	az := m.watch(authorization{authorizer: inner, syncer: spicedb.NewSyncer(&writeLog{}), start: new(startState)})
 	az.markStarted()
 	s := readyServer(az)
 	if got := readyz(t, s); got.code != http.StatusOK {

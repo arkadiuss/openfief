@@ -28,7 +28,7 @@ The MCP server offers exactly the read-only tools the Ask box's model is offered
 
 ## Context
 
-D-213 offers the same read-only answerers as tools, and D-209 limits a script token by its grants. The tools are the Ask box's one table (D-203), called with the caller's token as bearer, never the core's own identity. Under the default policy authorizer a script token's grants are not enforced (the read API's own behavior, D-164); they limit what a tool sees once SpiceDB answers.
+D-213 offers the same read-only answerers as tools, and D-209 limits a script token by its grants. The tools are the Ask box's one table (D-203), called with the caller's token as bearer, never the core's own identity. Both authorizers enforce a script token's grants: SpiceDB, the default (D-164), and the policy, the opt-out, which GrantPolicy answers from the grants table (D-209); the server answers 503 where the authorizer says it does not.
 
 ## Source
 

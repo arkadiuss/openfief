@@ -176849,12 +176849,13 @@ symbols:
       - type: implements
         target: REQ-identity-grants-per-account-sleeve-household
   - id: SYM-grants-cmd-core-main-test-policyauthz
-    title: policyAuthz
+    title: clusterAuthz
     status: active
     sourceFile: cmd/core/main_test.go
     origin:
       kind: agent
       recorded_at: 2026-11-13T10:04:53.603Z
+    symbol_role: behavioral
     relationships:
       - type: executable_for
         target: TEST-core-unit
@@ -230461,10 +230462,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-ask-eval-note
+      - type: covered_by
+        target: TEST-ui-ask-opinions-evaluated
       - type: implements
         target: REQ-decision-d222-1-model-answer-shows-name-line-and-link
       - type: implements
         target: REQ-decision-d222-3-commands-show-no-model-note
+      - type: implements
+        target: REQ-decision-d225-2-opinions-not-evaluated-until-the-opinions-eval-passes
       - type: implements
         target: REQ-ui-ask-shows-model-and-disclaimer
   - id: SYM-ab9-internal-views-ui-askevalnote-go-modelname
@@ -255064,3 +255069,573 @@ symbols:
         target: TEST-tooling-release-notes
       - type: implements
         target: REQ-tooling-release-notes-internal-scopes
+  - id: SYM-d225-internal-views-ui-askevalnote-evaluatedopinionmodels
+    title: evaluatedOpinionModels
+    status: active
+    sourceFile: internal/views/ui/askevalnote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Opinions eval set design answers, rounds 1 and 2 (design session, 2026-11-21)
+      recorded_at: 2026-11-21T22:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-opinions-evaluated
+      - type: implements
+        target: REQ-decision-d225-2-opinions-not-evaluated-until-the-opinions-eval-passes
+  - id: SYM-d225-internal-views-ui-askevalnote-evaluatedin
+    title: evaluatedIn
+    status: active
+    sourceFile: internal/views/ui/askevalnote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Opinions eval set design answers, rounds 1 and 2 (design session, 2026-11-21)
+      recorded_at: 2026-11-21T22:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-opinions-evaluated
+      - type: implements
+        target: REQ-decision-d225-2-opinions-not-evaluated-until-the-opinions-eval-passes
+  - id: SYM-d225-internal-views-ui-askevalnote-resultrows
+    title: resultRows
+    status: active
+    sourceFile: internal/views/ui/askevalnote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Opinions eval set design answers, rounds 1 and 2 (design session, 2026-11-21)
+      recorded_at: 2026-11-21T22:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-opinions-evaluated
+      - type: implements
+        target: REQ-decision-d225-2-opinions-not-evaluated-until-the-opinions-eval-passes
+  - id: SYM-d225-internal-views-ui-askevalnote-test-testanopinionisevaluatedonlybytheopinionsset
+    title: TestAnOpinionIsEvaluatedOnlyByTheOpinionsSet
+    status: active
+    sourceFile: internal/views/ui/askevalnote_test.go
+    origin:
+      kind: agent
+      ref: Opinions eval set design answers, rounds 1 and 2 (design session, 2026-11-21)
+      recorded_at: 2026-11-21T22:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-opinions-evaluated
+  - id: SYM-d225-internal-views-ui-askevalnote-test-testresultsoftheopinionssetnevercountfortheevalsowncases
+    title: TestResultsOfTheOpinionsSetNeverCountForTheEvalsOwnCases
+    status: active
+    sourceFile: internal/views/ui/askevalnote_test.go
+    origin:
+      kind: agent
+      ref: Opinions eval set design answers, rounds 1 and 2 (design session, 2026-11-21)
+      recorded_at: 2026-11-21T22:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-opinions-evaluated
+  - id: SYM-core-authzwait-key-pending-reason
+    title: keyPendingReason
+    status: active
+    sourceFile: cmd/core/authzwait.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:34:57.155Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: covered_by
+        target: TEST-core-authz-wait
+      - type: implements
+        target: REQ-core-spicedb-not-ready-says-why
+  - id: SYM-core-authzwait-schema-pending-reason
+    title: schemaPendingReason
+    status: active
+    sourceFile: cmd/core/authzwait.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:35:05.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-wait
+      - type: implements
+        target: REQ-core-spicedb-not-ready-says-why
+  - id: SYM-core-authzwait-spicedb-store
+    title: spicedbStore
+    status: active
+    sourceFile: cmd/core/authzwait.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:35:13.010Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-wait
+      - type: implements
+        target: REQ-core-spicedb-not-ready-says-why
+  - id: SYM-core-authzwait-row-querier
+    title: rowQuerier
+    status: active
+    sourceFile: cmd/core/authzwait.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:35:20.991Z
+  - id: SYM-core-authzwait-read-spicedb-store
+    title: readSpiceDBStore
+    status: active
+    sourceFile: cmd/core/authzwait.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:35:29.527Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-wait
+      - type: implements
+        target: REQ-core-spicedb-not-ready-says-why
+  - id: SYM-core-authzwait-spicedb-wait-reason
+    title: spicedbWaitReason
+    status: active
+    sourceFile: cmd/core/authzwait.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:35:38.111Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-wait
+      - type: implements
+        target: REQ-core-spicedb-not-ready-says-why
+  - id: SYM-core-authzwait-spicedb-diagnosis
+    title: spicedbDiagnosis
+    status: active
+    sourceFile: cmd/core/authzwait.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:35:46.503Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-wait
+      - type: implements
+        target: REQ-core-spicedb-not-ready-says-why
+  - id: SYM-core-authz-authorization-note-failure
+    title: authorization.noteFailure
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:35:54.378Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-wait
+      - type: implements
+        target: REQ-core-spicedb-not-ready-says-why
+  - id: SYM-core-authzkey-remind-after
+    title: remindAfter
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:36:02.774Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-core-spicedb-not-ready-says-why
+  - id: SYM-core-authzwait-test-spicedb-wait-reason
+    title: TestSpiceDBWaitReason
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:36:10.894Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-store-row
+    title: storeRow
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:36:19.196Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-store-row-scan
+    title: storeRow.Scan
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:36:27.427Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-fake-catalog
+    title: fakeCatalog
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:36:35.772Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-fake-catalog-query-row
+    title: fakeCatalog.QueryRow
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:36:43.974Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-spicedb-diagnosis
+    title: TestSpiceDBDiagnosis
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:36:51.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-not-ready-says-what-is-missing
+    title: TestNotReadySaysWhatIsMissing
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:37:00.033Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-read-spicedb-store-on-postgres
+    title: TestReadSpiceDBStoreOnPostgres
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:37:07.816Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzkey-test-key-gate-warns-and-reminds
+    title: TestKeyGateWarnsAndReminds
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:37:15.937Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-core-authz-test-no-spicedb-says-how-to-opt-out
+    title: TestNoSpiceDBSaysHowToOptOut
+    status: active
+    sourceFile: cmd/core/authz_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:37:24.390Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-flags
+  - id: SYM-core-main-test-cluster-spicedb
+    title: clusterSpiceDB
+    status: active
+    sourceFile: cmd/core/main_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:37:32.640Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unit
+  - id: SYM-e2e-firstrun-check-authorized-by-spicedb
+    title: checkAuthorizedBySpiceDB
+    status: active
+    sourceFile: test/e2e/firstrun_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:37:40.431Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run
+  - id: SYM-e2e-upgrade-check-cutover-in-spicedb
+    title: checkCutoverInSpiceDB
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:37:48.577Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-sorted-accounts
+    title: sortedAccounts
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:37:56.920Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-tooling-release-bundle-check-authz
+    title: check_authz
+    status: active
+    sourceFile: scripts/release-bundle.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:41:17.528Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-tooling-release-bundle-authz-spicedb
+  - id: SYM-core-authzwait-keep-reconciled
+    title: authorization.followDemo
+    status: active
+    sourceFile: cmd/core/authzwait.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:57:51.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-wait
+      - type: implements
+        target: REQ-demo-spicedb-reconciled-after-reseed
+  - id: SYM-core-authzwait-test-demo-keeps-reconciling
+    title: TestDemoFollowsTheLoader
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:58:00.945Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-locked-buffer
+    title: lockedBuffer
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:58:10.199Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-locked-buffer-write
+    title: lockedBuffer.Write
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:58:19.092Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-locked-buffer-string
+    title: lockedBuffer.String
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T08:58:28.100Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authz-insecure-from-env
+    title: insecureFromEnv
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:02:24.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-flags
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-core-authz-start-state
+    title: startState
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:02:33.062Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-wait
+      - type: implements
+        target: REQ-core-spicedb-not-ready-says-why
+  - id: SYM-core-authzwait-test-wait-calls
+    title: waitCalls
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:02:41.479Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-demo-step
+    title: authorization.demoStep
+    status: active
+    sourceFile: cmd/core/authzwait.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:29:10.722Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-wait
+      - type: implements
+        target: REQ-demo-spicedb-reconciled-after-reseed
+  - id: SYM-core-authzwait-placements
+    title: placements
+    status: active
+    sourceFile: cmd/core/authzwait.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:29:19.015Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-wait
+      - type: implements
+        target: REQ-demo-spicedb-reconciled-after-reseed
+  - id: SYM-core-authzwait-test-demo-ledger
+    title: demoLedger
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:29:35.024Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-new-demo-ledger
+    title: newDemoLedger
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:29:43.222Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-demo-ledger-set
+    title: demoLedger.set
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:29:51.206Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-demo-ledger-load
+    title: demoLedger.load
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:29:59.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-demo-ledger-reconcile
+    title: demoLedger.reconcile
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:30:07.200Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-demo-ledger-answer
+    title: demoLedger.answer
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:30:15.144Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-quiet-for
+    title: quietFor
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:30:23.291Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-demo-sweeps
+    title: TestDemoSweepsWhateverItReads
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:30:31.415Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait
+  - id: SYM-core-authzwait-test-placements-ignore-order
+    title: TestPlacementsIgnoreOrder
+    status: active
+    sourceFile: cmd/core/authzwait_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-22T09:30:39.419Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-wait

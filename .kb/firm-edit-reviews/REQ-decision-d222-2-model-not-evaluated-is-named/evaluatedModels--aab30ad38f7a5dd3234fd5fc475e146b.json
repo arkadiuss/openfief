@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d222-2-model-not-evaluated-is-named",
+  "sourceFile": "internal/views/ui/askevalnote.go",
+  "symbol": "evaluatedModels",
+  "verdict": "keeps",
+  "note": "A model no full run covered is still named not evaluated; evaluatedModels only skips the opinions set's rows, which never count for the eval. Reviewed and approved by the author in chat with the orchestrator, 2026-11-22.",
+  "statementHash": "sha256:d875955bac84293032d73b9343b0aeba82f8011f457c1b5b7ca8a7f8ac7bc0f4",
+  "codeHash": "sha256:83bbf838ee0a4b0c7f2fbf569df61557eb2fe4e4bab36e88dcec4de8502d8995",
+  "startLine": 69,
+  "endLine": 69,
+  "recordedAt": "2026-11-22T14:57:00.045Z"
+}

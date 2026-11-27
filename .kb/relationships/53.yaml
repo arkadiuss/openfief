@@ -1126,3 +1126,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82a0d2bc8ad6
+  - type: specified_by
+    from: REQ-demo-spicedb-reconciled-after-reseed
+    to: SCEN-demo-spicedb-reconciled-after-reseed
+    created_at: 2026-11-22T08:57:48.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-463d52bac145

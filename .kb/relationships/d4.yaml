@@ -1161,3 +1161,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e9d26f4644b
+  - type: verified_by
+    from: SCEN-demo-spicedb-reconciled-after-reseed
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T08:57:45.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e5e6309a26a

@@ -1301,3 +1301,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-efadccb1787c
+  - type: executable_for
+    from: SYM-core-authzwait-test-fake-catalog
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T08:50:24.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b1b41bbde93

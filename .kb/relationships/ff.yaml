@@ -1413,3 +1413,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f5c7ae9f4d6
+  - type: executable_for
+    from: SYM-core-main-test-cluster-spicedb
+    to: TEST-core-unit
+    created_at: 2026-11-22T08:37:36.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-923a52ee9c54

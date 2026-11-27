@@ -195,9 +195,10 @@ func (o *ownerAPI) deleteAccount(t *testing.T, id string) {
 	}
 }
 
-// coreAuthzFlags returns the flags that make the core's own commands pass a grant on to SpiceDB when the core
-// answers from it, and none while it runs the policy: the commands run in the core's pod, where SpiceDB's endpoint
-// and key are in the environment already.
+// coreAuthzFlags returns the flag that makes the core's own commands answer as the core does: --authz=spicedb, the
+// default, when it answers from SpiceDB, so a grant they make is passed on to it, and --authz=policy while it runs the
+// policy, so they don't wait for SpiceDB. The commands run in the core's pod, where SpiceDB's endpoint, plaintext
+// setting and key are in the environment already.
 func coreAuthzFlags(t *testing.T, k *kube) []string {
 	t.Helper()
 	d, err := k.clients.AppsV1().Deployments(namespace).Get(t.Context(), coreDeployment, metav1.GetOptions{})
@@ -205,21 +206,26 @@ func coreAuthzFlags(t *testing.T, k *kube) []string {
 		t.Fatalf("getting Deployment %s: %v", coreDeployment, err)
 	}
 	if coreRunsSpiceDB(d) {
-		return []string{authzSpiceDBFlag, authzInsecureFlag}
+		return []string{authzSpiceDBFlag}
 	}
-	return nil
+	return []string{authzPolicyFlag}
 }
 
-// coreRunsSpiceDB reports whether the core Deployment runs with --authz=spicedb.
+// coreRunsSpiceDB reports whether the core Deployment of this checkout runs with SpiceDB: its last --authz says
+// spicedb, or it has none, since SpiceDB is the default (D-164).
 func coreRunsSpiceDB(d *appsv1.Deployment) bool {
 	for i := range d.Spec.Template.Spec.Containers {
 		c := &d.Spec.Template.Spec.Containers[i]
 		if c.Name != "core" {
 			continue
 		}
-		if slices.Contains(c.Args, authzSpiceDBFlag) {
-			return true
+		mode := authzSpiceDBFlag
+		for _, a := range c.Args {
+			if strings.HasPrefix(a, "--authz=") {
+				mode = a
+			}
 		}
+		return mode == authzSpiceDBFlag
 	}
 	return false
 }

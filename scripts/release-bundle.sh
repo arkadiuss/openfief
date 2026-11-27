@@ -28,6 +28,8 @@
 # That Job is named per release, since its pod template can't change and the core's image does: the bundle renames it
 # openfief-init-credentials-<version>, the version lowercased with dots and pluses as dashes, which must keep the name
 # a DNS-1123 label of 63 characters at most (deploy/spicedb/secrets.yaml). Its label app.kubernetes.io/name stays.
+# The install's core runs --authz=spicedb, and no other --authz (D-164): SpiceDB answers authorization in every release,
+# and the policy, --authz=policy, is an owner's own opt-out, never what a release ships.
 # Every other image the install names must get a digest. With VERIFY=1 and REPO=<owner/repo> (the release workflow), each
 # pinned image must also carry a keyless cosign signature from that repository's images.yml on main, for that same
 # digest (scripts/verified-digest.sh, which needs cosign and gojq).
@@ -111,6 +113,17 @@ check_init_job() {
     '[.[] | select(.kind == "Job" and .metadata.labels["app.kubernetes.io/name"] == "openfief-init-credentials") | .metadata.name] | join(",")' "$1")"
   [ "$jobs" = "$(init_job_name "$version")" ] ||
     fail "the install must hold one Job labelled app.kubernetes.io/name=$init_job, named $(init_job_name "$version"), not: '$jobs'"
+}
+
+# check_authz fails unless the core container in the manifests in file $1 runs --authz=spicedb and no other --authz
+# (D-164), so the release's authorization is SpiceDB's and never the policy.
+check_authz() {
+  local got
+  got="$(gojq -r --yaml-input -s \
+    '[.[] | select(.kind == "Deployment") | .spec.template.spec.containers[] | select(.name == "core")
+      | (.args // [])[] | select(test("^--?authz(=|$)"))] | join(",")' "$1")"
+  [ "$got" = "--authz=spicedb" ] ||
+    fail "the install's core must run --authz=spicedb, SpiceDB answering authorization (D-164), and no other --authz; it runs: '${got:-no --authz}'"
 }
 
 # check_no_exemption fails if a manifest in file $1 sets the egress proxy's test-only exemption from its refused
@@ -235,6 +248,7 @@ pin "$work/install/base.yaml" "$work/install/kustomization.yaml"
 kustomize build "$work/install" >"$work/install.yaml"
 check_pinned "$work/install.yaml"
 check_init_job "$work/install.yaml"
+check_authz "$work/install.yaml"
 check_no_exemption "$work/install.yaml"
 if [ "${VERIFY:-0}" = 1 ]; then
   verify "$work/install.yaml"

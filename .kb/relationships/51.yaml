@@ -1126,3 +1126,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d3b246eadab8
+  - type: executable_for
+    from: SYM-core-authzwait-test-placements-ignore-order
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T09:30:43.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6057e75aec34

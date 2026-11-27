@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-identity-authz-spicedb-answers",
+  "sourceFile": "cmd/core/authz.go",
+  "symbol": "authorization.waiting",
+  "verdict": "keeps",
+  "note": "The same readiness gate on SpiceDB's key and first answer; its text names the missing Secret, role or database. Reviewed and approved by the author in chat with the orchestrator, 2026-11-22.",
+  "statementHash": "sha256:3fa2afbefe1b953ea3ecdb984119d4841eb8350de0c337a64d431cf9c4fcf2b1",
+  "codeHash": "sha256:0d3aa9d18743ebf0ffbfbb490305971e2f90c38f62105fe3ebbd45ae0b728149",
+  "startLine": 256,
+  "endLine": 264,
+  "recordedAt": "2026-11-22T15:13:36.227Z"
+}

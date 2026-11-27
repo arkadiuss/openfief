@@ -1399,3 +1399,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-435f6492bbad
+  - type: executable_for
+    from: SYM-core-authzwait-test-store-row
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T08:50:16.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69c26bfb4016

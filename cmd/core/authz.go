@@ -9,6 +9,7 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"sync/atomic"
 	"time"
@@ -20,6 +21,7 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 
 	"github.com/arkadiuss/openfief/authz"
+	"github.com/arkadiuss/openfief/internal/identity"
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	"github.com/arkadiuss/openfief/internal/identity/spicedb"
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -33,9 +35,11 @@ import (
 const (
 	// authzPolicy is identityapp.GrantPolicy: the owner acts on every account,
 	// and a viewer, a script token and a view plugin view exactly the accounts
-	// their grants cover, as under SpiceDB. The default.
+	// their grants cover, as under SpiceDB. An owner's opt-out, which needs
+	// nothing of SpiceDB.
 	authzPolicy = "policy"
-	// authzSpiceDB is SpiceDB answering over authz/schema.zed.
+	// authzSpiceDB is SpiceDB answering over authz/schema.zed. The default:
+	// the binary, the release bundle and the demo run it.
 	authzSpiceDB = "spicedb"
 )
 
@@ -47,6 +51,11 @@ const (
 	// key. In the cluster it comes from a Secret (D-29). It is never a flag,
 	// so it never shows in a process listing, and never logged.
 	spicedbKeyEnv = "OPENFIEF_SPICEDB_PRESHARED_KEY"
+	// spicedbInsecureEnv names the environment variable that, set to true,
+	// speaks plaintext gRPC to SpiceDB as --spicedb-insecure does. The core's
+	// Deployment sets it, so the commands an owner runs in its pod, such as
+	// core token revoke, reach SpiceDB as serve does without the flag.
+	spicedbInsecureEnv = "OPENFIEF_SPICEDB_INSECURE"
 	// defaultSpiceDBKeyFile is where the core's Deployment mounts the key of
 	// the Secret openfief-spicedb-key, as an optional volume: the file
 	// appears when the credentials Job has created the Secret (D-216), and
@@ -64,13 +73,19 @@ const (
 var (
 	// errBadAuthz reports an --authz that is neither policy nor spicedb.
 	errBadAuthz = errors.New("--authz must be policy or spicedb")
-	// errNoSpiceDBEndpoint reports --authz=spicedb without an endpoint.
-	errNoSpiceDBEndpoint = errors.New("--authz=spicedb needs --spicedb-endpoint or " + spicedbEndpointEnv)
+	// errNoSpiceDBEndpoint reports --authz=spicedb, the default, without an
+	// endpoint: a run outside the cluster fails at once, saying how to opt
+	// out, instead of waiting for a SpiceDB that isn't there.
+	errNoSpiceDBEndpoint = errors.New("--authz=spicedb, the default, needs SpiceDB's address in --spicedb-endpoint or " + spicedbEndpointEnv +
+		"; to run without SpiceDB, pass --authz=policy")
+	// errBadSpiceDBInsecure reports a spicedbInsecureEnv that is no boolean.
+	errBadSpiceDBInsecure = errors.New(spicedbInsecureEnv + " must be true or false")
 	// errBadSpiceDBTimeout reports a --spicedb-timeout of zero or less.
 	errBadSpiceDBTimeout = errors.New("--spicedb-timeout must be positive")
 	// errNoSpiceDBKey reports --authz=spicedb without a preshared key, from
 	// the environment or a file, to a command that can't wait for one.
-	errNoSpiceDBKey = errors.New("--authz=spicedb needs the preshared key in " + spicedbKeyEnv + " or in --spicedb-key-file")
+	errNoSpiceDBKey = errors.New("--authz=spicedb, the default, needs the preshared key in " + spicedbKeyEnv + " or in --spicedb-key-file" +
+		" (the Secret " + identity.PresharedKeyName + "); to run without SpiceDB, pass --authz=policy")
 	// errSpiceDBKeyPending is what every check answers until the core has
 	// SpiceDB's key: refused, closed (D-164).
 	errSpiceDBKeyPending = fmt.Errorf("%w: SpiceDB's preshared key is not there yet; every check is refused until it is", kernel.ErrAuthzUnavailable)
@@ -91,7 +106,8 @@ func (secret) LogValue() slog.Value { return slog.StringValue("[redacted]") }
 
 // authzConfig is serve's authorization configuration.
 type authzConfig struct {
-	// Mode is authzPolicy, or authzSpiceDB; empty is authzPolicy.
+	// Mode is authzSpiceDB, the flag's default, or authzPolicy; empty, in a
+	// configuration built without the flags, is authzPolicy.
 	Mode string
 	// Endpoint is SpiceDB's gRPC address, host:port.
 	Endpoint string
@@ -112,15 +128,16 @@ type authzConfig struct {
 
 // authzFlags defines serve's authorization flags on fs, into a.
 func authzFlags(fs *flag.FlagSet, a *authzConfig) {
-	fs.StringVar(&a.Mode, "authz", authzPolicy, "who answers authorization (D-163, D-164): policy, the owner acts on every account and a viewer, a script token and a view plugin view exactly the accounts their grants cover, or spicedb, which answers the same from SpiceDB")
+	fs.StringVar(&a.Mode, "authz", authzSpiceDB, "who answers authorization (D-163, D-164): spicedb, the default, answers from SpiceDB, or policy, the opt-out that needs no SpiceDB, answers the same from the grants table: the owner acts on every account and a viewer, a script token and a view plugin view exactly the accounts their grants cover")
 	fs.StringVar(&a.Endpoint, "spicedb-endpoint", "", "SpiceDB's gRPC address, host:port, for --authz=spicedb; "+spicedbEndpointEnv+" by default")
 	fs.StringVar(&a.KeyFile, "spicedb-key-file", defaultSpiceDBKeyFile, "the file with SpiceDB's preshared key, for --authz=spicedb, which "+spicedbKeyEnv+" overrides. serve starts without the file and refuses every check, reporting not ready, until it has a key")
-	fs.BoolVar(&a.Insecure, "spicedb-insecure", false, "speak plaintext gRPC to SpiceDB, for the in-cluster Service behind its network policy; TLS otherwise")
+	fs.BoolVar(&a.Insecure, "spicedb-insecure", false, "speak plaintext gRPC to SpiceDB, for the in-cluster Service behind its network policy, as "+spicedbInsecureEnv+"=true does; TLS otherwise")
 	fs.DurationVar(&a.Timeout, "spicedb-timeout", defaultSpiceDBTimeout, "how long one call to SpiceDB may take; a check that takes longer is refused")
 }
 
 // parseAuthz checks a and reads SpiceDB's endpoint, when the flag left it
-// empty, and its preshared key, when the environment has it, through getenv.
+// empty, whether to speak plaintext, when the flag didn't say so, and its
+// preshared key, when the environment has it, through getenv.
 // The key may still be missing: serve waits for the file, and a command asks
 // requireKey. With --authz=policy nothing of SpiceDB is read or needed.
 func parseAuthz(a *authzConfig, getenv func(string) string) error {
@@ -137,6 +154,10 @@ func parseAuthz(a *authzConfig, getenv func(string) string) error {
 	if a.Endpoint == "" {
 		return errNoSpiceDBEndpoint
 	}
+	var err error
+	if a.Insecure, err = insecureFromEnv(a.Insecure, getenv); err != nil {
+		return err
+	}
 	a.Key = secret(strings.TrimSpace(getenv(spicedbKeyEnv)))
 	if a.Key == "" && a.KeyFile == "" {
 		return errNoSpiceDBKey
@@ -145,6 +166,21 @@ func parseAuthz(a *authzConfig, getenv func(string) string) error {
 		return errBadSpiceDBTimeout
 	}
 	return nil
+}
+
+// insecureFromEnv returns whether to speak plaintext to SpiceDB: true when
+// the flag said so, else what spicedbInsecureEnv says through getenv, false
+// when it is unset, or errBadSpiceDBInsecure when it is no boolean.
+func insecureFromEnv(fromFlag bool, getenv func(string) string) (bool, error) {
+	v := getenv(spicedbInsecureEnv)
+	if fromFlag || v == "" {
+		return fromFlag, nil
+	}
+	plaintext, err := strconv.ParseBool(v)
+	if err != nil {
+		return false, fmt.Errorf("%w, not %q", errBadSpiceDBInsecure, v)
+	}
+	return plaintext, nil
 }
 
 // readKeyFile returns the preshared key in path, trimmed, or "" when the file
@@ -191,25 +227,54 @@ type authorization struct {
 	gate *keyGate
 	// ping asks SpiceDB whether it answers; nil with the policy.
 	ping func(context.Context) error
-	// started is set once SpiceDB has answered and holds the schema and the
-	// relationships the core owns: the start's reconcile succeeded. Readiness
-	// waits for it, and it is never unset (an outage later is the monitor's);
-	// nil with the policy.
-	started *atomic.Bool
+	// start is how far the start's reconcile has got, which readiness
+	// waits for; nil with the policy.
+	start *startState
+}
+
+// startState is how far the start's reconcile of SpiceDB has got.
+type startState struct {
+	// done is set once SpiceDB has answered and holds the schema and the
+	// relationships the core owns: the start's reconcile succeeded. It is
+	// never unset (an outage later is the monitor's).
+	done atomic.Bool
+	// why is why it has not succeeded yet, as the last failed attempt's
+	// diagnosis said it, which readiness and the log report.
+	why atomic.Pointer[string]
+	// diagnose says why a reconcile failed with err: SpiceDB's role or
+	// database missing from the database, a key SpiceDB refuses, or SpiceDB
+	// not answering (spicedbWaitReason); nil reports no reason. Set before
+	// the start's reconcile runs.
+	diagnose func(ctx context.Context, err error) string
 }
 
 // waiting says what the core still waits for before it is ready, or "" when
-// nothing: with SpiceDB, its key, then an answer with the schema written.
-// It only ever turns from waiting to "", so a SpiceDB outage after the start
-// never makes the core not ready.
+// nothing: with SpiceDB, its key, naming the Secret and the file it is read
+// from, then an answer with the schema written, with why the last attempt
+// failed once one has. It only ever turns from waiting to "", so a SpiceDB
+// outage after the start never makes the core not ready.
 func (az authorization) waiting() string {
 	if az.gate != nil && !az.gate.isConnected() {
-		return "waiting for SpiceDB's preshared key"
+		return keyPendingReason(az.gate.cfg.KeyFile)
 	}
-	if az.started != nil && !az.started.Load() {
-		return "waiting for SpiceDB to answer and take its schema"
+	if az.start != nil && !az.start.done.Load() {
+		return schemaPendingReason(&az.start.why)
 	}
 	return ""
+}
+
+// noteFailure records why the start's reconcile failed with err, for
+// readiness, and returns it, for the log.
+func (az authorization) noteFailure(ctx context.Context, err error) string {
+	if az.start == nil {
+		return ""
+	}
+	var why string
+	if az.start.diagnose != nil {
+		why = az.start.diagnose(ctx, err)
+	}
+	az.start.why.Store(&why)
+	return why
 }
 
 // accessSyncer is what the core asks of the syncer that keeps SpiceDB's
@@ -233,7 +298,10 @@ func newAuthorization(cfg *authzConfig) (authorization, error) {
 	if err != nil {
 		return authorization{}, err
 	}
-	return authorization{authorizer: c.authorizer, syncer: c.syncer, closer: c.client, ping: c.authorizer.Ping, started: new(atomic.Bool)}, nil
+	return authorization{
+		authorizer: c.authorizer, syncer: c.syncer, closer: c.client, ping: c.authorizer.Ping,
+		start: new(startState),
+	}, nil
 }
 
 // serveAuthorization returns the authorization serve runs with. With SpiceDB
@@ -347,11 +415,11 @@ func (az authorization) registryOptions() []portfolioapp.RegistryOption {
 // reconcile runs then, in the background.
 func (az authorization) startReconcile(ctx context.Context, load func(context.Context) (spicedb.Desired, error), log *slog.Logger) func(context.Context) error {
 	if az.gate == nil {
-		reconcileAccess(ctx, az.syncer, load, log, az.markStarted)
+		reconcileAccess(ctx, az.syncer, load, log, az.markStarted, az.noteFailure)
 	} else {
 		go func() {
 			if az.gate.wait(ctx) {
-				reconcileAccess(ctx, az.syncer, load, log, az.markStarted)
+				reconcileAccess(ctx, az.syncer, load, log, az.markStarted, az.noteFailure)
 			}
 		}()
 	}
@@ -365,8 +433,8 @@ func (az authorization) startReconcile(ctx context.Context, load func(context.Co
 
 // markStarted records that the start's reconcile succeeded.
 func (az authorization) markStarted() {
-	if az.started != nil {
-		az.started.Store(true)
+	if az.start != nil {
+		az.start.done.Store(true)
 	}
 }
 
@@ -403,14 +471,18 @@ func desiredAccess(l *ledgerapp.Ledger, sleeves *portfolioapp.Registry, grants *
 // at start and, when SpiceDB can't take it yet, again every authzRetryEvery
 // in the background until it does or ctx ends. Until then every check is
 // refused, closed, since no account has a household. A failure is logged,
-// without any credential. done, when not nil, is called once the reconcile
-// succeeded: SpiceDB has answered and holds the schema.
-func reconcileAccess(ctx context.Context, syncer accessSyncer, load func(context.Context) (spicedb.Desired, error), log *slog.Logger, done func()) {
+// without any credential, with what failed says of it: what is missing, by
+// name. done, when not nil, is called once the reconcile succeeded: SpiceDB
+// has answered and holds the schema.
+func reconcileAccess(ctx context.Context, syncer accessSyncer, load func(context.Context) (spicedb.Desired, error), log *slog.Logger, done func(), failed func(context.Context, error) string) {
 	if syncer == nil {
 		return
 	}
 	if done == nil {
 		done = func() {}
+	}
+	if failed == nil {
+		failed = func(context.Context, error) string { return "" }
 	}
 	err := syncer.Reconcile(ctx, load)
 	if err == nil {
@@ -418,7 +490,8 @@ func reconcileAccess(ctx context.Context, syncer accessSyncer, load func(context
 		log.Info("authorization reconciled with SpiceDB")
 		return
 	}
-	log.Warn("SpiceDB is not reconciled yet; every check is refused until it is, retrying", "error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded, spicedb.ErrInvalidID))
+	log.Warn("SpiceDB is not reconciled yet; every authorization check is refused and the core is not ready until it is, retrying",
+		"reason", failed(ctx, err), "error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded, spicedb.ErrInvalidID))
 	go func() {
 		t := time.NewTicker(authzRetryEvery)
 		defer t.Stop()
@@ -429,7 +502,8 @@ func reconcileAccess(ctx context.Context, syncer accessSyncer, load func(context
 			case <-t.C:
 			}
 			if err := syncer.Reconcile(ctx, load); err != nil {
-				log.Warn("SpiceDB is not reconciled yet; retrying", "error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded, spicedb.ErrInvalidID))
+				log.Warn("SpiceDB is not reconciled yet; every authorization check is refused and the core is not ready until it is, retrying",
+					"reason", failed(ctx, err), "error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded, spicedb.ErrInvalidID))
 				continue
 			}
 			done()

@@ -1063,3 +1063,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e22964d538c7
+  - type: implements
+    from: SYM-tooling-release-bundle-check-authz
+    to: REQ-tooling-release-bundle-authz-spicedb
+    created_at: 2026-11-22T08:41:21.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-707ea4f68044
+  - type: covered_by
+    from: SYM-tooling-release-bundle-check-authz
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-22T08:41:21.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d49d1acebf83

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-identity-authz-spicedb-answers",
+  "sourceFile": "cmd/core/authz.go",
+  "symbol": "authorization.markStarted",
+  "verdict": "keeps",
+  "note": "Still marks the start's reconcile as succeeded, now through startState; the readiness gate is the same. Reviewed and approved by the author in chat with the orchestrator, 2026-11-22.",
+  "statementHash": "sha256:3fa2afbefe1b953ea3ecdb984119d4841eb8350de0c337a64d431cf9c4fcf2b1",
+  "codeHash": "sha256:5876baa8ee293df1527f690c85a20664068f8830426f509f0d54a20cb21b9e72",
+  "startLine": 435,
+  "endLine": 439,
+  "recordedAt": "2026-11-22T15:13:36.227Z"
+}

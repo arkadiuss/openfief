@@ -54,17 +54,49 @@ type evalResultRow struct {
 	Verdict    string   `json:"verdict"`
 	Answered   bool     `json:"answered"`
 	Diagnostic []string `json:"diagnostic"`
+	// Set names the set of cases the run asked when it is not the eval's own:
+	// "opinions" for the opinions set (D-225, D-229); empty for the eval's.
+	Set string `json:"set"`
 }
+
+// opinionsResultSet is the Set of a result of the opinions set.
+const opinionsResultSet = "opinions"
 
 // evaluatedModels returns the model ids a full run of the eval has covered
 // with a verdict: a run of some cases only, one no call answered and one from
-// before the verdict existed do not count.
-func evaluatedModels(files fs.FS) (map[string]bool, error) {
+// before the verdict existed do not count, and neither does a run of the
+// opinions set, which says nothing of the model's answers to the eval's cases.
+func evaluatedModels(files fs.FS) (map[string]bool, error) { return evaluatedIn(files, "") }
+
+// evaluatedOpinionModels returns the model ids a full run of the opinions set
+// has covered with a verdict, on the same terms. An opinion's note reads only
+// these: a pass of the eval's own cases says nothing of an opinion.
+func evaluatedOpinionModels(files fs.FS) (map[string]bool, error) {
+	return evaluatedIn(files, opinionsResultSet)
+}
+
+// evaluatedIn is the models the full runs with a verdict of the named set covered.
+func evaluatedIn(files fs.FS, set string) (map[string]bool, error) {
+	rows, err := resultRows(files)
+	if err != nil {
+		return nil, err
+	}
+	out := map[string]bool{}
+	for _, r := range rows {
+		if r.Set == set && r.Answered && len(r.Diagnostic) == 0 && r.Verdict != "none" && r.Verdict != "" {
+			out[r.Model] = true
+		}
+	}
+	return out, nil
+}
+
+// resultRows reads every run of every committed result file.
+func resultRows(files fs.FS) ([]evalResultRow, error) {
 	names, err := fs.Glob(files, "evalresults/*.json")
 	if err != nil {
 		return nil, fmt.Errorf("list eval results: %w", err)
 	}
-	out := map[string]bool{}
+	var out []evalResultRow
 	for _, name := range names {
 		data, readErr := fs.ReadFile(files, name)
 		if readErr != nil {
@@ -74,11 +106,7 @@ func evaluatedModels(files fs.FS) (map[string]bool, error) {
 		if jsonErr := json.Unmarshal(data, &rows); jsonErr != nil {
 			return nil, fmt.Errorf("decode %s: %w", name, jsonErr)
 		}
-		for _, r := range rows {
-			if r.Answered && len(r.Diagnostic) == 0 && r.Verdict != "none" && r.Verdict != "" {
-				out[r.Model] = true
-			}
-		}
+		out = append(out, rows...)
 	}
 	return out, nil
 }
@@ -89,7 +117,10 @@ func evaluatedModels(files fs.FS) (map[string]bool, error) {
 type noteAnswerer struct {
 	next      answerer
 	evaluated map[string]bool
-	evalURL   string
+	// evaluatedOpinions are the models the opinions set has a verdict for: an
+	// answer given with opinions on is evaluated only by them (D-225).
+	evaluatedOpinions map[string]bool
+	evalURL           string
 }
 
 func (n noteAnswerer) answer(r *http.Request, sess session, question string) (answerCard, error) {
@@ -99,7 +130,11 @@ func (n noteAnswerer) answer(r *http.Request, sess session, question string) (an
 	}
 	if card.Model != "" {
 		name := modelName(card.Model)
-		card.Note = &modelNote{Name: name, Evaluated: n.evaluated[name], EvalURL: n.evalURL, Opinions: card.Opinions}
+		evaluated := n.evaluated[name]
+		if card.Opinions {
+			evaluated = n.evaluatedOpinions[name]
+		}
+		card.Note = &modelNote{Name: name, Evaluated: evaluated, EvalURL: n.evalURL, Opinions: card.Opinions}
 	}
 	return card, nil
 }

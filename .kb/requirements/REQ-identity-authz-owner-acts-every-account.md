@@ -33,12 +33,13 @@ origin:
   recorded_at: '2026-11-21T22:19:15.123Z'
 id: REQ-identity-authz-owner-acts-every-account
 type: req
+approval_ref: The author approved this Context-only update for SpiceDB as the default (D-164) in chat with the orchestrator, 2026-11-22
 ---
 Under either implementation, the owner must act on every account.
 
 ## Context
 
-Author decision D-163, clause 4 of its last sentence, as amended on main (5317aac): the owner acts on every account under either implementation of the authorization interface, the policy over the grants table or SpiceDB (D-164). The interim framing "until SpiceDB answers, its only implementation" is gone, because GrantPolicy, the default `--authz=policy`, now answers beside SpiceDB. The author approved this in-place reword in chat with the orchestrator on 2026-11-21; the requirement keeps its id, text_ref, history and links. D-65 has the owner hold every account and alone change anything. identityapp.Policy, over the pure identity.MayAct, answers for the owner under the interim policy, GrantPolicy defers to it, and the zed assertions in authz/validation.yaml show the same under SpiceDB. No end-to-end test proves it yet, so its evidence floor is asserted.
+Author decision D-163, clause 4 of its last sentence, as amended on main (5317aac): the owner acts on every account under either implementation of the authorization interface, the policy over the grants table or SpiceDB (D-164). The interim framing "until SpiceDB answers, its only implementation" is gone. Built: under either authorizer, SpiceDB (the default, D-164) or GrantPolicy (the `--authz=policy` opt-out), the owner acts on every account (D-163). The author approved this in-place reword in chat with the orchestrator on 2026-11-21; the requirement keeps its id, text_ref, history and links. D-65 has the owner hold every account and alone change anything. identityapp.Policy, over the pure identity.MayAct, answers for the owner under the interim policy, GrantPolicy defers to it, and the zed assertions in authz/validation.yaml show the same under SpiceDB. No end-to-end test proves it yet, so its evidence floor is asserted.
 
 ## Source
 

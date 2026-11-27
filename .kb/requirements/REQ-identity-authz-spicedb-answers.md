@@ -32,12 +32,13 @@ origin:
   recorded_at: '2026-11-01T22:45:41.372Z'
 id: REQ-identity-authz-spicedb-answers
 type: req
+approval_ref: The author approved this Context-only update for SpiceDB as the default (D-164) in chat with the orchestrator, 2026-11-22
 ---
 From the second alpha, SpiceDB must answer the authorization interface, with its datastore a database in the core's PostgreSQL cluster.
 
 ## Context
 
-The author decided it on 2026-11-01, when planning viewers for the second alpha (D-65). D-14 runs the core's PostgreSQL cluster with CloudNativePG. Not built: the first alpha ships the rule D-163 states instead. No end-to-end test proves it yet, so its evidence floor is asserted.
+The author decided it on 2026-11-01, when planning viewers for the second alpha (D-65). D-14 runs the core's PostgreSQL cluster with CloudNativePG. Built: from 2026.11.0-alpha.2 SpiceDB answers by default, in the binary, the release bundle and the demo; the policy stays an owner's opt-out. No end-to-end test proves it yet, so its evidence floor is asserted.
 
 ## Source
 

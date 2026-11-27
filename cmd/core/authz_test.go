@@ -18,10 +18,11 @@ import (
 // testKey is a placeholder preshared key; it is no credential.
 const testKey = "placeholder-preshared-key"
 
-// TestParseAuthz checks --authz and SpiceDB's endpoint and key (D-164): the
-// policy, which needs nothing of SpiceDB, is the default, and spicedb needs
-// both an endpoint, from the flag or the environment, and the key from the
-// environment alone.
+// TestParseAuthz checks --authz and SpiceDB's endpoint and key (D-164):
+// spicedb is the default, and needs an endpoint, from the flag or the
+// environment, and the key from the environment or its file; plaintext gRPC
+// comes from the flag or the environment; the policy, the opt-out, needs
+// nothing of SpiceDB.
 func TestParseAuthz(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
@@ -30,10 +31,27 @@ func TestParseAuthz(t *testing.T) {
 		env  map[string]string
 		want authzConfig
 	}{
-		{name: "the policy is the default", want: authzConfig{Mode: authzPolicy, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout}},
+		{
+			name: "spicedb is the default",
+			env:  map[string]string{spicedbEndpointEnv: "spicedb:50051"},
+			want: authzConfig{Mode: authzSpiceDB, Endpoint: "spicedb:50051", KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout},
+		},
+		{
+			name: "the core's pod: plaintext from the environment",
+			env:  clusterSpiceDB(),
+			want: clusterAuthz(),
+		},
+		{
+			name: "the environment's false is TLS", env: map[string]string{spicedbEndpointEnv: "spicedb:50051", spicedbInsecureEnv: "false"},
+			want: authzConfig{Mode: authzSpiceDB, Endpoint: "spicedb:50051", KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout},
+		},
+		{
+			name: "the policy needs nothing of SpiceDB", args: []string{"--authz=policy"},
+			want: authzConfig{Mode: authzPolicy, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout},
+		},
 		{
 			name: "the policy ignores SpiceDB's settings", args: []string{"--authz=policy"},
-			env:  map[string]string{spicedbEndpointEnv: "spicedb:50051", spicedbKeyEnv: testKey},
+			env:  clusterSpiceDB(),
 			want: authzConfig{Mode: authzPolicy, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout},
 		},
 		{
@@ -71,8 +89,10 @@ func TestParseAuthz(t *testing.T) {
 	}
 }
 
-// TestParseAuthzRefuses checks what --authz refuses: spicedb without an
-// endpoint or a key, a mode that is none, and a key given as a flag.
+// TestParseAuthzRefuses checks what --authz refuses: spicedb, the default,
+// without an endpoint, so a run without SpiceDB fails at once instead of
+// waiting for it, or without a key, a mode that is none, a plaintext setting
+// that is no boolean, and a key given as a flag.
 func TestParseAuthzRefuses(t *testing.T) {
 	t.Parallel()
 	endpoint := map[string]string{spicedbEndpointEnv: "spicedb:50051"}
@@ -84,6 +104,8 @@ func TestParseAuthzRefuses(t *testing.T) {
 		wantErr error // nil: any error
 	}{
 		{name: "no endpoint", args: []string{"--authz=spicedb"}, env: key, wantErr: errNoSpiceDBEndpoint},
+		{name: "no flag and no endpoint: the default is spicedb", wantErr: errNoSpiceDBEndpoint},
+		{name: "a plaintext setting that is no boolean", env: map[string]string{spicedbEndpointEnv: "spicedb:50051", spicedbInsecureEnv: "yes please"}, wantErr: errBadSpiceDBInsecure},
 		{name: "no key and no file", args: []string{"--authz=spicedb", "--spicedb-key-file="}, env: endpoint, wantErr: errNoSpiceDBKey},
 		{name: "an unknown mode", args: []string{"--authz=openfga"}, wantErr: errBadAuthz},
 		{name: "no timeout", args: []string{"--authz=spicedb", "--spicedb-endpoint=x:1", "--spicedb-timeout=0s"}, env: key, wantErr: errBadSpiceDBTimeout},
@@ -165,5 +187,19 @@ func TestSpiceDBDownRefusesEverything(t *testing.T) {
 	ok, err := az.authorizer.MayAct(t.Context(), identity.Caller{Holder: identity.HolderOwner, ID: "s"}, identity.ActionView, "brokerage")
 	if ok || err == nil {
 		t.Errorf("MayAct with SpiceDB down = %v, %v, want false and an error", ok, err)
+	}
+}
+
+// TestNoSpiceDBSaysHowToOptOut checks that a run without SpiceDB's settings,
+// such as a core started outside the cluster, fails at once with what is
+// missing and the opt-out, --authz=policy, instead of waiting for a SpiceDB
+// that isn't there.
+func TestNoSpiceDBSaysHowToOptOut(t *testing.T) {
+	t.Parallel()
+	for _, args := range [][]string{nil, {"token", "issue", "--name=x"}, {"token", "revoke", "x"}} {
+		_, err := parseArgs(args, func(k string) string { return map[string]string{dsnEnv: testDSN}[k] })
+		if !errors.Is(err, errNoSpiceDBEndpoint) || !strings.Contains(err.Error(), "pass --authz=policy") {
+			t.Errorf("parseArgs(%q) without SpiceDB = %v, want errNoSpiceDBEndpoint naming --authz=policy", args, err)
+		}
 	}
 }

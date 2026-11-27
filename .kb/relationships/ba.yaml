@@ -1231,3 +1231,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-804a2c5d9a5c
+  - type: implements
+    from: SYM-core-authz-insecure-from-env
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-22T09:02:29.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8906fa1a01ea
+  - type: covered_by
+    from: SYM-core-authz-insecure-from-env
+    to: TEST-core-authz-flags
+    created_at: 2026-11-22T09:02:29.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-374a192ce97b

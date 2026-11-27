@@ -85,9 +85,9 @@ func TestReconcileAccessWritesTheOwner(t *testing.T) {
 	load := func(context.Context) (spicedb.Desired, error) {
 		return spicedb.Desired{Accounts: []string{"bonds"}, Sleeves: map[string]string{"bonds": "bonds"}}, nil
 	}
-	reconcileAccess(t.Context(), nil, load, log, nil) // the policy: nothing to do, nothing to fail
+	reconcileAccess(t.Context(), nil, load, log, nil, nil) // the policy: nothing to do, nothing to fail
 	w := &writeLog{}
-	reconcileAccess(t.Context(), spicedb.NewSyncer(w), load, log, nil)
+	reconcileAccess(t.Context(), spicedb.NewSyncer(w), load, log, nil, nil)
 	want := []string{
 		"OPERATION_TOUCH household:home#owner@person:owner",
 		"OPERATION_TOUCH account:bonds#household@household:home",

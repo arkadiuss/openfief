@@ -318,6 +318,10 @@ func newAccess(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, l *led
 	if err != nil {
 		return access{}, err
 	}
+	if az.syncer != nil {
+		// While SpiceDB doesn't answer, readiness and the log say why: its role or database missing, or SpiceDB down.
+		az.start.diagnose = spicedbDiagnosis(pool, cfg.Authz.Endpoint)
+	}
 	store := identitypg.New(pool)
 	dir := &grantDirectory{accounts: l}
 	if installed != nil {
@@ -336,7 +340,12 @@ func newAccess(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, l *led
 	}
 	acc := access{authorization: az, sleeves: sleeves, grants: grants}
 	if az.syncer != nil {
-		acc.reconcile = az.startReconcile(ctx, desiredAccess(l, sleeves, grants, cfg.Auth.DemoSessions), log)
+		load := desiredAccess(l, sleeves, grants, cfg.Auth.DemoSessions)
+		acc.reconcile = az.startReconcile(ctx, load, log)
+		if cfg.Auth.DemoSessions {
+			// The demo's loader reseeds the ledger next to a running core, past the start's reconcile.
+			go az.followDemo(ctx, load, acc.reconcile, demoPollEvery, demoReconcileEvery, log)
+		}
 	}
 	if installed != nil {
 		if err := installed.OnRemoved(grantsOnUninstall(ctx, grants, log)); err != nil {

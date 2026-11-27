@@ -4,10 +4,10 @@
   "sourceFile": "internal/views/ui/askevalnote.go",
   "symbol": "noteAnswerer.answer",
   "verdict": "keeps",
-  "note": "The note still shows the name, the line AI can be wrong; check the cards. Not investment advice. kept whole, and the link; with opinions on one more sentence follows it. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "note": "The answer still shows the model's name, the line and the link; only an opinions answer takes Evaluated from the opinions set's results (D-225). Reviewed and approved by the author in chat with the orchestrator, 2026-11-22.",
   "statementHash": "sha256:557f2fab83d0ddfe009df04004204599fe65908bed11b27d9eb72e3f697851fc",
-  "codeHash": "sha256:99081ae9fd9299905854f7ea06588f4b095675d3521ab1f23e9bf976275bee00",
-  "startLine": 95,
-  "endLine": 105,
-  "recordedAt": "2026-11-21T21:37:18.811Z"
+  "codeHash": "sha256:7de448ee3c58866b73c83fe2aa8683df288af53d80720c533b6bad9be40036a1",
+  "startLine": 126,
+  "endLine": 140,
+  "recordedAt": "2026-11-22T14:57:00.045Z"
 }

@@ -1231,3 +1231,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-74ab811d78f9
+  - type: implements
+    from: SYM-core-authzwait-key-pending-reason
+    to: REQ-core-spicedb-not-ready-says-why
+    created_at: 2026-11-22T08:39:36.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0426bd9935ef
+  - type: covered_by
+    from: SYM-core-authzwait-key-pending-reason
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T08:39:36.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e18f3855fce9
+  - type: covered_by
+    from: SYM-core-authzwait-key-pending-reason
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-22T08:39:36.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c8dc6f32328

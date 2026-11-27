@@ -1203,3 +1203,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7510bc8e155e
+  - type: implements
+    from: SYM-d225-internal-views-ui-askevalnote-resultrows
+    to: REQ-decision-d225-2-opinions-not-evaluated-until-the-opinions-eval-passes
+    created_at: 2026-11-22T01:40:07.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fd193a8c64a
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askevalnote-resultrows
+    to: TEST-ui-ask-opinions-evaluated
+    created_at: 2026-11-22T01:40:07.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb0dc1bdc42c
+  - type: implements
+    from: SYM-core-authzwait-spicedb-wait-reason
+    to: REQ-core-spicedb-not-ready-says-why
+    created_at: 2026-11-22T08:39:59.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d2c6c523345
+  - type: covered_by
+    from: SYM-core-authzwait-spicedb-wait-reason
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T08:40:00.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a67bc0eaba6

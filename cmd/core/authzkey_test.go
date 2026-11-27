@@ -161,6 +161,32 @@ func TestKeyGateNeverLogsTheKey(t *testing.T) {
 	}
 }
 
+// TestKeyGateWarnsAndReminds checks that a gate without the key logs, as a
+// warning, the Secret it waits for and the file, at the first look and again
+// every keyRemindEvery, so a Secret that never comes keeps showing in the log.
+func TestKeyGateWarnsAndReminds(t *testing.T) {
+	t.Parallel()
+	var out bytes.Buffer
+	g := gateFor(t, &out)
+	g.poll = keyRemindEvery / 2 // a reminder every second look
+	for range 5 {
+		if g.step() {
+			t.Fatal("step connected without a key file")
+		}
+	}
+	lines := strings.Split(strings.TrimSpace(out.String()), "\n")
+	if len(lines) != 3 {
+		t.Fatalf("logged %d lines over 5 looks a reminder apart every 2, want 3:\n%s", len(lines), out.String())
+	}
+	for _, line := range lines {
+		for _, want := range []string{"level=WARN", "the Secret openfief-spicedb-key is not in " + g.cfg.KeyFile, "secret=openfief-spicedb-key", "file=" + g.cfg.KeyFile} {
+			if !strings.Contains(line, want) {
+				t.Errorf("the wait's log line %q lacks %q", line, want)
+			}
+		}
+	}
+}
+
 // TestNotReadyWithoutTheKey checks that /readyz reports not ready, with the
 // core otherwise wired, until the key is there, and that the health endpoint
 // stays up.
@@ -180,8 +206,12 @@ func TestNotReadyWithoutTheKey(t *testing.T) {
 		s.browserHandler().ServeHTTP(rec, httptest.NewRequestWithContext(t.Context(), http.MethodGet, p, http.NoBody))
 		return rec.Code, strings.TrimSpace(rec.Body.String())
 	}
-	if code, body := get("/readyz"); code != http.StatusServiceUnavailable || body != "waiting for SpiceDB's preshared key" {
-		t.Errorf("GET /readyz without the key = %d %q, want 503 waiting for the key", code, body)
+	// The readiness names the Secret, the file and what makes it (an upgrade whose Secret is missing says so).
+	wantKey := "waiting for SpiceDB's preshared key: the Secret openfief-spicedb-key is not in " + path + " yet; " +
+		"the install's credentials Job (label app.kubernetes.io/name=openfief-init-credentials) creates it, " +
+		"and every authorization check is refused until it is there"
+	if code, body := get("/readyz"); code != http.StatusServiceUnavailable || body != wantKey {
+		t.Errorf("GET /readyz without the key = %d %q, want 503 %q", code, body, wantKey)
 	}
 	if code, _ := get("/healthz"); code != http.StatusOK {
 		t.Errorf("GET /healthz without the key = %d, want 200", code)
@@ -193,8 +223,8 @@ func TestNotReadyWithoutTheKey(t *testing.T) {
 		t.Fatal("step did not connect")
 	}
 	// The key alone is not enough: SpiceDB must answer, with its schema written.
-	if code, body := get("/readyz"); code != http.StatusServiceUnavailable || body != "waiting for SpiceDB to answer and take its schema" {
-		t.Errorf("GET /readyz with the key but no answer yet = %d %q, want 503 waiting for the schema", code, body)
+	if code, body := get("/readyz"); code != http.StatusServiceUnavailable || body != schemaPending {
+		t.Errorf("GET /readyz with the key but no answer yet = %d %q, want 503 %q", code, body, schemaPending)
 	}
 	az.markStarted()
 	if waiting := az.waiting(); waiting != "" {

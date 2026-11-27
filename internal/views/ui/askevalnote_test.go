@@ -151,3 +151,53 @@ func TestEvaluatedModelsCountsOnlyFullRunsWithAVerdict(t *testing.T) {
 		}
 	}
 }
+
+// TestAnOpinionIsEvaluatedOnlyByTheOpinionsSet is a table test: a model that passed
+// the eval's own cases is evaluated for an answer without opinions and not for one
+// with them, until the opinions set has a verdict for it.
+func TestAnOpinionIsEvaluatedOnlyByTheOpinionsSet(t *testing.T) {
+	t.Parallel()
+	main := map[string]bool{"a/b": true}
+	tests := []struct {
+		name     string
+		opinions bool
+		set      map[string]bool
+		want     bool
+	}{
+		{"main-set pass, opinions off", false, nil, true},
+		{"main-set pass, opinions on, no opinions results", true, nil, false},
+		{"main-set pass, opinions on, results of another model", true, map[string]bool{"x/y": true}, false},
+		{"main-set pass, opinions on, an opinions verdict", true, map[string]bool{"a/b": true}, true},
+		{"an opinions verdict does not evaluate an answer without opinions", false, map[string]bool{"c": true}, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			model := "inst/a/b"
+			if tt.name == "an opinions verdict does not evaluate an answer without opinions" {
+				model = "inst/c"
+			}
+			n := noteAnswerer{next: &stubAnswerer{card: answerCard{Model: model, Opinions: tt.opinions}}, evaluated: main, evaluatedOpinions: tt.set, evalURL: "u"}
+			got, err := n.answer(nil, session{}, "q")
+			if err != nil || got.Note == nil || got.Note.Evaluated != tt.want {
+				t.Errorf("note = %+v, %v; want Evaluated %v", got.Note, err, tt.want)
+			}
+		})
+	}
+}
+
+func TestResultsOfTheOpinionsSetNeverCountForTheEvalsOwnCases(t *testing.T) {
+	t.Parallel()
+	files := fstest.MapFS{"evalresults/a.json": {Data: []byte(`[
+ {"model":"m/main","verdict":"pass","answered":true},
+ {"model":"m/op","verdict":"pass","answered":true,"set":"opinions"},
+ {"model":"m/opdiag","verdict":"pass","answered":true,"set":"opinions","diagnostic":["O1"]}]`)}}
+	main, err := evaluatedModels(files)
+	if err != nil || !main["m/main"] || main["m/op"] {
+		t.Errorf("evaluatedModels = %v, %v; want the eval's own run only", main, err)
+	}
+	op, err := evaluatedOpinionModels(files)
+	if err != nil || !op["m/op"] || op["m/main"] || op["m/opdiag"] {
+		t.Errorf("evaluatedOpinionModels = %v, %v; want the opinions set's full run only", op, err)
+	}
+}

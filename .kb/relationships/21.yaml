@@ -1182,3 +1182,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1135a9d3bbd0
+  - type: verified_by
+    from: SCEN-ui-ask-opinions-evaluated
+    to: TEST-ui-ask-opinions-evaluated
+    created_at: 2026-11-22T01:39:26.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5324aabc3f6b
+  - type: executable_for
+    from: SYM-core-authzwait-test-demo-ledger-reconcile
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T09:30:11.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-981d7414d3d2

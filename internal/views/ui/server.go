@@ -321,10 +321,14 @@ func (s *server) noteModelAnswers(evalURL string) error {
 	if err != nil {
 		return err
 	}
+	opinions, err := evaluatedOpinionModels(evalResultFiles)
+	if err != nil {
+		return err
+	}
 	if evalURL == "" {
 		evalURL = defaultAskEvalURL
 	}
-	s.ask = noteAnswerer{next: s.ask, evaluated: evaluated, evalURL: evalURL}
+	s.ask = noteAnswerer{next: s.ask, evaluated: evaluated, evaluatedOpinions: opinions, evalURL: evalURL}
 	return nil
 }
 

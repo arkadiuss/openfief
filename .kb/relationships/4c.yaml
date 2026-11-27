@@ -1273,3 +1273,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9fd4e624a46a
+  - type: executable_for
+    from: SYM-core-authzwait-test-spicedb-diagnosis
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T08:36:56.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8aee55d81429
+  - type: executable_for
+    from: SYM-core-authzwait-test-wait-calls
+    to: TEST-core-authz-wait
+    created_at: 2026-11-22T09:02:45.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7459ebbe279c

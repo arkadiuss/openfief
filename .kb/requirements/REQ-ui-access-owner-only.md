@@ -36,4 +36,4 @@ The Access page and its forms are the owner's: a read session never sees the pag
 
 ## Context
 
-D-210 puts the Access page in Settings and D-209 makes grants the owner's alone. Under --authz=policy every holder of read access views every account, so the page stores the grants and says plainly that they take effect when SpiceDB authorization is on.
+D-210 puts the Access page in Settings and D-209 makes grants the owner's alone. Both authorization modes enforce grants: SpiceDB, the default (D-164), and the policy, the owner's --authz=policy opt-out, which GrantPolicy answers from the grants table (D-209, D-163). So a grant the page stores limits its holder at once under either mode, and the page's note that grants have no effect is shown only by a core whose authorizer reports that it does not enforce them, which neither does.

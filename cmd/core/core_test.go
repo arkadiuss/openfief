@@ -99,10 +99,16 @@ func quiet() *slog.Logger { return slog.New(slog.DiscardHandler) }
 // today.
 func coreNow() time.Time { return time.Date(2026, 10, 28, 12, 0, 0, 0, time.UTC) }
 
-// tokenCmd runs a token command as the CLI does and returns its output.
+// tokenCmd runs a token command as the CLI does and returns its output. The
+// test has no SpiceDB, so issue and revoke pass --authz=policy, the opt-out
+// from the default, SpiceDB.
 func tokenCmd(t *testing.T, dsn string, args ...string) string {
 	t.Helper()
-	cmd, err := parseArgs(append([]string{"token"}, args...), func(string) string { return dsn })
+	line := append([]string{"token"}, args...)
+	if len(args) > 0 && args[0] != "list" {
+		line = slices.Concat([]string{"token", args[0], "--authz=policy"}, args[1:])
+	}
+	cmd, err := parseArgs(line, func(string) string { return dsn })
 	if err != nil {
 		t.Fatalf("parseArgs: %v", err)
 	}
