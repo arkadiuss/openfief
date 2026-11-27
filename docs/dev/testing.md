@@ -48,6 +48,7 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 
 ## Stability
 
+- Packages that run goroutines also pass under the race detector: `task test:race` runs `go test -race` on the egress proxy, the operator, ingest/app, identity, modelrouter, valuation/postgres and cmd/core, and CI runs it as its own job. A new package with goroutines joins its list in the Taskfile.
 - No sleeps: wait on conditions, with a deadline.
 - No wall clock: inject the date.
 - No unseeded randomness, no network in unit or replay tests, no dependence on test order.

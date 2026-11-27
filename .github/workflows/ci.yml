@@ -140,6 +140,26 @@ jobs:
       - name: task test:pg
         run: task test:pg
 
+  test-race:
+    # The Go tests of the packages that run goroutines, under the race detector (task test:race): the egress proxy,
+    # the operator, ingest/app, identity, modelrouter, and with a throwaway PostgreSQL valuation/postgres and cmd/core.
+    name: task test:race
+    needs: plan
+    if: needs.plan.outputs.code == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          tools: 'false'
+      - name: task test:race
+        run: task test:race
+
   ui-browser:
     # The browser checks of the built-in UI (ui-browser.yml): on a pull request that can affect the UI (task
     # ci:plan's ui=true), and on every push to main. release.yml runs them too and builds nothing until they pass.

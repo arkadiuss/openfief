@@ -6,13 +6,19 @@
 # - Otherwise: start a throwaway cluster from the local PostgreSQL binaries (initdb and pg_ctl on PATH, or the newest
 #   /usr/lib/postgresql/*/bin), listening only on a Unix socket in a temporary directory, and remove it on exit.
 #   As root, the cluster runs as the postgres user, because PostgreSQL refuses to run as root.
+# - TEST_PG_PACKAGES set (space-separated import paths): test only those, instead of every postgres package, as
+#   task test:race does with -race.
 # Extra arguments go to go test, e.g. task test:pg -- -run TestAppend -v
 set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$root"
 # cmd/demo-seed loads the demo dataset end to end into a fresh database; cmd/core serves it over the read API.
-mapfile -t pkgs < <(go list ./internal/... | grep '/postgres$'; go list ./cmd/demo-seed ./cmd/core)
+if [ -n "${TEST_PG_PACKAGES:-}" ]; then
+  read -r -a pkgs <<<"$TEST_PG_PACKAGES"
+else
+  mapfile -t pkgs < <(go list ./internal/... | grep '/postgres$'; go list ./cmd/demo-seed ./cmd/core)
+fi
 if [ "${#pkgs[@]}" -eq 0 ]; then
   echo "test:pg: no postgres packages"
   exit 0

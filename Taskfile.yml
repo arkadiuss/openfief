@@ -517,6 +517,13 @@ tasks:
     cmds:
       - '{{.GO_GUARD}} cd {{.MODULE}} && KUBEBUILDER_ASSETS="{{.BIN}}/envtest/{{.ENVTEST_K8S_VERSION}}" go test {{.PKGS | default "./..."}}'
 
+  test:race:
+    desc: 'The Go tests of the packages that run goroutines under the race detector (the egress proxy, the operator, ingest/app, identity, modelrouter, and with a disposable PostgreSQL valuation/postgres and cmd/core), which CI runs as its own job; any other package that fails under -race is a bug to fix, not to leave out'
+    deps: [tool:envtest]
+    cmds:
+      - '{{.GO_GUARD}} KUBEBUILDER_ASSETS="{{.BIN}}/envtest/{{.ENVTEST_K8S_VERSION}}" go test -race -count=1 ./internal/plugins/smokescreen ./internal/plugins/operator/... ./internal/ingest/app ./internal/identity/... ./internal/modelrouter/...'
+      - '{{.GO_GUARD}} TEST_PG_PACKAGES="./internal/valuation/postgres ./internal/identity/postgres ./internal/modelrouter/postgres ./cmd/core" bash scripts/test-pg.sh -race'
+
   test:script:
     desc: 'One test of the pipeline''s scripts (scripts/tests), with the pinned tools first on PATH, e.g. task test:script SCRIPT=scripts/tests/dco-check.test.sh'
     deps: [tool:kustomize, tool:gojq, tool:buf]
