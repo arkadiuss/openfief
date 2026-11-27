@@ -94,9 +94,6 @@ type accessData struct {
 	// identity; PluginsUnavailable says the core can't read them now.
 	Plugins            []accessHolder
 	PluginsUnavailable bool
-	// Enforced is whether grants limit what holders view now: false under the
-	// policy, where they are stored with no effect.
-	Enforced bool
 	// New describes the grants form of a new token.
 	New         grantChoices
 	DefaultDays int
@@ -146,7 +143,6 @@ func (s *server) renderAccess(w http.ResponseWriter, r *http.Request, sess sessi
 	if data.Posted != nil {
 		posted = data.Posted.Grants
 	}
-	data.Enforced = in.Tokens.GetGrantsEnforced()
 	data.DefaultDays = defaultTokenDays
 	data.New = newChoices("new-token", in.Sleeves, in.Accounts, posted)
 	data.PluginsUnavailable = in.Plugins == nil

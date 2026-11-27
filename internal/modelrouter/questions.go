@@ -19,6 +19,38 @@ type QuestionLimits struct {
 	PerDay  int
 }
 
+// DefaultViewerLimits are the limits a viewer's session has unless the owner
+// sets others: 10 questions an hour and 30 a day, D-208's values. A viewer
+// (D-65) is not the owner, and each of their questions is a model call the
+// owner pays for, so their allowance is limited by default; the owner's own is
+// limited only when set.
+func DefaultViewerLimits() QuestionLimits {
+	return QuestionLimits{PerHour: defaultViewerPerHour, PerDay: defaultViewerPerDay}
+}
+
+// The viewer's default allowance.
+const (
+	defaultViewerPerHour = 10
+	defaultViewerPerDay  = 30
+)
+
+// Stricter returns the limits that hold when both l and o do: in each window
+// the lower of the two limits, and the other's when one has none.
+func (l QuestionLimits) Stricter(o QuestionLimits) QuestionLimits {
+	return QuestionLimits{PerHour: stricter(l.PerHour, o.PerHour), PerDay: stricter(l.PerDay, o.PerDay)}
+}
+
+// stricter returns the lower of two limits, where zero is no limit.
+func stricter(a, b int) int {
+	switch {
+	case a <= 0:
+		return b
+	case b <= 0:
+		return a
+	}
+	return min(a, b)
+}
+
 // Enabled reports whether any limit is set.
 func (l QuestionLimits) Enabled() bool { return l.PerHour > 0 || l.PerDay > 0 }
 

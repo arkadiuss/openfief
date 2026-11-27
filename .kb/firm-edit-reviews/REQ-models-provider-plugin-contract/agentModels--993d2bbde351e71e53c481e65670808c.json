@@ -4,10 +4,10 @@
   "sourceFile": "cmd/core/modelrouter.go",
   "symbol": "agentModels",
   "verdict": "keeps",
-  "note": "agentModels and newAgentModels only pass the demo flag through; the provider contract is untouched. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "note": "One field for viewer limits; provider contract unchanged. Author approved directly 27 Nov.",
   "statementHash": "sha256:057eb1f55893d2c7685a96b1eb60419a845a79924eeb4f0bc7f5477c95a63ccf",
-  "codeHash": "sha256:91ecbc0dfa7d028ff91320b8ea703d65edb3e083ef5c055e19a9f2b6dcd742a6",
+  "codeHash": "sha256:4b00ce645b13dd72dd5f21bf04513868b898c88810e69ee5be7c6173b12511a5",
   "startLine": 304,
-  "endLine": 320,
-  "recordedAt": "2026-11-21T21:37:18.811Z"
+  "endLine": 322,
+  "recordedAt": "2026-11-27T09:40:43.985Z"
 }

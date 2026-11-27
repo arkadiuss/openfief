@@ -766,3 +766,38 @@ func TestSweep(t *testing.T) {
 		t.Errorf("a second Sweep = %d, %v, want 0", n, err)
 	}
 }
+
+// enforcingAuthorizer stands for SpiceDB: it answers nothing here and says it
+// limits holders to their grants.
+type enforcingAuthorizer struct{ app.Policy }
+
+func (enforcingAuthorizer) EnforcesTokenGrants() bool { return true }
+
+// TestGrantsEnforcedFollowsTheAuthorizer checks that the grants are enforced
+// under either authorizer that limits holders to them, SpiceDB and the policy
+// over the grants table (--authz=policy), and not under the one that lets every
+// holder of read access view every account, nor before the authorizer is known.
+func TestGrantsEnforcedFollowsTheAuthorizer(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name string
+		a    app.Authorizer
+		want bool
+	}{
+		{name: "SpiceDB", a: enforcingAuthorizer{}, want: true},
+		{name: "the policy over the grants table, --authz=policy", a: app.NewGrantPolicy(nil, nil), want: true},
+		{name: "the rule that lets every reader view every account", a: app.Policy{}, want: false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			g := app.NewGrants(nil, nil, nil, nil, time.Now).WithAuthorizer(tt.a)
+			if got := g.Enforced(); got != tt.want {
+				t.Errorf("Enforced = %t, want %t", got, tt.want)
+			}
+		})
+	}
+	if app.NewGrants(nil, nil, nil, nil, time.Now).Enforced() {
+		t.Error("grants with no authorizer given are enforced, want not")
+	}
+}

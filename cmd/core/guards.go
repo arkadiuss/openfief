@@ -16,9 +16,10 @@ import (
 // errGuards reports a guard setting the core can't use.
 var errGuards = errors.New("invalid model guard setting")
 
-// guardConfig is D-208's guards on the model router, set by flags. Every one is
-// off in its zero value, which is what an installation that sets none gets: the
-// demo sets them (deploy/demo/model).
+// guardConfig is D-208's guards on the model router, set by flags. Each is off
+// in its zero value, which is what an installation that sets none gets, except a
+// viewer's question limits, which default to 10 an hour and 30 a day: the demo
+// sets the others (deploy/demo/model).
 type guardConfig struct {
 	// DailyBudgetUSD is the most the day's model calls may cost, in US dollars,
 	// as decimal text; empty or zero is no budget.
@@ -27,6 +28,12 @@ type guardConfig struct {
 	// model per session and per address; zero is no limit.
 	QuestionsPerHour int
 	QuestionsPerDay  int
+	// ViewerQuestionsPerHour and ViewerQuestionsPerDay limit the questions of a
+	// viewer's session on top of those, which apply to everyone; they default to
+	// modelrouter.DefaultViewerLimits, so the owner's questions are limited only
+	// when the flags above say so and a viewer's always are. Zero is no limit.
+	ViewerQuestionsPerHour int
+	ViewerQuestionsPerDay  int
 	// AskCalls is how many calls of the Ask box's role may be in flight at once
 	// in this process, and QueueWait how long a call past it waits for a free
 	// one before it is refused as busy.
@@ -46,6 +53,11 @@ func guardFlags(fs *flag.FlagSet, g *guardConfig) {
 		"the most the day's model calls may cost, in US dollars, counted from the model entries' prices (D-208); empty is no budget. The day is --time-zone's")
 	fs.IntVar(&g.QuestionsPerHour, "ask-questions-per-hour", 0, "the most questions to a model one Ask box session, and one address, may ask in a rolling hour (D-208); 0 is no limit")
 	fs.IntVar(&g.QuestionsPerDay, "ask-questions-per-day", 0, "the most questions to a model one Ask box session, and one address, may ask in a rolling day (D-208); 0 is no limit")
+	viewer := modelrouter.DefaultViewerLimits()
+	fs.IntVar(&g.ViewerQuestionsPerHour, "ask-viewer-questions-per-hour", viewer.PerHour,
+		"the most questions to a model one viewer's Ask box session, and one address, may ask in a rolling hour, besides --ask-questions-per-hour, which counts for everyone; the owner's sessions have only that one; 0 is no limit")
+	fs.IntVar(&g.ViewerQuestionsPerDay, "ask-viewer-questions-per-day", viewer.PerDay,
+		"the most questions to a model one viewer's Ask box session, and one address, may ask in a rolling day, besides --ask-questions-per-day; 0 is no limit")
 	fs.IntVar(&g.AskCalls, "ask-concurrent-calls", 0, "the most calls of the Ask box's role in flight at once in this process (D-208); 0 is no limit")
 	fs.DurationVar(&g.QueueWait, "ask-queue-wait", modelsapp.DefaultQueueWait, "how long an Ask box call waits for a free one of --ask-concurrent-calls before it is refused as busy")
 	fs.StringVar(&g.ClientIPHeader, "client-ip-header", "",
@@ -64,6 +76,9 @@ func (g *guardConfig) validate() error {
 	}
 	if err := g.limits().Validate(); err != nil {
 		return fmt.Errorf("%w: --ask-questions-per-hour and --ask-questions-per-day: %w", errGuards, err)
+	}
+	if err := g.viewerLimits().Validate(); err != nil {
+		return fmt.Errorf("%w: --ask-viewer-questions-per-hour and --ask-viewer-questions-per-day: %w", errGuards, err)
 	}
 	if g.AskCalls < 0 {
 		return fmt.Errorf("%w: --ask-concurrent-calls is not negative", errGuards)
@@ -100,6 +115,12 @@ func (g *guardConfig) budget() (modelrouter.Budget, error) {
 // limits returns the limits of questions per session and per address.
 func (g *guardConfig) limits() modelrouter.QuestionLimits {
 	return modelrouter.QuestionLimits{PerHour: g.QuestionsPerHour, PerDay: g.QuestionsPerDay}
+}
+
+// viewerLimits returns the limits of questions a viewer's session has besides
+// limits.
+func (g *guardConfig) viewerLimits() modelrouter.QuestionLimits {
+	return modelrouter.QuestionLimits{PerHour: g.ViewerQuestionsPerHour, PerDay: g.ViewerQuestionsPerDay}
 }
 
 // routerGuards returns the router's guards over the usage store, counting the day

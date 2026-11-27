@@ -75,7 +75,7 @@ func serve() int {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)
 	defer stop()
 	if err := run(ctx, log); err != nil {
-		log.Error("ghostfolio stopped", "error", err.Error())
+		log.Error("ghostfolio stopped", "error", openfief.LogSafe(err))
 		return 1
 	}
 	return 0
@@ -169,7 +169,7 @@ func loop(ctx context.Context, s syncer, interval, retry time.Duration, log *slo
 		next := interval
 		rep, err := s.Sync(ctx)
 		if err != nil {
-			log.Error("sync failed", "error", err.Error())
+			log.Error("sync failed", "error", openfief.LogSafe(err))
 			next = min(wait, maxRetry, interval)
 			wait *= 2
 		} else {

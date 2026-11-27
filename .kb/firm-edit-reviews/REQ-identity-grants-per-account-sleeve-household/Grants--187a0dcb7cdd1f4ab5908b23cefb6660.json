@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-identity-grants-per-account-sleeve-household",
+  "sourceFile": "internal/identity/app/grants.go",
+  "symbol": "Grants",
+  "verdict": "keeps",
+  "note": "Grants unchanged; Enforced now follows the authorizer. Author approved directly 27 Nov.",
+  "statementHash": "sha256:ace95538d425e7c1a7edc88094443d6b3bcb5763e4957788cf56aa53aa78e8a0",
+  "codeHash": "sha256:82ee71062bd217824f5582509e690f3429433fce5bd419a7c8f77c1b529ef771",
+  "startLine": 98,
+  "endLine": 110,
+  "recordedAt": "2026-11-27T09:40:43.985Z"
+}

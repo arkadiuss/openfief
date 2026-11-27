@@ -57,7 +57,7 @@ func defaultServe(t *testing.T) serveConfig {
 		Auth:  authConfig{Origins: mustOrigins(t, "http://localhost:8080"), Sessions: identity.DefaultSessionPolicy()},
 		Authz: authzConfig{Mode: authzPolicy, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout},
 		// D-208's guards are all off by default, an installation that sets none is limited by none.
-		Guards: guardConfig{QueueWait: modelsapp.DefaultQueueWait},
+		Guards: guardConfig{QueueWait: modelsapp.DefaultQueueWait, ViewerQuestionsPerHour: 10, ViewerQuestionsPerDay: 30},
 	}
 }
 

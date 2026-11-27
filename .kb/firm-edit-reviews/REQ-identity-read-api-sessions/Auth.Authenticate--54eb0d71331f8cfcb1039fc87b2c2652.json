@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-identity-read-api-sessions",
+  "sourceFile": "internal/identity/app/auth.go",
+  "symbol": "Auth.Authenticate",
+  "verdict": "keeps",
+  "note": "Sessions still authenticate; PrincipalOfSession makes the holder explicit (owner, viewer, demo). Author approved directly 27 Nov.",
+  "statementHash": "sha256:5762838181d78745223f39643ab958c02408f25638b515484af797fb7b8f8efa",
+  "codeHash": "sha256:411c945a23f33adf9d3d7de987d79ee3b6c9498ac72e08ae956a18803784461d",
+  "startLine": 321,
+  "endLine": 340,
+  "recordedAt": "2026-11-27T09:40:43.985Z"
+}

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-views-ghostfolio-own-sync-timer",
+  "sourceFile": "plugins/ghostfolio/main.go",
+  "symbol": "loop",
+  "verdict": "keeps",
+  "note": "Log text only; the sync timer is unchanged. Author approved directly 27 Nov.",
+  "statementHash": "sha256:c5d1f59306eb45e96adeeea65b22c05c7940fa2a5d37409eeda51bb06f5a3de6",
+  "codeHash": "sha256:37cbf24d420976bcef362f5f64fae51a0810d0c5fe5cbaf5989edc2a70f03687",
+  "startLine": 166,
+  "endLine": 189,
+  "recordedAt": "2026-11-27T09:40:43.985Z"
+}

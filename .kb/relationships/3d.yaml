@@ -1168,3 +1168,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b687c606440c
+  - type: executable_for
+    from: SYM-identity-grants-test-enforcing-authorizer
+    to: TEST-identity-grants-app
+    created_at: 2026-11-27T08:27:00.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bbe6f94930a

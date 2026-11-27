@@ -1343,3 +1343,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb18b1a5f928
+  - type: specified_by
+    from: REQ-identity-grants-enforced-follows-authorizer
+    to: SCEN-identity-grants-enforced-follows-authorizer
+    created_at: 2026-11-27T08:26:28.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3585c3f6220c

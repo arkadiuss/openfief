@@ -276,19 +276,38 @@ type Principal struct {
 	ScriptToken identity.ScriptTokenID
 	// Demo is whether the session came from the demo authenticator.
 	Demo bool
+	// Owner is whether the session is the owner's own: not a viewer's and
+	// not the demo's. Only PrincipalOfSession sets it, so a Principal built
+	// by hand is never the owner.
+	Owner bool
+}
+
+// PrincipalOfSession returns who the session s stands for: the viewer whose
+// session it is, the demo, or the owner. Every Principal of a session is
+// built here, so none can leave out who the session is of.
+func PrincipalOfSession(s *identity.Session) Principal {
+	p := Principal{Session: s.ID, Demo: s.Authenticator == identity.AuthenticatorDemo}
+	if s.OfViewer() {
+		p.Viewer = s.Person()
+	}
+	p.Owner = p.Viewer == "" && !p.Demo
+	return p
 }
 
 // Caller returns who p is to the authorizer (D-163): a session from the
-// demo authenticator is a demo session, a viewer's session the viewer, any
-// other session the owner, and a script token itself.
+// demo authenticator is a demo session, a viewer's session the viewer, an
+// owner's session the owner, and a script token itself. It fails closed: a
+// session that is none of those is nobody, which the authorizer refuses.
 func (p Principal) Caller() identity.Caller {
 	switch {
 	case p.Session != "" && p.Viewer != "":
 		return identity.Caller{Holder: identity.HolderViewer, ID: p.Viewer}
 	case p.Session != "" && p.Demo:
 		return identity.Caller{Holder: identity.HolderDemoSession, ID: string(p.Session)}
-	case p.Session != "":
+	case p.Session != "" && p.Owner:
 		return identity.Caller{Holder: identity.HolderOwner, ID: string(p.Session)}
+	case p.Session != "":
+		return identity.Caller{}
 	case p.ScriptToken != "":
 		return identity.Caller{Holder: identity.HolderScriptToken, ID: string(p.ScriptToken)}
 	}
@@ -308,11 +327,7 @@ func (a *Auth) Authenticate(ctx context.Context, token string) (Principal, error
 		if err != nil {
 			return Principal{}, err
 		}
-		p := Principal{Session: s.ID, Demo: s.Authenticator == identity.AuthenticatorDemo}
-		if s.OfViewer() {
-			p.Viewer = s.Person()
-		}
-		return p, nil
+		return PrincipalOfSession(&s), nil
 	}
 	if err := a.tokens.Verify(ctx, token, identity.ScopeRead); err != nil {
 		return Principal{}, err

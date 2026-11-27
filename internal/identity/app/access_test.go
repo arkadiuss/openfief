@@ -60,7 +60,9 @@ func TestPrincipalCaller(t *testing.T) {
 		p    app.Principal
 		want identity.Caller
 	}{
-		{name: "a passkey session is the owner", p: app.Principal{Session: "s1"}, want: identity.Caller{Holder: identity.HolderOwner, ID: "s1"}},
+		{name: "an owner's session is the owner", p: app.Principal{Session: "s1", Owner: true}, want: identity.Caller{Holder: identity.HolderOwner, ID: "s1"}},
+		{name: "a session of nobody in particular is nobody", p: app.Principal{Session: "s1"}, want: identity.Caller{}},
+		{name: "a viewer's session is the viewer, whatever else it says", p: app.Principal{Session: "v1", Viewer: "p1", Owner: true}, want: identity.Caller{Holder: identity.HolderViewer, ID: "p1"}},
 		{name: "a demo session", p: app.Principal{Session: "d1", Demo: true}, want: identity.Caller{Holder: identity.HolderDemoSession, ID: "d1"}},
 		{name: "a script token", p: app.Principal{ScriptToken: "t1"}, want: identity.Caller{Holder: identity.HolderScriptToken, ID: "t1"}},
 		{name: "nothing is nobody", p: app.Principal{}, want: identity.Caller{}},
@@ -70,6 +72,38 @@ func TestPrincipalCaller(t *testing.T) {
 			t.Parallel()
 			if diff := cmp.Diff(tt.want, tt.p.Caller()); diff != "" {
 				t.Errorf("Caller mismatch (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+// TestPrincipalOfSessionNeverMakesAViewerTheOwner checks every kind of
+// session through the one constructor: only the owner's own is the owner, a
+// viewer's is the viewer in every scope, and none but the owner's is let
+// through to what the owner may do.
+func TestPrincipalOfSessionNeverMakesAViewerTheOwner(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name string
+		s    identity.Session
+		want identity.Caller
+	}{
+		{name: "the owner's session", s: identity.Session{ID: "s1", Scope: identity.SessionScopeOwner}, want: identity.Caller{Holder: identity.HolderOwner, ID: "s1"}},
+		{name: "the owner's read session", s: identity.Session{ID: "s2", Scope: identity.SessionScopeRead}, want: identity.Caller{Holder: identity.HolderOwner, ID: "s2"}},
+		{name: "a viewer's read session", s: identity.Session{ID: "s3", Scope: identity.SessionScopeRead, PersonID: "p1"}, want: identity.Caller{Holder: identity.HolderViewer, ID: "p1"}},
+		{name: "a viewer's session with owner scope", s: identity.Session{ID: "s4", Scope: identity.SessionScopeOwner, PersonID: "p1"}, want: identity.Caller{Holder: identity.HolderViewer, ID: "p1"}},
+		{name: "a viewer's session from the demo", s: identity.Session{ID: "s5", Scope: identity.SessionScopeRead, PersonID: "p1", Authenticator: identity.AuthenticatorDemo}, want: identity.Caller{Holder: identity.HolderViewer, ID: "p1"}},
+		{name: "a demo session", s: identity.Session{ID: "s6", Scope: identity.SessionScopeRead, Authenticator: identity.AuthenticatorDemo}, want: identity.Caller{Holder: identity.HolderDemoSession, ID: "s6"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got := app.PrincipalOfSession(&tt.s).Caller()
+			if diff := cmp.Diff(tt.want, got); diff != "" {
+				t.Errorf("Caller mismatch (-want +got):\n%s", diff)
+			}
+			if tt.want.Holder == identity.HolderViewer && identity.MayAct(got, identity.ActionView) {
+				t.Errorf("a viewer may view every account by the rule that holds until SpiceDB answers")
 			}
 		})
 	}

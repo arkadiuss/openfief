@@ -317,6 +317,8 @@ type agentModels struct {
 	// per session and per address; the zero values limit nothing.
 	guards modelsapp.Guards
 	limits modelsdomain.QuestionLimits
+	// viewerLimits are the questions a viewer's session may ask besides limits.
+	viewerLimits modelsdomain.QuestionLimits
 }
 
 // modelGuardSetup is what the guards (D-208) are made from: the flags, and the
@@ -357,7 +359,7 @@ func newAgentsAndAttention(pool *pgxpool.Pool, out *outbox, auth *identityapp.Au
 	if err != nil {
 		return nil, nil, err
 	}
-	agents.guards, agents.limits = guards, setup.cfg.limits()
+	agents.guards, agents.limits, agents.viewerLimits = guards, setup.cfg.limits(), setup.cfg.viewerLimits()
 	attn := newAttention(pool, l, vstore, checks, attentionOwners(auth, origins), now, log, append([]attentionapp.Check{agents.routeCheck()}, extra...)...)
 	agents.attend(attn.items)
 	return agents, attn, nil
@@ -392,7 +394,7 @@ func (a *agentModels) attend(items attentionItems) {
 		Settings: a.store, Providers: a.providers, Audit: modelAudit{log: identitypg.New(a.pool)},
 		Attention: valuationAttention{items: items}, CallIDs: newCallID, Now: a.now, Guards: a.guards,
 	})
-	a.ask = modelsapp.NewAsk(a.askers, a.store, a.router).WithQuestionLimits(a.store, a.limits).WithDemo(a.demo)
+	a.ask = modelsapp.NewAsk(a.askers, a.store, a.router).WithQuestionLimits(a.store, a.limits).WithViewerLimits(a.viewerLimits).WithDemo(a.demo)
 }
 
 // withAskModelService returns h with the AskModelService mounted next to it

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-ui-access-page",
+  "sourceFile": "internal/views/ui/access.go",
+  "symbol": "accessData",
+  "verdict": "keeps",
+  "note": "The page still exists; only the stale enforcement warning is gone. Author approved directly 27 Nov.",
+  "statementHash": "sha256:f4bb4389d3dd4654d9bd4a549fecc7bc7bf5941442b1e5ef77f3a7e12bbb454c",
+  "codeHash": "sha256:cc42332f6300e09ca59b9bff9e4773af800fab88d8cd4efff01063a114fb1dea",
+  "startLine": 80,
+  "endLine": 109,
+  "recordedAt": "2026-11-27T09:40:43.985Z"
+}

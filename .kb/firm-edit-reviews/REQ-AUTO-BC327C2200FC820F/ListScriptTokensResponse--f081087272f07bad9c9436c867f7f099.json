@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-AUTO-BC327C2200FC820F",
+  "sourceFile": "sdk/go/gen/openfief/identity/v1/auth.pb.go",
+  "symbol": "ListScriptTokensResponse",
+  "verdict": "keeps",
+  "note": "Comment-only regeneration of grants_enforced; contract unchanged. Author approved directly 27 Nov.",
+  "statementHash": "sha256:2f2b0c8cde618cc68530c24b25a4c6187b030163f811b8c48b2c0d11db1f010e",
+  "codeHash": "sha256:ba86bd5137584ac1fea2aefb067a2768cf181179822dd111688b92bab470d7ec",
+  "startLine": 2823,
+  "endLine": 2833,
+  "recordedAt": "2026-11-27T09:40:43.985Z"
+}

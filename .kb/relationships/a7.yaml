@@ -1175,3 +1175,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-93d82a658b33
+  - type: implements
+    from: SYM-models-ask-viewer-limits-with
+    to: REQ-models-ask-viewer-question-limits
+    created_at: 2026-11-27T08:18:57.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f80821a682a
+  - type: covered_by
+    from: SYM-models-ask-viewer-limits-with
+    to: TEST-models-app-guards
+    created_at: 2026-11-27T08:18:57.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7378da35519f

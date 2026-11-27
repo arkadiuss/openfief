@@ -295,3 +295,25 @@ func TestDecideQuestion(t *testing.T) {
 		})
 	}
 }
+
+func TestQuestionLimitsStricter(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name string
+		l, o modelrouter.QuestionLimits
+		want modelrouter.QuestionLimits
+	}{
+		{"none and none", modelrouter.QuestionLimits{}, modelrouter.QuestionLimits{}, modelrouter.QuestionLimits{}},
+		{"one's limits when the other has none", modelrouter.QuestionLimits{}, modelrouter.QuestionLimits{PerHour: 10, PerDay: 30}, modelrouter.QuestionLimits{PerHour: 10, PerDay: 30}},
+		{"the lower of each", modelrouter.QuestionLimits{PerHour: 5, PerDay: 100}, modelrouter.QuestionLimits{PerHour: 10, PerDay: 30}, modelrouter.QuestionLimits{PerHour: 5, PerDay: 30}},
+		{"a window only one limits", modelrouter.QuestionLimits{PerHour: 5}, modelrouter.QuestionLimits{PerDay: 30}, modelrouter.QuestionLimits{PerHour: 5, PerDay: 30}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			if got := tt.l.Stricter(tt.o); got != tt.want {
+				t.Errorf("Stricter = %+v, want %+v", got, tt.want)
+			}
+		})
+	}
+}

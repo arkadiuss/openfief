@@ -1266,3 +1266,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5e50612835f
+  - type: specified_by
+    from: REQ-models-ask-viewer-question-limits
+    to: SCEN-models-ask-viewer-question-limits
+    created_at: 2026-11-27T08:18:11.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e752cbbc4807

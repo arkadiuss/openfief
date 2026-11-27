@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-AUTO-902181B0129A6321",
+  "sourceFile": "plugins/ui/main.go",
+  "symbol": "serve",
+  "verdict": "keeps",
+  "note": "Log text only: startup error logged through LogSafe; UI behaviour unchanged. Author approved directly 27 Nov.",
+  "statementHash": "sha256:ecf0d99e061995859065836be190afe9726a21751e10f52d98e2fb7702410965",
+  "codeHash": "sha256:3b4b1a6c4c1ef2375c1d517893474274ccc7a9335063e0ef1dbfce88185bf1fb",
+  "startLine": 72,
+  "endLine": 81,
+  "recordedAt": "2026-11-27T09:40:43.985Z"
+}

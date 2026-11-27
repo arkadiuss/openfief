@@ -74,7 +74,7 @@ func serve() int {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)
 	defer stop()
 	if err := run(ctx, log); err != nil {
-		log.Error("ui stopped", "error", err.Error())
+		log.Error("ui stopped", "error", openfief.LogSafe(err))
 		return 1
 	}
 	return 0

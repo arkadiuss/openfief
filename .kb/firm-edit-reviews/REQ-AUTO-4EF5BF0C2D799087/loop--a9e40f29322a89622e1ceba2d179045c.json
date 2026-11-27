@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-AUTO-4EF5BF0C2D799087",
+  "sourceFile": "plugins/ghostfolio/main.go",
+  "symbol": "loop",
+  "verdict": "keeps",
+  "note": "Log text only: startup error logged through LogSafe; plugin behaviour unchanged. Author approved directly 27 Nov.",
+  "statementHash": "sha256:27ac8b3df48f5ce5646349e6c3c7a8f4963a25c1cfd7cd544c81205b52fcbbf0",
+  "codeHash": "sha256:37cbf24d420976bcef362f5f64fae51a0810d0c5fe5cbaf5989edc2a70f03687",
+  "startLine": 166,
+  "endLine": 189,
+  "recordedAt": "2026-11-27T09:40:43.985Z"
+}

@@ -504,9 +504,10 @@ message ListScriptTokensRequest {
 
 message ListScriptTokensResponse {
   repeated ScriptToken tokens = 1;
-  // Whether grants limit what holders view now: true while the core answers
-  // from SpiceDB, false under --authz=policy, where every holder of read
-  // access views every account and grants are stored with no effect yet.
+  // Whether grants limit what holders view now: true under either
+  // authorizer, SpiceDB and --authz=policy, which answers from the grants
+  // table. False only for a core whose authorizer lets every holder of read
+  // access view every account.
   bool grants_enforced = 2;
 }
 

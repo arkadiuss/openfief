@@ -1511,3 +1511,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e3db9c3ed2c
+  - type: executable_for
+    from: SYM-models-ask-viewer-limits-test-admit
+    to: TEST-models-app-guards
+    created_at: 2026-11-27T08:19:26.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c21b159310c

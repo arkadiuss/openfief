@@ -39,6 +39,9 @@ type Ask struct {
 	// address (D-208); nil questions or no limit lets every question through.
 	questions QuestionStore
 	limits    modelrouter.QuestionLimits
+	// viewerLimits hold for a viewer's session besides limits, and not for
+	// the owner's.
+	viewerLimits modelrouter.QuestionLimits
 	// demo is whether the core is a public demo (D-68), which never gives
 	// opinions (D-225, R-7).
 	demo bool
@@ -56,6 +59,16 @@ func NewAsk(askers Askers, settings SettingsStore, router *Router) *Ask {
 func (a *Ask) WithQuestionLimits(store QuestionStore, limits modelrouter.QuestionLimits) *Ask {
 	out := *a
 	out.questions, out.limits = store, limits
+	return &out
+}
+
+// WithViewerLimits returns a whose viewers' sessions are held to limits
+// besides the ones every session has (WithQuestionLimits), the stricter of
+// each window; the owner's session is not. Questions are counted when either
+// is set.
+func (a *Ask) WithViewerLimits(limits modelrouter.QuestionLimits) *Ask {
+	out := *a
+	out.viewerLimits = limits
 	return &out
 }
 
@@ -113,10 +126,14 @@ func (a *Ask) Admit(ctx context.Context, origin, sessionToken, address string) (
 	if state.Spent {
 		return Admission{Decision: AdmitBudgetSpent, ResetsAt: state.ResetsAt}, nil
 	}
-	if a.questions == nil || !a.limits.Enabled() {
+	limits := a.limits
+	if who.Kind == ActorViewer {
+		limits = limits.Stricter(a.viewerLimits)
+	}
+	if a.questions == nil || !limits.Enabled() {
 		return Admission{Decision: AdmitAllowed}, nil
 	}
-	q := QuestionAsked{At: a.router.now(), Session: who.ID, Address: addressKey(address), Limits: a.limits}
+	q := QuestionAsked{At: a.router.now(), Session: who.ID, Address: addressKey(address), Limits: limits}
 	ruling, err := a.questions.Admit(ctx, &q)
 	if err != nil {
 		return Admission{}, fmt.Errorf("counting a question: %w", err)

@@ -105,6 +105,8 @@ type Grants struct {
 	// ping asks the authorization model whether it answers; nil with the
 	// policy, which has nothing to ask.
 	ping func(context.Context) error
+	// enforced is whether the authorizer in use limits holders to their grants.
+	enforced bool
 }
 
 // NewGrants returns the grant use cases over store, checking script tokens
@@ -127,10 +129,20 @@ func (g *Grants) WithPeople(people PersonReader) *Grants {
 	return g
 }
 
+// WithAuthorizer returns g knowing which authorizer answers, so Enforced says
+// what it does: SpiceDB, and the policy over the grants table (GrantPolicy),
+// both limit holders to their grants (D-209).
+func (g *Grants) WithAuthorizer(a Authorizer) *Grants {
+	g.enforced = EnforcesTokenGrants(a)
+	return g
+}
+
 // Enforced reports whether the grants limit what holders view now: they do
-// while the authorization model answers, and have no effect under the policy,
-// which lets every holder of read access view every account.
-func (g *Grants) Enforced() bool { return g.proj != nil }
+// under either authorizer, SpiceDB or GrantPolicy (--authz=policy), which
+// answers from the grants table. It is false only for an authorizer that lets
+// every holder of read access view every account (Policy), or when none was
+// given (WithAuthorizer).
+func (g *Grants) Enforced() bool { return g.enforced }
 
 // WithPing returns g asking ping, before it stores a token that is to hold
 // grants, whether the authorization model answers: a model that doesn't makes

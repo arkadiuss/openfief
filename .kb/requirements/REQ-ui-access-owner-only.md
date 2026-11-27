@@ -1,5 +1,5 @@
 ---
-title: 'The Access page and its forms are the owner''s: a read session never sees the page or its link, and is refused its forms, which never reach the core; while grants have no effect it says so.'
+title: 'The Access page and its forms are the owner''s: a read session never sees the page or its link, and is refused its forms, which never reach the core.'
 status: open
 origin:
   kind: agent
@@ -7,10 +7,10 @@ origin:
   recorded_at: '2026-11-13T18:00:00.000Z'
 firmness: default
 required_evidence: unverified
-semantic_text: 'The Access page and its forms are the owner''s: a read session never sees the page or its link, and is refused its forms, which never reach the core; while grants have no effect it says so.'
+semantic_text: 'The Access page and its forms are the owner''s: a read session never sees the page or its link, and is refused its forms, which never reach the core.'
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: 20a55e2b580a9a2d13bd3d59659aa8f6728830ed4c13ddada470f631042c0150
+semantic_source_hash: da1b03cddc3742e5eb7ebf1c66169c89ccd138646b668b227cd241683441779b
 semantic_inventory:
   - claim_key: CLAIM-A16113643101244B
     claim_text: 'The Access page and its forms are the owner''s: a read session never sees the page or its link, and is refused its forms, which never reach the core'
@@ -19,21 +19,13 @@ semantic_inventory:
     span:
       start: 0
       end: 147
-  - claim_key: CLAIM-E097275747DE5F18
-    claim_text: while grants have no effect it says so
-    role: descriptive
-    status: missing
-    span:
-      start: 149
-      end: 187
 logic_claims:
   - CLAIM-A16113643101244B
-  - CLAIM-E097275747DE5F18
 id: REQ-ui-access-owner-only
 type: req
 ---
-The Access page and its forms are the owner's: a read session never sees the page or its link, and is refused its forms, which never reach the core; while grants have no effect it says so.
+The Access page and its forms are the owner's: a read session never sees the page or its link, and is refused its forms, which never reach the core.
 
 ## Context
 
-D-210 puts the Access page in Settings and D-209 makes grants the owner's alone. Both authorization modes enforce grants: SpiceDB, the default (D-164), and the policy, the owner's --authz=policy opt-out, which GrantPolicy answers from the grants table (D-209, D-163). So a grant the page stores limits its holder at once under either mode, and the page's note that grants have no effect is shown only by a core whose authorizer reports that it does not enforce them, which neither does.
+D-210 puts the Access page in Settings and D-209 makes grants the owner's alone. Both authorization modes enforce grants: SpiceDB, the default (D-164), and the policy, the owner's --authz=policy opt-out, which GrantPolicy answers from the grants table (D-209, D-163). So a grant the page stores limits its holder at once under either mode, and the page carries no note that grants have no effect: it had one for a core that answered with no grants enforced, which no longer exists, and it wrongly showed it under --authz=policy until Grants.Enforced followed the authorizer.

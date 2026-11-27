@@ -453,6 +453,8 @@ func (sessionsByToken) Session(_ context.Context, _ identity.Origin, token strin
 		s = identity.Session{ID: "owner-id", Scope: identity.SessionScopeOwner}
 	case "demo":
 		s = identity.Session{ID: "demo-id", Scope: identity.SessionScopeRead, Authenticator: identity.AuthenticatorDemo}
+	case "viewer":
+		s = identity.Session{ID: "viewer-id", Scope: identity.SessionScopeRead, PersonID: "person-1"}
 	default:
 		return identity.Session{}, fmt.Errorf("%w: unknown", identityapp.ErrInvalidSession)
 	}
@@ -480,9 +482,13 @@ func checkReader(t *testing.T, c *readerCase, s maintainerSessions) {
 	if err == nil && got != c.want {
 		t.Errorf("Reader = %+v, want %+v", got, c.want)
 	}
+	asker := identity.Caller{Holder: identity.HolderDemoSession, ID: "demo-id"}
+	if c.token == "viewer" {
+		asker = identity.Caller{Holder: identity.HolderViewer, ID: "person-1"}
+	}
 	for _, asked := range c.authz.asked {
-		if asked.Holder != identity.HolderDemoSession || asked.ID != "demo-id" {
-			t.Errorf("the authorizer was asked about %+v, want the demo session", asked)
+		if asked != asker {
+			t.Errorf("the authorizer was asked about %+v, want %+v", asked, asker)
 		}
 	}
 	if c.token == "owner" && len(c.authz.asked) != 0 {
@@ -507,6 +513,8 @@ func TestMaintainerSessionsTellWhoMayReadTheWholePortfolio(t *testing.T) {
 		{name: "a demo session the household grant lets view every account", origin: local, token: "demo", authz: demoViews(both), want: portfolioapp.Reader{SessionID: "demo-id", ViewsAll: true}},
 		{name: "a session that may view only one account", origin: local, token: "demo", authz: demoViews(map[string]bool{"acc-1": true}), want: portfolioapp.Reader{SessionID: "demo-id"}},
 		{name: "an authorizer that can't tell is a refusal", origin: local, token: "demo", authz: &viewAuthz{err: errSpiceDown}, want: portfolioapp.Reader{SessionID: "demo-id"}},
+		{name: "a viewer is asked about as the viewer, never as the owner", origin: local, token: "viewer", authz: &viewAuthz{allowed: map[identity.Holder]map[string]bool{identity.HolderOwner: both}}, want: portfolioapp.Reader{SessionID: "viewer-id"}},
+		{name: "a viewer granted every account views them all", origin: local, token: "viewer", authz: &viewAuthz{allowed: map[identity.Holder]map[string]bool{identity.HolderViewer: both}}, want: portfolioapp.Reader{SessionID: "viewer-id", ViewsAll: true}},
 		{name: "no session", origin: local, token: "nope", authz: &viewAuthz{}, wantErr: portfolioapp.ErrNoSession},
 		{name: "an origin off the list", origin: "https://other.example.com", token: "owner", authz: &viewAuthz{}, wantErr: portfolioapp.ErrNoSession},
 	}

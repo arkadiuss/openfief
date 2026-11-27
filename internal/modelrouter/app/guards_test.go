@@ -541,6 +541,34 @@ func TestAskAdmitCountsQuestionsPerSessionAndTellsWhenItResets(t *testing.T) {
 	}
 }
 
+// TestAskAdmitLimitsAViewerAndNotTheOwnerByTheViewerLimits checks D-208's
+// limits for a viewer's session alone: with none set for everyone, a viewer
+// is stopped at the viewer limits and the owner asks without end.
+func TestAskAdmitLimitsAViewerAndNotTheOwnerByTheViewerLimits(t *testing.T) {
+	t.Parallel()
+	qs := &fakeQuestions{}
+	f, ask := newAdmitFixture(t, app.Guards{}, qs, modelrouter.QuestionLimits{})
+	ask = ask.WithViewerLimits(modelrouter.DefaultViewerLimits())
+	for i := range 50 {
+		if got, err := ask.Admit(t.Context(), "https://demo", askerToken, ""); err != nil || got.Decision != app.AdmitAllowed {
+			t.Fatalf("the owner's question %d = %+v, %v, want allowed", i+1, got, err)
+		}
+	}
+	for i := range 10 {
+		if got, err := ask.Admit(t.Context(), "https://demo", readerToken, ""); err != nil || got.Decision != app.AdmitAllowed {
+			t.Fatalf("the viewer's question %d = %+v, %v, want allowed", i+1, got, err)
+		}
+	}
+	got, err := ask.Admit(t.Context(), "https://demo", readerToken, "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := app.Admission{Decision: app.AdmitSessionLimit, ResetsAt: f.clock.t.Add(time.Hour)}
+	if got != want {
+		t.Errorf("the viewer's 11th question = %+v, want %+v", got, want)
+	}
+}
+
 func TestAskAdmitAddressKeys(t *testing.T) {
 	t.Parallel()
 	tests := []struct {

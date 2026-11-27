@@ -240,7 +240,7 @@ func (s maintainerSessions) Reader(ctx context.Context, origin, sessionToken str
 	if err != nil {
 		return portfolioapp.Reader{}, fmt.Errorf("loading the accounts: %w", err)
 	}
-	principal := identityapp.Principal{Session: sess.ID, Demo: sess.Authenticator == identity.AuthenticatorDemo}
+	principal := identityapp.PrincipalOfSession(&sess)
 	out.ViewsAll = s.viewsEvery(ctx, accounts, principal.Caller())
 	return out, nil
 }

@@ -2823,9 +2823,10 @@ func (x *ListScriptTokensRequest) GetSessionToken() string {
 type ListScriptTokensResponse struct {
 	state  protoimpl.MessageState `protogen:"open.v1"`
 	Tokens []*ScriptToken         `protobuf:"bytes,1,rep,name=tokens,proto3" json:"tokens,omitempty"`
-	// Whether grants limit what holders view now: true while the core answers
-	// from SpiceDB, false under --authz=policy, where every holder of read
-	// access views every account and grants are stored with no effect yet.
+	// Whether grants limit what holders view now: true under either
+	// authorizer, SpiceDB and --authz=policy, which answers from the grants
+	// table. False only for a core whose authorizer lets every holder of read
+	// access view every account.
 	GrantsEnforced bool `protobuf:"varint,2,opt,name=grants_enforced,json=grantsEnforced,proto3" json:"grants_enforced,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache

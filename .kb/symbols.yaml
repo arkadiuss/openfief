@@ -255821,3 +255821,166 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-app-read-authorization-class
+  - id: SYM-identity-principal-of-session
+    title: PrincipalOfSession
+    status: active
+    sourceFile: internal/identity/app/auth.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T09:05:06.010Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-principal-of-session
+  - id: SYM-identity-principal-of-session-test
+    title: TestPrincipalOfSessionNeverMakesAViewerTheOwner
+    status: active
+    sourceFile: internal/identity/app/access_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T09:05:16.603Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-access
+  - id: SYM-models-ask-viewer-limits-default
+    title: DefaultViewerLimits
+    status: active
+    sourceFile: internal/modelrouter/questions.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:18:25.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-ask-viewer-question-limits
+  - id: SYM-models-ask-viewer-limits-stricter-method
+    title: QuestionLimits.Stricter
+    status: active
+    sourceFile: internal/modelrouter/questions.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:18:35.644Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-ask-viewer-question-limits
+  - id: SYM-models-ask-viewer-limits-stricter
+    title: stricter
+    status: active
+    sourceFile: internal/modelrouter/questions.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:18:45.076Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-ask-viewer-question-limits
+  - id: SYM-models-ask-viewer-limits-with
+    title: Ask.WithViewerLimits
+    status: active
+    sourceFile: internal/modelrouter/app/ask.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:18:53.556Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-ask-viewer-question-limits
+  - id: SYM-models-ask-viewer-limits-config
+    title: guardConfig.viewerLimits
+    status: active
+    sourceFile: cmd/core/guards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:19:01.960Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-guards
+      - type: implements
+        target: REQ-models-ask-viewer-question-limits
+  - id: SYM-models-ask-viewer-limits-test-stricter
+    title: TestQuestionLimitsStricter
+    status: active
+    sourceFile: internal/modelrouter/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:19:11.393Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-domain-guards
+  - id: SYM-models-ask-viewer-limits-test-admit
+    title: TestAskAdmitLimitsAViewerAndNotTheOwnerByTheViewerLimits
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:19:21.234Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-models-ask-viewer-limits-test-config
+    title: TestGuardConfigBuildsAViewersLimits
+    status: active
+    sourceFile: cmd/core/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:19:30.665Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-guards
+  - id: SYM-identity-grants-with-authorizer
+    title: Grants.WithAuthorizer
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:26:45.645Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-enforced-follows-authorizer
+  - id: SYM-identity-grants-test-enforcing-authorizer
+    title: enforcingAuthorizer
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:26:55.654Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-identity-grants-test-enforcing-authorizer-enforces
+    title: enforcingAuthorizer.EnforcesTokenGrants
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:27:05.656Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-identity-grants-test-enforced-follows
+    title: TestGrantsEnforcedFollowsTheAuthorizer
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:27:15.876Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app

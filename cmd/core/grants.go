@@ -299,7 +299,7 @@ func newGrants(store identityapp.GrantStore, tokens *identityapp.Tokens, dir ide
 	if people, ok := store.(identityapp.PersonReader); ok {
 		g.WithPeople(people)
 	}
-	return g
+	return g.WithAuthorizer(az.authorizer)
 }
 
 // accountLister lists every account; *ledgerapp.Ledger implements it.

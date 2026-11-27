@@ -1154,3 +1154,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5df3f66f93ca
+  - type: implements
+    from: SYM-identity-principal-of-session
+    to: REQ-identity-principal-of-session
+    created_at: 2026-11-27T09:05:10.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9a6ce3d08b8
+  - type: covered_by
+    from: SYM-identity-principal-of-session
+    to: TEST-identity-app-access
+    created_at: 2026-11-27T09:05:10.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c27f982f5213

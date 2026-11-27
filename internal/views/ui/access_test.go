@@ -23,8 +23,8 @@ var errNoSuchSleeve = errors.New("no such sleeve")
 
 // TestAccessPage checks the owner's Access page (D-210): each script token
 // with its status, expiry, MCP flag and grants in words, the view plugins with
-// theirs, the grants forms for each, the form of a new token, and, while grants
-// have no effect, the note that says so.
+// theirs, the grants forms for each and the form of a new token, and never a note
+// that grants have no effect: they hold under either authorizer.
 func TestAccessPage(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
@@ -39,15 +39,13 @@ func TestAccessPage(t *testing.T) {
 		`action="/access/plugins/ghostfolio/grants"`, `action="/access/plugins/sheets/grants"`,
 		`action="/access/tokens"`, `name="grant" value="household:home"`, "Whole household",
 		`name="grant" value="sleeve:core"`, `name="grant" value="account:`+accountID+`"`, `name="mcp"`, `name="days"`,
-		"Grants take effect when SpiceDB authorization is on", `href="/access" aria-current="page"`,
+		`href="/access" aria-current="page"`,
 	)
 	// A revoked token has no way to change or revoke.
 	wantNoBody(t, rec, `action="/access/tokens/0011223344556677/revoke"`, `action="/access/tokens/0011223344556677/grants"`)
 
-	h.auth.locked(func() { h.auth.enforced = true })
-	rec = h.serve(t, withSession(request(http.MethodGet, "/access", ""), ownerSession))
-	wantStatus(t, rec, http.StatusOK)
-	wantNoBody(t, rec, "Grants take effect when SpiceDB authorization is on")
+	// Grants hold under either authorizer, so the page never warns that they don't.
+	wantNoBody(t, rec, "Grants take effect when SpiceDB authorization is on", "reads every account, whatever it is granted here")
 }
 
 // TestAccessPageViewPluginsUnavailable checks that a core that can't read its

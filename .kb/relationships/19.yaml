@@ -1105,3 +1105,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52518071144a
+  - type: implements
+    from: SYM-identity-grants-with-authorizer
+    to: REQ-identity-grants-enforced-follows-authorizer
+    created_at: 2026-11-27T08:26:50.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f60b3a15fc20
+  - type: covered_by
+    from: SYM-identity-grants-with-authorizer
+    to: TEST-identity-grants-app
+    created_at: 2026-11-27T08:26:50.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9b8cce95950

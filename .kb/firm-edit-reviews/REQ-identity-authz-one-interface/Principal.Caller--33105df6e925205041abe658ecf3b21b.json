@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-identity-authz-one-interface",
+  "sourceFile": "internal/identity/app/auth.go",
+  "symbol": "Principal.Caller",
+  "verdict": "keeps",
+  "note": "Every read still asks the one interface; an unknown principal is refused instead of treated as owner. Author approved directly 27 Nov.",
+  "statementHash": "sha256:682fca9b92689deea579e04d6bd2728f3a062794cfad5c649319327ca31f73c3",
+  "codeHash": "sha256:b41bbc1e8d2bdddd9ee241b48dd9cfb42dcf0652724da671b2752c0804cfe89b",
+  "startLine": 301,
+  "endLine": 315,
+  "recordedAt": "2026-11-27T09:40:43.985Z"
+}

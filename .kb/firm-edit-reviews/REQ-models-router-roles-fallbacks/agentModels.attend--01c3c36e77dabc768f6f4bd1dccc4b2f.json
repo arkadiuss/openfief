@@ -4,10 +4,10 @@
   "sourceFile": "cmd/core/modelrouter.go",
   "symbol": "agentModels.attend",
   "verdict": "keeps",
-  "note": "Roles, primaries and fallbacks are untouched; the wiring passes the demo flag and SettingsStore gains SaveOpinions. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "note": "Only passes viewer question limits to the Ask door; routes and fallbacks unchanged. Author approved directly 27 Nov.",
   "statementHash": "sha256:8f7c1fe0e1cab47ca3a90f9e88694ff7c361fcc59fb0422f5e2f4920f3bc052e",
-  "codeHash": "sha256:31f58a1c858d8d22658e01bea59c77e708d44b2bbd80ce2ccd7c3550b22131e5",
-  "startLine": 390,
-  "endLine": 396,
-  "recordedAt": "2026-11-21T21:37:18.811Z"
+  "codeHash": "sha256:1d674c0f78c97bfc976f909826a59ff666aa75993f0bdbb5e80f1cc2e51616be",
+  "startLine": 392,
+  "endLine": 398,
+  "recordedAt": "2026-11-27T09:40:43.985Z"
 }

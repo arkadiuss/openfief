@@ -25,11 +25,15 @@ func TestGuardFlags(t *testing.T) {
 		wantErr error
 		fail    bool
 	}{
-		{name: "none set: nothing is limited", want: guardConfig{QueueWait: modelsapp.DefaultQueueWait}},
+		{name: "none set: the owner is limited by nothing, a viewer by 10 an hour and 30 a day", want: guardConfig{QueueWait: modelsapp.DefaultQueueWait, ViewerQuestionsPerHour: 10, ViewerQuestionsPerDay: 30}},
+		{
+			name: "the owner lifts a viewer's limits", args: []string{"--ask-viewer-questions-per-hour=0", "--ask-viewer-questions-per-day=0"},
+			want: guardConfig{QueueWait: modelsapp.DefaultQueueWait},
+		},
 		{
 			name: "the demo's values", args: demo,
 			want: guardConfig{
-				DailyBudgetUSD: "0.50", QuestionsPerHour: 10, QuestionsPerDay: 30, AskCalls: 3, QueueWait: 2 * time.Second,
+				DailyBudgetUSD: "0.50", QuestionsPerHour: 10, QuestionsPerDay: 30, ViewerQuestionsPerHour: 10, ViewerQuestionsPerDay: 30, AskCalls: 3, QueueWait: 2 * time.Second,
 				ClientIPHeader: "X-Forwarded-For", TrustedProxies: "10.42.0.0/16", AllowTurnstile: true,
 			},
 		},
@@ -37,6 +41,8 @@ func TestGuardFlags(t *testing.T) {
 		{name: "a negative budget", args: []string{"--model-daily-budget-usd=-1"}, wantErr: errGuards},
 		{name: "a negative limit", args: []string{"--ask-questions-per-hour=-1"}, wantErr: errGuards},
 		{name: "more an hour than a day", args: []string{"--ask-questions-per-hour=31", "--ask-questions-per-day=30"}, wantErr: errGuards},
+		{name: "a viewer's hour above their day", args: []string{"--ask-viewer-questions-per-hour=31"}, wantErr: errGuards},
+		{name: "a negative viewer limit", args: []string{"--ask-viewer-questions-per-day=-1"}, wantErr: errGuards},
 		{name: "negative calls at once", args: []string{"--ask-concurrent-calls=-1"}, wantErr: errGuards},
 		{name: "a negative queue wait", args: []string{"--ask-queue-wait=-1s"}, wantErr: errGuards},
 		{name: "a header with no proxy to trust", args: []string{"--client-ip-header=X-Forwarded-For"}, wantErr: browserproxy.ErrClientIPConfig},
@@ -90,5 +96,15 @@ func TestGuardConfigProxyOptions(t *testing.T) {
 	bad := guardConfig{ClientIPHeader: "X-Forwarded-For"}
 	if _, err := bad.proxyOptions(); !errors.Is(err, browserproxy.ErrClientIPConfig) {
 		t.Errorf("a header with no proxy: error = %v", err)
+	}
+}
+
+func TestGuardConfigBuildsAViewersLimits(t *testing.T) {
+	t.Parallel()
+	if got, want := (&guardConfig{ViewerQuestionsPerHour: 5, ViewerQuestionsPerDay: 7}).viewerLimits(), (modelrouter.QuestionLimits{PerHour: 5, PerDay: 7}); got != want {
+		t.Errorf("viewerLimits = %+v, want %+v", got, want)
+	}
+	if got := (&guardConfig{}).viewerLimits(); got.Enabled() {
+		t.Errorf("viewerLimits of zero values = %+v, want none", got)
 	}
 }

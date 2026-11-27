@@ -59,14 +59,6 @@ privacy | internal/plugins/operator PluginReconciler.otherClaimants logs an erro
 privacy | internal/plugins/smokescreen Proxy.closeTunnels logs an error | logs an error raw (logrus WithError): pass it through kernel.LogSafe
 privacy | internal/views/browserproxy Proxy.refuse logs an error | logs an error raw: pass it through kernel.LogSafe
 privacy | internal/views/browserproxy Proxy.unreachable logs an error | logs an error raw: pass it through kernel.LogSafe
-privacy | plugins/eodhd serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
-privacy | plugins/ghostfolio loop logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
-privacy | plugins/ghostfolio serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
-privacy | plugins/ibkr-flex serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
-privacy | plugins/nbp-fx serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
-privacy | plugins/treasury-bonds serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
-privacy | plugins/ui serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
-privacy | plugins/xtb serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
 
 # Pure domain: package-level variables.
 pure-domain | internal/attention var kindPattern | a compiled regular expression held as package state; compile it in a function

@@ -1014,3 +1014,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e0f582782303
+  - type: verified_by
+    from: SCEN-models-ask-viewer-question-limits
+    to: TEST-models-domain-guards
+    created_at: 2026-11-27T08:18:09.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56f9689535fb
+  - type: verified_by
+    from: SCEN-models-ask-viewer-question-limits
+    to: TEST-models-app-guards
+    created_at: 2026-11-27T08:18:09.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92c5438bf99e
+  - type: verified_by
+    from: SCEN-models-ask-viewer-question-limits
+    to: TEST-core-guards
+    created_at: 2026-11-27T08:18:09.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a340a8030c79
