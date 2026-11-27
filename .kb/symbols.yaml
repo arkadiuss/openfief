@@ -255729,3 +255729,95 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-models-connectapi-ask-guards
+  - id: SYM-views-readclass-test
+    title: TestEveryReadProcedureAsksTheAuthorizerOrIsHouseholdLevel
+    status: active
+    sourceFile: internal/views/app/readclass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:31:15.606Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-read-authorization-class
+  - id: SYM-views-readclass-unauthorized
+    title: unauthorizedByAccount
+    status: active
+    sourceFile: internal/views/app/readclass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:31:26.547Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-read-authorization-class
+  - id: SYM-views-readclass-receiver
+    title: receiverName
+    status: active
+    sourceFile: internal/views/app/readclass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:31:37.147Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-read-authorization-class
+  - id: SYM-views-readclass-isread
+    title: isReadProcedure
+    status: active
+    sourceFile: internal/views/app/readclass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:31:47.046Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-read-authorization-class
+  - id: SYM-views-readclass-asks
+    title: asksTheAuthorizer
+    status: active
+    sourceFile: internal/views/app/readclass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:34:31.535Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-read-authorization-class
+  - id: SYM-views-readclass-scan
+    title: readScan
+    status: active
+    sourceFile: internal/views/app/readclass_test.go
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:34:41.202Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-read-authorization-class
+  - id: SYM-views-readclass-scan-views
+    title: scanViews
+    status: active
+    sourceFile: internal/views/app/readclass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:34:51.068Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-read-authorization-class
+  - id: SYM-views-readclass-scan-add
+    title: readScan.add
+    status: active
+    sourceFile: internal/views/app/readclass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:35:02.487Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-read-authorization-class
+  - id: SYM-views-readclass-scan-reaches
+    title: readScan.reaches
+    status: active
+    sourceFile: internal/views/app/readclass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:35:14.065Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-read-authorization-class

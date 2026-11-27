@@ -1210,3 +1210,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28ab777288d3
+  - type: executable_for
+    from: SYM-views-readclass-asks
+    to: TEST-views-app-read-authorization-class
+    created_at: 2026-11-27T08:34:36.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a626173b4a3

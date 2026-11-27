@@ -1623,3 +1623,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d26f9da4d8ab
+  - type: verified_by
+    from: SCEN-views-read-household-reads
+    to: TEST-views-app-read-authorization-class
+    created_at: 2026-11-27T08:30:58.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e08229b5bdf
