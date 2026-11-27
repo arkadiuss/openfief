@@ -1119,3 +1119,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba25adb84e0c
+  - type: specified_by
+    from: REQ-models-budget-refuses-unpriced-model
+    to: SCEN-models-budget-refuses-unpriced-model
+    created_at: 2026-11-27T08:04:40.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-578e3961ef7a

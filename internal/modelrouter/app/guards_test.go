@@ -71,6 +71,7 @@ func (f *fakeUsage) Record(_ context.Context, u *app.UsageRecord) error {
 func guardedFixture(t *testing.T, g app.Guards) *routerFixture {
 	t.Helper()
 	f := newRouterFixture(t)
+	f.providers.locations = map[string]modelrouter.Location{"ollama": modelrouter.LocationOwnerHardware}
 	f.providers.entries["openrouter"] = []modelrouter.ModelEntry{{
 		ID: "qwen", ToolCalling: true, StructuredOut: true,
 		HasPrice: true, InputPrice: decimalOf(t, "1"), OutputPrice: decimalOf(t, "2"), PriceCurrency: usd(t),
@@ -206,6 +207,56 @@ func TestRouterCountsAnEntryWithNoPriceAsFree(t *testing.T) {
 	}
 	if !usage.byDay["2026-01-02"].IsZero() {
 		t.Errorf("total = %s, want 0", usage.byDay["2026-01-02"])
+	}
+}
+
+// TestRouterRefusesACallItCannotPriceUnderABudget checks that a budget never
+// lets a call through that it couldn't count: a model the catalog has no entry
+// for, which is every model after a restart until ListModels answers, and a
+// third party's model whose entry carries no price. A model on the owner's
+// hardware stays free.
+func TestRouterRefusesACallItCannotPriceUnderABudget(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name string
+		mod  func(f *routerFixture)
+		tier modelrouter.DataTier
+	}{
+		{"an empty catalog", func(f *routerFixture) { f.providers.entries = map[string][]modelrouter.ModelEntry{} }, modelrouter.DataTierT2},
+		{"a provider that can't list its models yet", func(f *routerFixture) {
+			f.providers.listErr = errBoom
+		}, modelrouter.DataTierT2},
+		{"a cloud model's entry with no price", func(f *routerFixture) {
+			f.providers.entries["openrouter"][0].HasPrice = false
+		}, modelrouter.DataTierT2},
+		{"a local model the catalog doesn't list", func(f *routerFixture) {
+			f.providers.entries["ollama"] = nil
+		}, modelrouter.DataTierT0},
+		{"an unpriced model in a third party's cloud", func(f *routerFixture) {
+			f.providers.locations = nil
+		}, modelrouter.DataTierT0},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			usage := &fakeUsage{}
+			f := guardedFixture(t, app.Guards{Budget: budgetOf(t, "1"), Usage: usage})
+			tt.mod(f)
+			f.rebuild(app.Guards{Budget: budgetOf(t, "1"), Usage: usage})
+			_, err := f.generate(request(tt.tier))
+			if !errors.Is(err, modelrouter.ErrNoPrice) {
+				t.Fatalf("error = %v, want ErrNoPrice", err)
+			}
+			if len(f.providers.called) != 0 {
+				t.Errorf("a call that can't be counted was sent: %v", f.providers.called)
+			}
+			if got := f.audit.results[0]; got.Outcome != app.OutcomeRefused || got.Class != app.ClassBudget {
+				t.Errorf("audit entry = %+v, want a refusal of class budget", got)
+			}
+			if len(usage.records) != 0 {
+				t.Errorf("records = %v, want none", usage.records)
+			}
+		})
 	}
 }
 

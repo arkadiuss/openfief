@@ -121,6 +121,9 @@ type fakeProviders struct {
 	// instances holds the error Instance returns for a provider instance;
 	// nil, or none, for an instance that runs.
 	instances map[string]error
+	// locations is where each provider's models run; a third party's cloud
+	// when none is listed.
+	locations map[string]modelrouter.Location
 	listErr   error
 	mu        sync.Mutex
 	called    []string
@@ -130,7 +133,10 @@ func (f *fakeProviders) Instance(_ context.Context, instance string) error {
 	return f.instances[instance]
 }
 
-func (f *fakeProviders) Describe(context.Context, string) (modelrouter.ProviderInstance, error) {
+func (f *fakeProviders) Describe(_ context.Context, provider string) (modelrouter.ProviderInstance, error) {
+	if loc, ok := f.locations[provider]; ok {
+		return modelrouter.ProviderInstance{Location: loc}, nil
+	}
 	return modelrouter.ProviderInstance{Location: modelrouter.LocationThirdPartyCloud}, nil
 }
 

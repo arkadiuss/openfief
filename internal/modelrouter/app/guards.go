@@ -57,8 +57,12 @@ type BudgetStatus struct {
 }
 
 // checkBudget refuses a call when the day's budget is spent, or when one of
-// the candidates is priced in a currency the budget can't count, which would
-// let that call spend without being counted.
+// the candidates can't be counted against it, which would let that call spend
+// without being counted: it is priced in another currency than the budget's
+// (modelrouter.ErrUnpriceable), the catalog has no entry for it, which is
+// every model after a restart until its provider lists them, or a third
+// party runs it and its entry has no price (modelrouter.ErrNoPrice). Only a
+// model on the owner's hardware is free without a price.
 func (r *Router) checkBudget(ctx context.Context, candidates []modelrouter.Ref) error {
 	if !r.guards.Budget.Enabled() {
 		return nil
@@ -73,26 +77,47 @@ func (r *Router) checkBudget(ctx context.Context, candidates []modelrouter.Ref) 
 	for _, m := range candidates {
 		e, ok := r.entryOf(ctx, m)
 		if !ok {
-			continue // the provider answers for itself, and refuses a model it has no entry for
+			return fmt.Errorf("model %s: %w: the catalog has no entry for it", m, modelrouter.ErrNoPrice)
 		}
 		if _, priceErr := modelrouter.CallCost(&e, modelrouter.Usage{}, r.guards.Budget.Currency); priceErr != nil {
 			return fmt.Errorf("model %s: %w", m, priceErr)
 		}
+		if !e.HasPrice {
+			if err := r.checkFree(ctx, m); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+// checkFree refuses the unpriced model m unless it runs on the owner's
+// hardware: a model a third party runs costs money whatever its entry says,
+// and where m runs, when its provider can't say, is not known to be free.
+func (r *Router) checkFree(ctx context.Context, m modelrouter.Ref) error {
+	inst, err := r.providers.Describe(ctx, m.Instance)
+	if err != nil {
+		return fmt.Errorf("model %s: %w: where it runs is unknown: %w", m, modelrouter.ErrNoPrice, err)
+	}
+	if inst.Location != modelrouter.LocationOwnerHardware {
+		return fmt.Errorf("model %s: %w: its entry has no price and it doesn't run on the owner's hardware", m, modelrouter.ErrNoPrice)
 	}
 	return nil
 }
 
 // recordUsage adds what the answered call cost to its day. Without a budget
 // it records nothing. A call that can't be priced, because its entry is gone
-// or priced in another currency than the cap's, is recorded at no cost only
-// when the entry is unknown: checkBudget refused the other before the call.
+// or priced in another currency than the cap's, is not recorded at no cost:
+// checkBudget refused both before the call, so one that reaches here lost its
+// entry while it ran, and the error withholds the answer like any usage that
+// can't be recorded.
 func (r *Router) recordUsage(ctx context.Context, m modelrouter.Ref, res *modelrouter.Result) error {
 	if !r.guards.Budget.Enabled() {
 		return nil
 	}
-	var entry modelrouter.ModelEntry
-	if e, ok := r.entryOf(ctx, m); ok {
-		entry = e
+	entry, ok := r.entryOf(ctx, m)
+	if !ok {
+		return fmt.Errorf("%w: pricing the call: %w", ErrUsageUnavailable, modelrouter.ErrNoPrice)
 	}
 	price, err := modelrouter.CallCost(&entry, res.Usage, r.guards.Budget.Currency)
 	if err != nil {

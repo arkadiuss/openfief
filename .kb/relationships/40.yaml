@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-572025110b46
+  - type: executable_for
+    from: SYM-models-ask-guards-test-cannot-price
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-27T08:05:20.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24630707e53d

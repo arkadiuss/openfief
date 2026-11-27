@@ -92,7 +92,7 @@ func NewRouter(p *RouterPorts) *Router {
 // whose entry names its class: a day whose calls have cost the budget's cap
 // (a *modelrouter.BudgetSpentError, which is modelrouter.ErrBudgetSpent), a
 // candidate priced in another currency than the cap's
-// (modelrouter.ErrUnpriceable), and, for the Ask box's role, a wait for a free
+// (modelrouter.ErrUnpriceable, modelrouter.ErrNoPrice), and, for the Ask box's role, a wait for a free
 // one of its calls at once that ran out (ErrBusy). Each answered call adds
 // what it cost to the day, and an answer whose cost can't be recorded is
 // withheld (ErrUsageUnavailable).

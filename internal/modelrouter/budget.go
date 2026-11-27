@@ -13,10 +13,15 @@ var (
 	// ErrBudgetSpent reports that the day's budget for model calls is used
 	// up: the router refuses a call before sending it.
 	ErrBudgetSpent = errors.New("the day's model budget is spent")
-	// ErrUnpriceable reports a model entry priced in another currency than
-	// the budget's: the call can't be counted against the cap, so the router
-	// does not send it.
-	ErrUnpriceable = errors.New("a model call can't be priced in the budget's currency")
+	// ErrUnpriceable reports a call the budget can't count against the cap, so
+	// the router does not send it: a model entry priced in another currency
+	// than the budget's, or ErrNoPrice.
+	ErrUnpriceable = errors.New("a model call can't be priced against the budget")
+	// ErrNoPrice is an ErrUnpriceable: no price is known for the model, because
+	// the catalog has no entry for it, as after a restart until its provider
+	// lists its models, or because its entry carries no price although a third
+	// party runs it.
+	ErrNoPrice = fmt.Errorf("%w: no price is known for its model", ErrUnpriceable)
 )
 
 // microPer is the power of ten of the million tokens a model entry's price is quoted for.

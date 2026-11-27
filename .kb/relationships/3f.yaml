@@ -1336,3 +1336,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25a65f869e0a
+  - type: verified_by
+    from: SCEN-models-budget-refuses-unpriced-model
+    to: TEST-models-app-guards
+    created_at: 2026-11-27T08:04:38.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7f51f570cde
+  - type: verified_by
+    from: SCEN-models-budget-refuses-unpriced-model
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-27T08:04:38.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-193eca346cec

@@ -255681,3 +255681,51 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-smokescreen-exemption
+  - id: SYM-models-app-guards-router-check-free
+    title: Router.checkFree
+    status: active
+    sourceFile: internal/modelrouter/app/guards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:04:44.610Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-budget-refuses-unpriced-model
+  - id: SYM-models-ask-guard-refusal
+    title: guardRefusal
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:04:54.445Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-box-model-through-router
+      - type: implements
+        target: REQ-models-budget-refuses-unpriced-model
+  - id: SYM-models-app-guards-test-cannot-price
+    title: TestRouterRefusesACallItCannotPriceUnderABudget
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:05:04.740Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-models-ask-guards-test-cannot-price
+    title: TestGenerateAskRefusedWhenTheBudgetCannotPriceTheModel
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T08:05:15.351Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards

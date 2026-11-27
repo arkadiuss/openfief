@@ -117,9 +117,10 @@ func (f *guardedAsk) admit(token, address string) (*modelsv1.AdmitAskQuestionRes
 	return resp.Msg, nil
 }
 
-func (f *guardedAsk) generate(token string) error {
+// generate asks as the owner.
+func (f *guardedAsk) generate() error {
 	_, err := f.client.GenerateAsk(context.Background(), connect.NewRequest(&modelsv1.GenerateAskRequest{
-		Origin: "o", SessionToken: token, Messages: []*modelsv1.AskMessage{userMessage("T2")}, MaxOutputTokens: 800,
+		Origin: "o", SessionToken: "owner", Messages: []*modelsv1.AskMessage{userMessage("T2")}, MaxOutputTokens: 800,
 	}))
 	if err != nil {
 		return fmt.Errorf("GenerateAsk: %w", err)
@@ -215,7 +216,7 @@ func TestGenerateAskRefusedByTheBudgetSaysSoAndWhen(t *testing.T) {
 		t.Fatal(err)
 	}
 	f := newGuardedAsk(t, app.Guards{Budget: budgetOf(t, "5"), Usage: usageOf{spent: spent}}, modelrouter.QuestionLimits{})
-	err = f.generate("owner")
+	err = f.generate()
 	var ce *connect.Error
 	if !errors.As(err, &ce) || ce.Code() != connect.CodeResourceExhausted {
 		t.Fatalf("error = %v, want RESOURCE_EXHAUSTED", err)
@@ -236,13 +237,33 @@ func TestGenerateAskRefusedByTheBudgetSaysSoAndWhen(t *testing.T) {
 	}
 }
 
+func TestGenerateAskRefusedWhenTheBudgetCannotPriceTheModel(t *testing.T) {
+	t.Parallel()
+	// The model's entry has no price and its provider isn't known to run on the owner's hardware.
+	f := newGuardedAsk(t, app.Guards{Budget: budgetOf(t, "5"), Usage: usageOf{}}, modelrouter.QuestionLimits{})
+	err := f.generate()
+	var ce *connect.Error
+	if !errors.As(err, &ce) || ce.Code() != connect.CodeFailedPrecondition {
+		t.Fatalf("error = %v, want FAILED_PRECONDITION", err)
+	}
+	if got := ce.Meta().Get(connectapi.RefusalHeader); got != "" {
+		t.Errorf("%s = %q, want none: the day's budget is not spent", connectapi.RefusalHeader, got)
+	}
+	if strings.Contains(ce.Error(), secretText) {
+		t.Errorf("the refusal quotes the question: %v", ce)
+	}
+	if len(f.provider.requests) != 0 {
+		t.Errorf("a call the budget can't count was sent")
+	}
+}
+
 func TestGenerateAskRefusedAsBusyWhenTheCallsAtOnceAreTaken(t *testing.T) {
 	t.Parallel()
 	f := newGuardedAsk(t, app.Guards{AskCalls: 1, QueueWait: 10 * time.Millisecond}, modelrouter.QuestionLimits{})
 	first := make(chan error, 1)
-	go func() { first <- f.generate("owner") }()
+	go func() { first <- f.generate() }()
 	<-f.provider.started
-	err := f.generate("owner")
+	err := f.generate()
 	var ce *connect.Error
 	if !errors.As(err, &ce) || ce.Code() != connect.CodeResourceExhausted || ce.Meta().Get(connectapi.RefusalHeader) != connectapi.RefusalBusy {
 		t.Fatalf("error = %v, want RESOURCE_EXHAUSTED refusing as busy", err)

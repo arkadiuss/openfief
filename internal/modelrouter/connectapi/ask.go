@@ -212,6 +212,29 @@ func askResponseTo(r *modelrouter.Result) *modelsv1.GenerateAskResponse {
 	return out
 }
 
+// guardRefusal maps a refusal of one of D-208's guards to its Connect error:
+// the spent budget with the moment the day ends, a call the budget can't count
+// as a failed precondition, and the calls at once all taken as busy.
+func guardRefusal(err error) *connect.Error {
+	if errors.Is(err, modelrouter.ErrBudgetSpent) {
+		out := connect.NewError(connect.CodeResourceExhausted, modelrouter.ErrBudgetSpent)
+		out.Meta().Set(RefusalHeader, RefusalBudget)
+		if spent, ok := errors.AsType[*modelrouter.BudgetSpentError](err); ok {
+			out.Meta().Set(ResetsAtHeader, spent.ResetsAt.UTC().Format(time.RFC3339))
+		}
+		return out
+	}
+	if errors.Is(err, modelrouter.ErrNoPrice) {
+		return connect.NewError(connect.CodeFailedPrecondition, modelrouter.ErrNoPrice)
+	}
+	if errors.Is(err, modelrouter.ErrUnpriceable) {
+		return connect.NewError(connect.CodeFailedPrecondition, modelrouter.ErrUnpriceable)
+	}
+	out := connect.NewError(connect.CodeResourceExhausted, app.ErrBusy)
+	out.Meta().Set(RefusalHeader, RefusalBusy)
+	return out
+}
+
 // fail maps err to its Connect error, by the error's kind and never its text.
 // Neither the question nor the answer reaches a log line (GR-12): an
 // unexpected failure is logged by its safe text only.
@@ -226,17 +249,8 @@ func (s *askService) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodePermissionDenied, modelrouter.ErrDataTierDenied)
 	case errors.Is(err, modelrouter.ErrSwitchOff), errors.Is(err, modelrouter.ErrFeatureOff), errors.Is(err, modelrouter.ErrNoRoute):
 		return connect.NewError(connect.CodeFailedPrecondition, modelrouter.ErrSwitchOff)
-	case errors.Is(err, modelrouter.ErrBudgetSpent):
-		out := connect.NewError(connect.CodeResourceExhausted, modelrouter.ErrBudgetSpent)
-		out.Meta().Set(RefusalHeader, RefusalBudget)
-		if spent, ok := errors.AsType[*modelrouter.BudgetSpentError](err); ok {
-			out.Meta().Set(ResetsAtHeader, spent.ResetsAt.UTC().Format(time.RFC3339))
-		}
-		return out
-	case errors.Is(err, app.ErrBusy):
-		out := connect.NewError(connect.CodeResourceExhausted, app.ErrBusy)
-		out.Meta().Set(RefusalHeader, RefusalBusy)
-		return out
+	case errors.Is(err, modelrouter.ErrBudgetSpent), errors.Is(err, modelrouter.ErrUnpriceable), errors.Is(err, app.ErrBusy):
+		return guardRefusal(err)
 	case errors.Is(err, app.ErrNoAnswer), errors.Is(err, app.ErrProviderUnavailable), errors.Is(err, context.DeadlineExceeded):
 		return connect.NewError(connect.CodeUnavailable, app.ErrNoAnswer)
 	case errors.Is(err, context.Canceled):

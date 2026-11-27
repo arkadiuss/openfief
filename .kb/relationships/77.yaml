@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4bacea3afcf6
+  - type: implements
+    from: SYM-models-app-guards-router-check-free
+    to: REQ-models-budget-refuses-unpriced-model
+    created_at: 2026-11-27T08:04:50.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d2a0326bc4a
+  - type: covered_by
+    from: SYM-models-app-guards-router-check-free
+    to: TEST-models-app-guards
+    created_at: 2026-11-27T08:04:50.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56eff5159396

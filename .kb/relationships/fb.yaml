@@ -1364,3 +1364,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48d0f4c859a3
+  - type: implements
+    from: SYM-models-ask-guard-refusal
+    to: REQ-models-budget-refuses-unpriced-model
+    created_at: 2026-11-27T08:04:59.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22ee858108cc
+  - type: implements
+    from: SYM-models-ask-guard-refusal
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-27T08:05:00.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a46f040faf8
+  - type: covered_by
+    from: SYM-models-ask-guard-refusal
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-27T08:05:00.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-263d07005515
