@@ -54,7 +54,6 @@ privacy | cmd/demo-seed main logs an error | logs an error raw: pass it through 
 privacy | cmd/egress-proxy main logs an error | logs an error raw (logrus WithError): pass it through kernel.LogSafe
 privacy | cmd/egress-proxy run logs an error | logs an error raw (logrus WithError): pass it through kernel.LogSafe
 privacy | internal/identity/connectapi toConnectError logs an error | logs a classified sentinel's text with .Error(): pass it through kernel.LogSafe with its class
-privacy | internal/ledger/connectapi checkpointService.fail logs an error | logs an error raw: pass it through kernel.LogSafe like the context's other services
 privacy | internal/plugins/operator PluginReconciler.allPluginsIfNamed logs an error | logs an error raw (logr): pass it through kernel.LogSafe
 privacy | internal/plugins/operator PluginReconciler.otherClaimants logs an error | logs an error raw (logr): pass it through kernel.LogSafe
 privacy | internal/plugins/smokescreen Proxy.closeTunnels logs an error | logs an error raw (logrus WithError): pass it through kernel.LogSafe

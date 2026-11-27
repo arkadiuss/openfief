@@ -126,6 +126,6 @@ func (s *checkpointService) fail(ctx context.Context, err error) *connect.Error 
 	case errors.Is(err, ledger.ErrNoCashDifference):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
 	}
-	s.log.LogAttrs(ctx, slog.LevelError, "cash checkpoint call failed", slog.String("error", err.Error()))
+	s.log.LogAttrs(ctx, slog.LevelError, "cash checkpoint call failed", slog.String("error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded)))
 	return connect.NewError(connect.CodeInternal, errInternal)
 }
