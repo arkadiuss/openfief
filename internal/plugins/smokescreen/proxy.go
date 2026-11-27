@@ -217,16 +217,19 @@ func (p *Proxy) Serve(ctx context.Context) error {
 	go func() { served <- p.server.Serve(p.listener) }()
 	select {
 	case err := <-served:
-		p.closeTunnels()
+		p.closeTunnels(ctx)
 		return fmt.Errorf("egress proxy serve: %w", err)
 	case <-ctx.Done():
 	}
-	p.tracker.ShuttingDown.Store(true)
+	// The tracker's ShuttingDown flag stays false on purpose: its only effect
+	// is that each tunnel's Close reads LastActivity without the atomic the
+	// tunnel's copy goroutine writes it with, a data race in Smokescreen, for
+	// a metric ("active at termination") nothing here collects.
 	drainCtx, cancel := context.WithTimeout(context.WithoutCancel(ctx), p.drain)
 	defer cancel()
 	err := p.server.Shutdown(drainCtx)
 	p.waitForTunnels(drainCtx)
-	p.closeTunnels()
+	p.closeTunnels(ctx)
 	if serveErr := <-served; !errors.Is(serveErr, http.ErrServerClosed) {
 		err = errors.Join(err, serveErr)
 	}
@@ -249,17 +252,31 @@ func (p *Proxy) waitForTunnels(ctx context.Context) {
 	}
 }
 
-// closeTunnels closes every tunnel still open. Server.Shutdown does not:
-// Smokescreen hijacks the connections behind CONNECT tunnels.
-func (p *Proxy) closeTunnels() {
+// closeTunnelsGrace is how long closeTunnels waits for the copy goroutines
+// of the tunnels it closed to finish.
+const closeTunnelsGrace = 5 * time.Second
+
+// closeTunnels closes every tunnel still open and waits, for at most
+// closeTunnelsGrace, until the tunnels' own goroutines have finished with
+// them. Server.Shutdown does not close them: Smokescreen hijacks the
+// connections behind CONNECT tunnels.
+//
+// It closes the network connection under each tunnel, never the tracked
+// connection itself: that one's Close is the tunnel goroutines' to call, once
+// their copying has stopped, and calling it from here too would run it
+// beside a copy that is still reading and writing the connection's counters.
+func (p *Proxy) closeTunnels(ctx context.Context) {
 	p.tracker.Range(func(k, _ any) bool {
 		if c, ok := k.(*conntrack.InstrumentedConn); ok {
-			if err := c.Close(); err != nil && !errors.Is(err, net.ErrClosed) {
+			if err := c.Conn.Close(); err != nil && !errors.Is(err, net.ErrClosed) {
 				p.log.WithError(err).Warn("closing a tunnel at shutdown")
 			}
 		}
 		return true
 	})
+	graceCtx, cancel := context.WithTimeout(context.WithoutCancel(ctx), closeTunnelsGrace)
+	defer cancel()
+	p.waitForTunnels(graceCtx)
 }
 
 // identify is the role function: the plugin named by the request's token.
