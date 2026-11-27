@@ -2,8 +2,10 @@ package smokescreen_test
 
 import (
 	"bytes"
+	"fmt"
 	"net/http"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/sirupsen/logrus"
@@ -108,7 +110,7 @@ func TestProxyWarnsOfAnExemption(t *testing.T) {
 	} {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			var out bytes.Buffer
+			var out syncBuffer
 			logger := logrus.New()
 			logger.SetOutput(&out)
 			logger.SetFormatter(&logrus.JSONFormatter{})
@@ -135,7 +137,7 @@ func TestProxyWarnsOfAnExemption(t *testing.T) {
 // names the refused address.
 func TestProxyLogsExemptionDecisions(t *testing.T) {
 	t.Parallel()
-	var out bytes.Buffer
+	var out syncBuffer
 	logger := logrus.New()
 	logger.SetOutput(&out)
 	logger.SetFormatter(&logrus.JSONFormatter{})
@@ -159,3 +161,28 @@ func TestProxyLogsExemptionDecisions(t *testing.T) {
 		t.Errorf("allowed line for the exempt host: %t, refused line for the other host: %t; log:\n%s", allowed, refused, out.String())
 	}
 }
+
+// syncBuffer is a log sink the test reads while the proxy's tunnel goroutines
+// may still be writing a closing line to it.
+type syncBuffer struct {
+	mu  sync.Mutex
+	buf bytes.Buffer
+}
+
+func (b *syncBuffer) Write(p []byte) (int, error) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	n, err := b.buf.Write(p)
+	if err != nil {
+		return n, fmt.Errorf("buffering a log line: %w", err)
+	}
+	return n, nil
+}
+
+func (b *syncBuffer) Bytes() []byte {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	return bytes.Clone(b.buf.Bytes())
+}
+
+func (b *syncBuffer) String() string { return string(b.Bytes()) }

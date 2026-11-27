@@ -255639,3 +255639,45 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-authz-wait
+  - id: SYM-plugins-smokescreen-test-sync-buffer
+    title: syncBuffer
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T07:34:11.796Z
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-test-sync-buffer-write
+    title: syncBuffer.Write
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T07:34:19.697Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-test-sync-buffer-bytes
+    title: syncBuffer.Bytes
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T07:34:28.397Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-test-sync-buffer-string
+    title: syncBuffer.String
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-27T07:34:37.110Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption

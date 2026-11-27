@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69c2ee86e4c1
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-sync-buffer-string
+    to: TEST-plugins-smokescreen-exemption
+    created_at: 2026-11-27T07:34:41.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a424eec722a2
