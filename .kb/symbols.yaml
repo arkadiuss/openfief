@@ -48318,7 +48318,7 @@ symbols:
       - type: covered_by
         target: TEST-identity-auth-app
       - type: implements
-        target: REQ-identity-read-api-sessions
+        target: REQ-identity-read-api-sessions-v2
   - id: SYM-identity-app-auth-auth-authenticate
     title: Auth.Authenticate
     sourceFile: internal/identity/app/auth.go
@@ -48331,7 +48331,7 @@ symbols:
       - type: covered_by
         target: TEST-identity-auth-app
       - type: implements
-        target: REQ-identity-read-api-sessions
+        target: REQ-identity-read-api-sessions-v2
   - id: SYM-identity-app-auth-login-methods
     title: LoginMethods
     sourceFile: internal/identity/app/auth.go
